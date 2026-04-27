@@ -1,0 +1,15 @@
+{
+  "_comment": "\uace0\uc720\uba85\uc0ac/\uae30\uc220\uc6a9\uc5b4 \uc0ac\uc804. \ubc88\uc5ed\ud558\uc9c0 \uc54a\uace0 \uadf8\ub300\ub85c \uc0ac\uc6a9\ud560 \ub2e8\uc5b4 \ub610\ub294 \uace0\uc815 \ubc88\uc5ed\uc744 \uc9c0\uc815\ud569\ub2c8\ub2e4.",
+  "keep_as_is": [
+    "Anzo",
+    "Ontology",
+    "SPARQL",
+    "RDF",
+    "Graph",
+    "Cambridge Semantics"
+  ],
+  "fixed_translations": {
+    "knowledge graph": "\uc9c0\uc2dd \uadf8\ub798\ud504",
+    "data fabric": "\ub370\uc774\ud130 \ud328\ube0c\ub9ad"
+  }
+}

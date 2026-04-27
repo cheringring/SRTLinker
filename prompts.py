@@ -1,0 +1,104 @@
+"""\ubc88\uc5ed \ud504\ub86c\ud504\ud2b8 \ud15c\ud50c\ub9bf."""
+from __future__ import annotations
+import json
+from pathlib import Path
+
+
+def build_system_prompt(target_lang: str, glossary_path: Path | None = None) -> str:
+    glossary_block = ""
+    if glossary_path and glossary_path.exists():
+        data = json.loads(glossary_path.read_text(encoding="utf-8"))
+        keep = data.get("keep_as_is", []) or []
+        fixed = data.get("fixed_translations", {}) or {}
+        lines = []
+        if keep:
+            lines.append("\ub2e4\uc74c \ub2e8\uc5b4\ub294 \ubc88\uc5ed\ud558\uc9c0 \uc54a\uace0 \uc6d0\ubb38 \uadf8\ub300\ub85c \uc720\uc9c0\ud55c\ub2e4: " + ", ".join(keep))
+        if fixed:
+            pairs = ", ".join(f'"{k}" -> "{v}"' for k, v in fixed.items())
+            lines.append("\ub2e4\uc74c \uace0\uc815 \ubc88\uc5ed\uc744 \ubc18\ub4dc\uc2dc \uc0ac\uc6a9\ud55c\ub2e4: " + pairs)
+        if lines:
+            glossary_block = "\n\n[\uc6a9\uc5b4\uc9d1]\n" + "\n".join(f"- {l}" for l in lines)
+
+    return (
+        f"\ub108\ub294 \uc804\ubb38 \uc601\uc0c1 \uc790\ub9c9 \ubc88\uc5ed\uac00\uc774\ub2e4. \uac01 \ube14\ub85d\uc740 \ud55c \uac1c\uc758 \uc644\uc804\ud55c \ubb38\uc7a5\uc774\uace0, \uc774\ub97c \uc790\uc5f0\uc2a4\ub7ec\uc6b4 {target_lang}\ub85c \ubc88\uc5ed\ud55c\ub2e4.\n"
+        "\n[\ubc18\ub4dc\uc2dc \uc9c0\ud0ac \uaddc\uce59]\n"
+        "1) translate \ubc30\uc5f4\uc758 \uac01 \ube14\ub85d\ub9cc \ubc88\uc5ed\ud558\uace0 context_before / context_after\ub294 \ubb38\ub9e5 \ucc38\uace0\uc6a9\uc774\ub2e4 (\uc808\ub300 \ubc88\uc5ed \ub300\uc0c1 \uc544\ub2d8).\n"
+        "2) \ucd9c\ub825\uc758 id \uc9d1\ud569\uacfc \uc21c\uc11c\ub294 \uc785\ub825\uacfc \uc815\ud655\ud788 \uc77c\uce58\ud574\uc57c \ud55c\ub2e4. id \ucd94\uac00/\uc0ad\uc81c/\ubcc0\uacbd \uae08\uc9c0.\n"
+        "3) \ud55c \ube14\ub85d = \ud558\ub098\uc758 \ubc88\uc5ed (\ube14\ub85d \uba85\ub9c9 \ubc14\uafb8\uae30 \uc548 \ub428).\n"
+        "4) \uc758\uc5ed \ud5c8\uc6a9, \uc9c1\uc5ed\ubcf4\ub2e4 \uc758\ubbf8 \uae30\ubc18 \uc790\uc5f0\uc2a4\ub7ec\uc6b4 \ud45c\ud604 \uc6b0\uc120. \uc815\ubcf4\ub97c \uc784\uc758 \ucd94\uac00/\uc0dd\ub7b5\ud558\uc9c0 \uc54a\ub294\ub2e4.\n"
+        "5) \ud68c\uc758/\uad50\uc721 \ud1a4\uc5d0 \ub9de\ub294 \uacbd\uc5b4 \ubc18\ub9d0(~\ud569\ub2c8\ub2e4 / ~\uc785\ub2c8\ub2e4)\uc744 \uc0ac\uc6a9\ud55c\ub2e4.\n"
+        "6) \uae30\uc220 \uc6a9\uc5b4(Anzo, Ontology, Dataset, Knowledge Graph, RDF, SPARQL, API, SDK, JSON \ub4f1)\ub294 \uc601\ubb38 \uadf8\ub300\ub85c \uc720\uc9c0\ud55c\ub2e4.\n"
+        "7) \uace0\uc720\uba85\uc0ac/\uc81c\ud488\uba85/\ubc84\uc804\uba85\uc740 \uc6d0\ubb38 \ud45c\uae30 \uc720\uc9c0.\n"
+        "8) \uc774\ubaa8\ud2f0\ucf58, \ub530\uc634\ud45c, \ub9c8\ud06c\ub2e4\uc6b4 \uc11c\uc2dd \ub4f1 \uc6d0\ubcf8 \uc11c\uc2dd\uc740 \uc758\ubbf8 \uc788\uc744 \ub54c\ub9cc \uc720\uc9c0\ud55c\ub2e4.\n"
+        "9) \uad6c\uc5b4\uccb4(uh, um, you know, like \ub4f1 \ud544\ub7ec) \ub294 \uc790\uc5f0\uc2a4\ub7ec\uc6b4 \ubc94\uc704 \ub0b4\uc5d0\uc11c \uc81c\uac70 \uac00\ub2a5.\n"
+        "10) \uc904\ubc14\uafc8(\\n)\uc740 \uc6d0\ubb38 \uad6c\uc870\uac00 \uc790\uc5f0\uc2a4\ub7ec\uc6b4 \uacbd\uc6b0\uc5d0\ub9cc \uc0ac\uc6a9.\n"
+        "11) \ucd9c\ub825\uc740 \ubc18\ub4dc\uc2dc \uc9c0\uc815\ub41c JSON \uc2a4\ud0a4\ub9c8 {items:[{id, text}]} \ub97c \ub530\ub978\ub2e4."
+        + glossary_block
+    )
+
+
+def build_user_payload(translate_blocks: list[dict], context_before: list[dict], context_after: list[dict], target_lang: str) -> str:
+    payload = {
+        "target_language": target_lang,
+        "context_before": context_before,
+        "translate": translate_blocks,
+        "context_after": context_after,
+        "instruction": "translate \ubc30\uc5f4\uc758 \uac01 \ube14\ub85d\uc744 target_language\ub85c \ubc88\uc5ed\ud558\uace0, {items:[{id,text}]} \ud615\ud0dc\uc758 JSON\uc73c\ub85c\ub9cc \uc751\ub2f5\ud558\ub77c. id\ub294 \uc785\ub825\uacfc \uc815\ud655\ud788 \ub3d9\uc77c\ud574\uc57c \ud55c\ub2e4.",
+    }
+    return json.dumps(payload, ensure_ascii=False)
+
+
+# ============================================================
+# \ubb38\uc7a5\uc778\uc2dd \ubd84\ud560 \ubc88\uc5ed: \ud55c \ubb38\uc7a5\uc774 \uc5ec\ub7ec \ube14\ub85d(fragment)\uc73c\ub85c \ucabc\uac1c\uc9c4 SRT \uc6a9
+# ============================================================
+
+def build_sentence_aware_system_prompt(target_lang: str, glossary_path: Path | None = None) -> str:
+    """1:1 \ube14\ub85d \ub9e4\ud551\uc744 \uc720\uc9c0\ud558\uba74\uc11c\ub3c4 \ubb38\uc7a5 \ub2e8\uc704 \uc790\uc5f0\uc2a4\ub7ec\uc6b4 \ubc88\uc5ed\uc744 \uc704\ud55c \uc2dc\uc2a4\ud15c \ud504\ub86c\ud504\ud2b8."""
+    glossary_block = ""
+    if glossary_path and glossary_path.exists():
+        data = json.loads(glossary_path.read_text(encoding="utf-8"))
+        keep = data.get("keep_as_is", []) or []
+        fixed = data.get("fixed_translations", {}) or {}
+        lines = []
+        if keep:
+            lines.append("\ub2e4\uc74c \ub2e8\uc5b4\ub294 \ubc88\uc5ed\ud558\uc9c0 \uc54a\uace0 \uc6d0\ubb38 \uadf8\ub300\ub85c \uc720\uc9c0\ud55c\ub2e4: " + ", ".join(keep))
+        if fixed:
+            pairs = ", ".join(f'"{k}" -> "{v}"' for k, v in fixed.items())
+            lines.append("\ub2e4\uc74c \uace0\uc815 \ubc88\uc5ed\uc744 \ubc18\ub4dc\uc2dc \uc0ac\uc6a9\ud55c\ub2e4: " + pairs)
+        if lines:
+            glossary_block = "\n\n[\uc6a9\uc5b4\uc9d1]\n" + "\n".join(f"- {l}" for l in lines)
+
+    return (
+        f"\ub108\ub294 \uc804\ubb38 \uc601\uc0c1 \uc790\ub9c9 \ubc88\uc5ed\uac00\uc774\ub2e4. \uc785\ub825\uc740 SRT \uc790\ub9c9\uc774\uba70, \ud55c \ubb38\uc7a5\uc774 \uc5ec\ub7ec fragment(\ube14\ub85d)\uc73c\ub85c \ucabc\uac1c\uc838 \uc788\ub2e4.\n"
+        f"\ubaa9\ud45c: \uac01 sentence\ub97c \uc790\uc5f0\uc2a4\ub7ec\uc6b4 {target_lang}\ub85c \ubc88\uc5ed\ud558\ub418, \ucd9c\ub825\uc740 \uc785\ub825 fragment \uac1c\uc218\uc640 id\ub97c **\uc815\ud655\ud788** \uc720\uc9c0\ud55c\ub2e4.\n"
+        "\n[\ubc18\ub4dc\uc2dc \uc9c0\ud0ac \uaddc\uce59]\n"
+        "1) sentences \ubc30\uc5f4\uc758 \uac01 sentence \uac1d\uccb4\ub294 full_text(\uc758\ubbf8\uc801 \uc644\uc804\uccb4)\uc640 fragments(\ucabc\uac1c\uc9c4 SRT \ube14\ub85d)\ub97c \ud3ec\ud568\ud55c\ub2e4.\n"
+        "2) \uba3c\uc800 full_text\ub97c \uc758\ubbf8 \uae30\ubc18\uc73c\ub85c \uc790\uc5f0\uc2a4\ub7ec\uc6b4 \ubb38\uc7a5\uc73c\ub85c \ubc88\uc5ed\ud55c\ub2e4 (\uc9c1\uc5ed \u00d7, \uc758\uc5ed \u25cb).\n"
+        "3) \uadf8 \ubc88\uc5ed\ubb38\uc744 fragments\uc758 \uac1c\uc218\uc640 \uc21c\uc11c\uc5d0 \ub9de\uac8c \ub098\ub220, \uac01 fragment\uc758 id\uc5d0 \ub9e4\ud551\ud55c\ub2e4.\n"
+        "4) {target_lang}\uc758 \uc5b4\uc21c\uc774 \uc6d0\uc5b4\uc640 \ub2ec\ub77c \ubd84\ub7c9\uc774 \ub2e4\uc18c \ub2ec\ub77c\uc9c8 \uc218 \uc788\uc73c\ub098, **\uac01 fragment\uc758 \ubc88\uc5ed\uc740 \uc758\ubbf8 \uc788\ub294 \uc5b4\uc808/\uad6c\uc808**\uc774\uc5b4\uc57c \ud558\uba70 \ube48 \ubb38\uc790\uc5f4\uc774\uba74 \uc548 \ub41c\ub2e4.\n"
+        "5) \uc804\uccb4 fragment\uc758 \ubc88\uc5ed\uc744 \uc774\uc5b4\ubd99\uc774\uba74 \ub2e4\uc2dc \uc790\uc5f0\uc2a4\ub7ec\uc6b4 \uc644\uc804 \ubb38\uc7a5\uc774 \ub418\uc5b4\uc57c \ud55c\ub2e4.\n"
+        "6) **\uc808\ub300 \ubd88\uac00**: id \ucd94\uac00/\uc0ad\uc81c/\ubcc0\uacbd, fragment \uac1c\uc218 \ubcc0\uacbd, \uc21c\uc11c \uc7ac\ubc30\uce58, \uc874\uc7ac\ud558\uc9c0 \uc54a\ub294 \uc815\ubcf4 \ucd94\uac00.\n"
+        "7) \uae30\uc220 \uc6a9\uc5b4(Anzo, Ontology, Dataset, Knowledge Graph, RDF, SPARQL \ub4f1)\ub294 \uc601\ubb38 \uadf8\ub300\ub85c \uc720\uc9c0.\n"
+        "8) \ud68c\uc758/\uad50\uc721 \ud1a4\uc5d0 \ub9de\ub294 \uacbd\uc5b4 \ubc18\ub9d0(~\ud569\ub2c8\ub2e4/~\uc785\ub2c8\ub2e4)\uc73c\ub85c \ubc88\uc5ed\ud55c\ub2e4.\n"
+        "9) context_before / context_after\ub294 \ubb38\ub9e5 \ucc38\uace0\uc6a9\uc774\uba70 \uc808\ub300 \ubc88\uc5ed\ud558\uc9c0 \uc54a\ub294\ub2e4.\n"
+        "10) \uc774\ubaa8\ud2f0\ucf58/\ub530\uc634\ud45c/\ub300\ubb38\uc790 \ub4f1 \uc6d0\ubcf8 \uc11c\uc2dd\uc740 \uc758\ubbf8 \uc788\uc744 \ub54c\ub9cc \uc720\uc9c0.\n"
+        "11) \uac01 fragment\ub294 start/end/duration_ms \ud0c0\uc774\ubc0d \uc815\ubcf4\uac00 \ud3ec\ud568\ub418\uc5b4 \uc788\ub2e4. **\ubd84\ud560 \ubd84\ub7c9\uc744 duration_ms\uc5d0 \ub300\ub7b5 \ube44\ub840\ud574 \ub9de\ucdb0**, \uc790\ub9c9\uc774 \ud654\uba74\uc5d0 \ub5a8 \uc2dc\uac04 \ub3d9\uc548 \ud3b8\uc548\ud558\uac8c \uc77d\ud790 \uc218 \uc788\ub3c4\ub85c\ud55c\ub2e4 (\ub108\ubb34 \ud55c \uc870\uac01\uc5d0 \uae00\uc790\uac00 \ubab0\ub9ac\uba74 \uc548 \ub428).\n"
+        "12) \ub2e8, \ud55c\uad6d\uc5b4 \uc5b4\uc21c\uc0c1 \uc640\uc804\ud788 \ube44\ub840 \uc870\uc808\uc774 \uc5b4\ub824\uc6b8 \ub54c\ub294 \uc758\ubbf8 \uacb0\uc18d\ub825\uc744 \uc6b0\uc120\ud55c\ub2e4. \ud0c0\uc774\ubc0d\uc740 \ucc38\uace0\uc77c \ubfd0 \uc808\ub300 \uba54\ud2b8\ub9ad\uc774 \uc544\ub2c8\ub2e4.\n"
+        "13) \ucd9c\ub825\uc740 \ubc18\ub4dc\uc2dc {items:[{id, text}]} JSON \uc2a4\ud0a4\ub9c8\ub97c \ub530\ub974\uba70, items\uc5d0\ub294 \uc785\ub825\ub41c \ubaa8\ub4e0 fragment\uc758 id\uac00 \ub3d9\uc77c\ud55c \uc21c\uc11c\ub85c \ub4e4\uc5b4\uc788\uc5b4\uc57c \ud55c\ub2e4."
+        + glossary_block
+    )
+
+
+def build_sentence_aware_payload(sentences: list[dict], context_before: list[dict], context_after: list[dict], target_lang: str) -> str:
+    """sentences: [{full_text, fragments:[{id,text}]}, ...]"""
+    payload = {
+        "target_language": target_lang,
+        "context_before": context_before,
+        "context_after": context_after,
+        "sentences": sentences,
+        "instruction": (
+            "\uac01 sentence\uc758 full_text\ub97c " + target_lang + "\ub85c \uc758\ubbf8 \uae30\ubc18 \ubc88\uc5ed\ud55c \ub2e4\uc74c, fragments \uac1c\uc218\uc640 id \uc21c\uc11c\uc5d0 \ub9de\uac8c \ub098\ub220 items \ubc30\uc5f4\uc5d0 \ub2f4\uc544 \ubc18\ud658\ud558\ub77c. "
+            "\ubaa8\ub4e0 sentence\uc758 \ubaa8\ub4e0 fragment id\uac00 items\uc5d0 \uc815\ud655\ud788 \ud55c \ubc88\uc529 \ub4f1\uc7a5\ud574\uc57c \ud55c\ub2e4."
+        ),
+    }
+    return json.dumps(payload, ensure_ascii=False)

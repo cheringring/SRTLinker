@@ -1,0 +1,27 @@
+[11:13:01] SRTLinker 준비 완료.
+[11:13:06] 파일을 먼저 추가하세요.
+[11:13:08] 파일을 먼저 추가하세요.
+[11:13:20] [1/1] Accenture Anzo Training Workshop-20240709_090646-Meeting Recording.mp4 처리 시작
+[11:13:20]   ✗ 실패: Accenture Anzo Training Workshop-20240709_090646-Meeting Recording.mp4: NameError: name '_next_available_path' is not defined
+[11:13:20] Traceback (most recent call last):
+  File "C:\Users\gksmf\SRTLinker\gui.py", line 243, in _run_worker
+    out = process_file(src, cfg, progress=prog)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gksmf\SRTLinker\pipeline.py", line 113, in process_file
+    out_path = _next_available_path(cfg.output_dir / f"{src.stem}{cfg.suffix}.srt")
+               ^^^^^^^^^^^^^^^^^^^^
+NameError: name '_next_available_path' is not defined
+
+[11:13:21] ⚠ 1개 파일 실패. 상세는 로그 파일 참고: logs\srtlinker_2026-04-27_11-13-01.log
+[11:13:23] [1/1] Accenture Anzo Training Workshop-20240709_090646-Meeting Recording.mp4 처리 시작
+[11:13:23]   ✗ 실패: Accenture Anzo Training Workshop-20240709_090646-Meeting Recording.mp4: NameError: name '_next_available_path' is not defined
+[11:13:23] Traceback (most recent call last):
+  File "C:\Users\gksmf\SRTLinker\gui.py", line 243, in _run_worker
+    out = process_file(src, cfg, progress=prog)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\gksmf\SRTLinker\pipeline.py", line 113, in process_file
+    out_path = _next_available_path(cfg.output_dir / f"{src.stem}{cfg.suffix}.srt")
+               ^^^^^^^^^^^^^^^^^^^^
+NameError: name '_next_available_path' is not defined
+
+[11:13:23] ⚠ 1개 파일 실패. 상세는 로그 파일 참고: logs\srtlinker_2026-04-27_11-13-01.log
