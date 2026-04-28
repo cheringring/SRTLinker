@@ -1,50 +1,49 @@
 @echo off
-chcp 65001 >nul 2>&1
 cd /d "%~dp0"
 
 echo ============================================
-echo   SRTLinker 설치 스크립트
+echo   SRTLinker Install
 echo ============================================
 echo.
 
-:: Python 확인
+:: Check Python
 python --version >nul 2>&1
 if errorlevel 1 (
-    echo [오류] Python이 설치되어 있지 않습니다.
-    echo https://www.python.org/downloads/ 에서 Python 3.10 이상을 설치하세요.
-    echo 설치 시 "Add Python to PATH" 를 반드시 체크하세요.
+    echo [ERROR] Python is not installed.
+    echo Download Python 3.10+ from https://www.python.org/downloads/
+    echo Make sure to check "Add Python to PATH" during installation.
     echo.
     pause
     exit /b 1
 )
 
-echo [1/3] 가상환경 생성 중...
+echo [1/3] Creating virtual environment...
 if not exist .venv (
     python -m venv .venv
-    echo       완료!
+    echo       Done.
 ) else (
-    echo       이미 존재합니다. 건너뜁니다.
+    echo       Already exists. Skipping.
 )
 echo.
 
-echo [2/3] 패키지 설치 중... (1~2분 소요)
+echo [2/3] Installing packages... (1-2 min)
 .venv\Scripts\pip.exe install -r requirements.txt -q
-echo       완료!
+echo       Done.
 echo.
 
-echo [3/3] API 키 설정 확인...
+echo [3/3] Checking .env file...
 if not exist .env (
-    echo OPENAI_API_KEY=여기에-API-키-입력 > .env
-    echo       .env 파일을 생성했습니다.
-    echo       .env 파일을 열어 OPENAI_API_KEY 값을 입력하세요.
+    echo OPENAI_API_KEY=your-api-key-here> .env
+    echo       Created .env file.
+    echo       Open .env and enter your OpenAI API key.
 ) else (
-    echo       .env 파일이 이미 존재합니다.
+    echo       .env already exists.
 )
 echo.
 
 echo ============================================
-echo   설치 완료!
-echo   SRTLinker.bat 을 더블클릭하여 실행하세요.
+echo   Install complete!
+echo   Double-click SRTLinker.bat to run.
 echo ============================================
 echo.
 pause
