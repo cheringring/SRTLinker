@@ -10,6 +10,7 @@ output/
 logs/
 build/
 dist/
+installer_build/
 *.spec
 *.srt
 !samples/*.srt
