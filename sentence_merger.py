@@ -26,45 +26,112 @@ def _normalize(text: str) -> str:
     return re.sub(r"\s+", " ", text.replace("\n", " ")).strip()
 
 
-def group_sentences(subs: pysrt.SubRipFile, max_blocks: int = 8) -> list[SentenceGroup]:
-    """\uc5f0\uc18d \ube14\ub85d\uc744 \ubb38\uc7a5 \ub2e8\uc704\ub85c \ubcd1\ud569.
+def group_sentences(subs: pysrt.SubRipFile, max_blocks: int = 8, gap_ms: int = 1000) -> list[SentenceGroup]:
+    """연속 블록을 문장 단위로 병합.
 
-    - \ubd80\ud638\ub85c \ubb38\uc7a5 \ub05d\uc774 \ub098\ud0c0\ub098\uba74 \uadf8\ub8f9 \uc885\ub8cc.
-    - \ubd80\ud638\uac00 \uc5c6\uc5b4\ub3c4 max_blocks \uac1c \uc30c\uc774\uba74 \uac15\uc81c \uc885\ub8cc (\ubb34\ud55c \ub204\uc801 \ubc29\uc9c0).
+    - 부호로 문장 끝이 나타나면 그룹 종료.
+    - max_blocks 도달 시: 마지막으로 문장이 끝난 지점까지만 그룹에 넣고,
+      나머지는 다음 그룹으로 넘김. 문장 끝이 하나도 없으면 전체를 하나로 유지.
+    - 화자 전환 감지: 시간 갭, 질문→응답, 응답 시작 패턴.
     """
+    _RESPONSE_START = re.compile(
+        r'^(Yeah|Yes|No|Nope|Sure|Okay|OK|Oh|Ah|So|Well|Right|Absolutely|Exactly'
+        r'|Thanks|Thank you|Hi|Hey|I see|I think|I would|I have|I was|I am'
+        r'|That\'s|It\'s|We|And so|But)\b',
+        re.I,
+    )
+
     groups: list[SentenceGroup] = []
     cur_idx: list[int] = []
     cur_texts: list[str] = []
+    prev_ended_sentence = False
+    prev_ended_question = False
+    prev_end_ms = 0
 
-    def flush():
+    def flush_range(end_pos: int = -1):
+        """cur_idx[:end_pos] 까지를 그룹으로 만들고, 나머지는 cur에 남김."""
+        nonlocal prev_ended_sentence, prev_ended_question, prev_end_ms
         if not cur_idx:
             return
-        joined = _normalize(" ".join(cur_texts))
-        starts_ms = [int(subs[i - 1].start.ordinal) for i in cur_idx]
-        ends_ms = [int(subs[i - 1].end.ordinal) for i in cur_idx]
-        groups.append(SentenceGroup(
-            indices=list(cur_idx),
-            fragments=list(cur_texts),
-            starts_ms=starts_ms,
-            ends_ms=ends_ms,
-            start=subs[cur_idx[0] - 1].start,
-            end=subs[cur_idx[-1] - 1].end,
-            text=joined,
-        ))
+        if end_pos < 0 or end_pos >= len(cur_idx):
+            end_pos = len(cur_idx)
+
+        flush_idx = cur_idx[:end_pos]
+        flush_texts = cur_texts[:end_pos]
+        remain_idx = cur_idx[end_pos:]
+        remain_texts = cur_texts[end_pos:]
+
+        if flush_idx:
+            joined = _normalize(" ".join(flush_texts))
+            starts_ms = [int(subs[i - 1].start.ordinal) for i in flush_idx]
+            ends_ms = [int(subs[i - 1].end.ordinal) for i in flush_idx]
+            groups.append(SentenceGroup(
+                indices=list(flush_idx),
+                fragments=list(flush_texts),
+                starts_ms=starts_ms,
+                ends_ms=ends_ms,
+                start=subs[flush_idx[0] - 1].start,
+                end=subs[flush_idx[-1] - 1].end,
+                text=joined,
+            ))
+
         cur_idx.clear()
         cur_texts.clear()
+        cur_idx.extend(remain_idx)
+        cur_texts.extend(remain_texts)
+
+    def flush_all():
+        flush_range(len(cur_idx))
 
     for i, sub in enumerate(subs, 1):
         text = _normalize(sub.text)
         if not text:
             continue
+
+        cur_start_ms = int(sub.start.ordinal)
+
+        # ── 화자 전환 감지 ──
+        if cur_idx:
+            time_gap = cur_start_ms - prev_end_ms
+            is_response_start = bool(_RESPONSE_START.match(text))
+
+            should_break = False
+            if prev_ended_question:
+                should_break = True
+            elif time_gap >= gap_ms and prev_ended_sentence:
+                should_break = True
+            elif prev_ended_sentence and is_response_start:
+                should_break = True
+
+            if should_break:
+                flush_all()
+
         cur_idx.append(i)
         cur_texts.append(text)
-        ends = bool(_SENT_END.search(text))
-        if ends or len(cur_idx) >= max_blocks:
-            flush()
 
-    flush()
+        ends = bool(_SENT_END.search(text))
+        prev_ended_sentence = ends
+        prev_ended_question = text.rstrip().endswith('?')
+        prev_end_ms = int(sub.end.ordinal)
+
+        if ends:
+            flush_all()
+        elif len(cur_idx) >= max_blocks:
+            # max_blocks 도달: 마지막으로 문장이 끝난 지점까지만 flush
+            last_end_pos = -1
+            for j in range(len(cur_texts) - 1, -1, -1):
+                if _SENT_END.search(cur_texts[j]):
+                    last_end_pos = j + 1  # 그 블록까지 포함
+                    break
+
+            if last_end_pos > 0:
+                # 문장 끝 지점까지만 그룹, 나머지는 다음 그룹으로
+                flush_range(last_end_pos)
+            else:
+                # 문장 끝이 하나도 없으면 전체를 하나로 (어쩔 수 없음)
+                flush_all()
+
+    flush_all()
     return groups
 
 

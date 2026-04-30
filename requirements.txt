@@ -3,6 +3,5 @@ pysrt>=1.1.2
 python-dotenv>=1.0.1
 tenacity>=9.0.0
 tqdm>=4.66.0
-tkinterdnd2>=0.4.2
 imageio-ffmpeg>=0.5.1
-PySide6>=6.7.0
+flask>=3.0.0

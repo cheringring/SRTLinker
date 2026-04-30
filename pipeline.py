@@ -1,15 +1,15 @@
 """\uc804\uccb4 \ud30c\uc774\ud504\ub77c\uc778: \ube44\ub514\uc624/\uc624\ub514\uc624/SRT \u2192 \ubc88\uc5ed\ub41c SRT (1:1 \uad6c\uc870 \uc720\uc9c0)."""
 from __future__ import annotations
 import pysrt
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
 from srt_chunker import load_srt, chunk_blocks, write_srt, Block
 from translator import Translator, TranslatorConfig
-from transcriber import video_to_srt, VIDEO_EXTS, AUDIO_EXTS
-from sentence_merger import group_sentences, SentenceGroup, build_split_srt
-from verify import verify_srt_pair, format_issues
+from transcriber import video_to_srt, VIDEO_EXTS, AUDIO_EXTS, _split_long_blocks, _clean_whisper_artifacts
+from sentence_merger import group_sentences, build_merged_srt
 
 
 ProgressCb = Callable[[str, float], None]  # (message, progress 0~1)
@@ -21,20 +21,12 @@ class PipelineConfig:
     model_transcribe: str = "whisper-1"
     target_lang: str = "Korean"
     source_lang: str | None = None
-    chunk_size: int = 20
+    chunk_size: int = 30
     context_size: int = 5
+    parallel_workers: int = 1
     glossary_path: Path | None = None
     output_dir: Path = Path("output")
     suffix: str = ".ko"
-    sentence_aware: bool = True   # \ubb38\uc7a5\uc778\uc2dd \ubd84\ud560 \ubc88\uc5ed (1:1 \uad6c\uc870 \uc720\uc9c0 + \uc790\uc5f0\uc2a4\ub7ec\uc6b4 \ubc88\uc5ed)
-    max_merge_blocks: int = 8     # \ubd80\ud638 \uc5c6\uc774 \ub204\uc801\ub420 \uc218 \uc788\ub294 \ucd5c\ub300 \ube14\ub85d (\ubb38\uc7a5 \uadf8\ub8f9 \uc548\uc804\uc7a5\uce58)
-    sentence_chunk_size: int = 8  # \ud55c \uccad\ud06c\uc5d0 \ubaa8\uc744 \ubb38\uc7a5 \uadf8\ub8f9 \uc218
-    sentence_context_size: int = 2  # \uc55e\ub4a4 \ubb38\ub9e5 \uadf8\ub8f9 \uc218
-
-    # \ud558\uc704 \ud638\ud658\uc131
-    @property
-    def merge_sentences(self) -> bool:
-        return self.sentence_aware
 
 
 def _next_available_path(base: Path) -> Path:
@@ -51,17 +43,20 @@ def _next_available_path(base: Path) -> Path:
 
 
 def _transcribe_if_needed(src: Path, cfg: PipelineConfig, progress: ProgressCb | None) -> Path:
+    """Whisper 전사 결과(raw)를 output/en/raw/ 에 저장. 이미 있으면 재사용."""
     ext = src.suffix.lower()
     if ext == ".srt":
         return src
+    raw_dir = cfg.output_dir / "en" / "raw"
+    raw_dir.mkdir(parents=True, exist_ok=True)
     if ext in VIDEO_EXTS or ext in AUDIO_EXTS:
-        srt_path = cfg.output_dir / f"{src.stem}.srt"
+        srt_path = raw_dir / f"{src.stem}.raw.srt"
         if srt_path.exists():
             if progress:
-                progress(f"\uae30\uc874 SRT \uc7ac\uc0ac\uc6a9: {srt_path.name}", 0.4)
+                progress(f"기존 전사 재사용: {srt_path.name}", 0.4)
             return srt_path
         if progress:
-            progress("\ubbf8\ub514\uc5b4 \u2192 SRT \ubcc0\ud658 \uc2dc\uc791", 0.05)
+            progress("미디어 → SRT 변환 시작", 0.05)
         video_to_srt(
             src, srt_path,
             model=cfg.model_transcribe,
@@ -69,68 +64,74 @@ def _transcribe_if_needed(src: Path, cfg: PipelineConfig, progress: ProgressCb |
             progress_cb=lambda m: progress(m, 0.15) if progress else None,
         )
         if progress:
-            progress("SRT \uc0dd\uc131 \uc644\ub8cc", 0.4)
+            progress("SRT 생성 완료", 0.4)
         return srt_path
-    raise ValueError(f"\uc9c0\uc6d0\ud558\uc9c0 \uc54a\ub294 \ud30c\uc77c \ud615\uc2dd: {ext}")
+    raise ValueError(f"지원하지 않는 파일 형식: {ext}")
 
 
 def _translate_blocks(translator: Translator, blocks: list[Block], cfg: PipelineConfig, progress: ProgressCb | None, base: float = 0.45) -> dict[int, str]:
     chunks = list(chunk_blocks(blocks, chunk_size=cfg.chunk_size, context_size=cfg.context_size))
     if progress:
-        progress(f"\ubc88\uc5ed \uc2dc\uc791 ({len(blocks)}\ube14\ub85d / {len(chunks)}\uccad\ud06c)", base)
+        progress(f"\ubc88\uc5ed \uc2dc\uc791 ({len(blocks)}\ube14\ub85d / {len(chunks)}\uccad\ud06c, {cfg.parallel_workers}\ubcd1\ub82c)", base)
     merged: dict[int, str] = {}
     total = max(1, len(chunks))
-    for idx, ch in enumerate(chunks, 1):
-        merged.update(translator.translate_chunk(ch))
-        if progress:
-            progress(f"\ubc88\uc5ed \uc9c4\ud589 {idx}/{total}", base + (1.0 - base - 0.05) * (idx / total))
+    done_count = 0
+
+    def do_chunk(idx_ch):
+        idx, ch = idx_ch
+        return idx, translator.translate_chunk(ch)
+
+    with ThreadPoolExecutor(max_workers=cfg.parallel_workers) as pool:
+        futures = {pool.submit(do_chunk, (i, ch)): i for i, ch in enumerate(chunks, 1)}
+        for future in as_completed(futures):
+            idx, result = future.result()
+            merged.update(result)
+            done_count += 1
+            if progress:
+                progress(f"\ubc88\uc5ed \uc9c4\ud589 {done_count}/{total}", base + (1.0 - base - 0.05) * (done_count / total))
     return merged
 
 
 def process_file(src: Path, cfg: PipelineConfig, progress: ProgressCb | None = None) -> Path:
     src = Path(src)
-    cfg.output_dir.mkdir(parents=True, exist_ok=True)
 
-    # 1) SRT \ud655\ubcf4 (\uc601\uc0c1\uc774\uba74 \uc804\uc0ac)
-    srt_path = _transcribe_if_needed(src, cfg, progress)
+    en_dir = cfg.output_dir / "en"
+    ko_dir = cfg.output_dir / "ko"
+    en_dir.mkdir(parents=True, exist_ok=True)
+    ko_dir.mkdir(parents=True, exist_ok=True)
 
+    # 1) 전사 원본(raw) 확보
+    raw_srt_path = _transcribe_if_needed(src, cfg, progress)
+
+    # 2) raw → 긴 블록 분할 + 필러 제거 + 화자 분리
+    raw_text = raw_srt_path.read_text(encoding="utf-8")
+    clean_text = _split_long_blocks(raw_text)
+    clean_text = _clean_whisper_artifacts(clean_text)
+    clean_text = _split_long_blocks(clean_text)  # clean에서 다시 길어진 블록 재분할
+
+    # 3) 문장 병합: 한 블록 = 한 문장으로 정리 (화자 전환 감지 포함)
+    clean_subs = pysrt.from_string(clean_text)
+    groups = group_sentences(clean_subs, max_blocks=8)
+    merged_en = build_merged_srt(groups, {i + 1: g.text for i, g in enumerate(groups)})
+
+    en_path = en_dir / f"{src.stem}.en.srt"
+    merged_en.save(str(en_path), encoding="utf-8")
+    if progress:
+        progress(f"영어 SRT: {len(clean_subs)}블록 → {len(merged_en)}문장", 0.43)
+
+    # 4) 정리된 영어 SRT를 1:1 번역 → ko/
     translator = Translator(TranslatorConfig(
         model=cfg.model_translate,
         target_lang=cfg.target_lang,
         glossary_path=cfg.glossary_path,
     ))
 
-    out_path = _next_available_path(cfg.output_dir / f"{src.stem}{cfg.suffix}.srt")
+    original, blocks = load_srt(en_path)
+    translations = _translate_blocks(translator, blocks, cfg, progress)
 
-    if cfg.sentence_aware:
-        # \ubb38\uc7a5 \ub2e8\uc704 \ubcd1\ud569 \ucd9c\ub825: \ud55c \ubb38\uc7a5 = \ud55c \uc790\uba89 \ube14\ub85d (\ud0c0\uc784\uc2a4\ud0ec\ud504\ub3c4 \ubcd1\ud569)
-        original = pysrt.open(str(srt_path), encoding="utf-8")
-        groups = group_sentences(original, max_blocks=cfg.max_merge_blocks)
-        if progress:
-            progress(f"\ubb38\uc7a5 \uadf8\ub8f9\ud551: {len(original)}\ube14\ub85d \u2192 {len(groups)}\ubb38\uc7a5", 0.42)
-
-        # \uac01 \ubb38\uc7a5\uc744 \ud558\ub098\uc758 Block\uc73c\ub85c \ubc88\uc5ed (id = \ubb38\uc7a5 \uc21c\uc11c)
-        sent_blocks = [Block(id=i + 1, text=g.text) for i, g in enumerate(groups)]
-        translations = _translate_blocks(translator, sent_blocks, cfg, progress)
-
-        merged_srt = build_split_srt(original, groups, translations)
-        out_path.parent.mkdir(parents=True, exist_ok=True)
-        merged_srt.save(str(out_path), encoding="utf-8")
-    else:
-        # \uc21c\uc218 1:1 \ube14\ub85d \ubcc4 \ubc88\uc5ed (\uc774\uc804 \uae30\ubcf8 \ub3d9\uc791)
-        original, blocks = load_srt(srt_path)
-        translations = _translate_blocks(translator, blocks, cfg, progress)
-        write_srt(original, translations, out_path)
-
-    # \uc815\ud569\uc131 \uac80\uc99d
-    try:
-        issues = verify_srt_pair(srt_path, out_path)
-        if issues and progress:
-            progress(f"\u26a0 \uc815\ud569\uc131 \uacbd\uace0: {format_issues(issues)}", 0.98)
-    except Exception as e:
-        if progress:
-            progress(f"\uac80\uc99d \uc2e4\ud328(\ubb34\uc2dc): {e}", 0.98)
+    out_path = _next_available_path(ko_dir / f"{src.stem}{cfg.suffix}.srt")
+    write_srt(original, translations, out_path)
 
     if progress:
-        progress(f"\uc644\ub8cc: {out_path.name}", 1.0)
+        progress(f"완료: ko/{out_path.name}", 1.0)
     return out_path

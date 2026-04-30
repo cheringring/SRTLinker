@@ -26,7 +26,7 @@ PYTHON_ZIP_URL = f"https://www.python.org/ftp/python/{PYTHON_VERSION}/python-{PY
 GET_PIP_URL = "https://bootstrap.pypa.io/get-pip.py"
 
 PROJECT_FILES = [
-    "gui_qt.py",
+    "gui_web.py",
     "main.py",
     "pipeline.py",
     "transcriber.py",
@@ -37,7 +37,6 @@ PROJECT_FILES = [
     "prompts.py",
     "glossary.json",
     "requirements.txt",
-    "README.md",
 ]
 
 
@@ -59,14 +58,16 @@ def step1_download_python():
         zf.extractall(PYTHON_DIR)
     zip_path.unlink()
 
-    # Enable pip: uncomment "import site" in python312._pth
+    # Enable pip + add app root to path in python312._pth
     pth_files = list(PYTHON_DIR.glob("python*._pth"))
     for pth in pth_files:
         content = pth.read_text()
         content = content.replace("#import site", "import site")
-        # Also add Lib\site-packages path
         if "Lib\\site-packages" not in content:
             content += "\nLib\\site-packages\n"
+        # Add parent dir (..) so project .py files are importable from python/ subfolder
+        if ".." not in content:
+            content += "\n..\n"
         pth.write_text(content)
     print("  Done.")
 
@@ -125,7 +126,9 @@ def step4_copy_project():
     launcher.write_text(
         '@echo off\r\n'
         'cd /d "%~dp0"\r\n'
-        'python\\python.exe gui_qt.py\r\n',
+        'echo SRTLinker starting... Browser will open automatically.\r\n'
+        'python\\python.exe gui_web.py\r\n'
+        'if errorlevel 1 pause\r\n',
         encoding='ascii'
     )
     print("  Done.")
@@ -158,7 +161,7 @@ Name: "{group}\SRTLinker"; Filename: "{app}\SRTLinker.bat"; IconFilename: "{app}
 Name: "{group}\Edit API Key"; Filename: "notepad.exe"; Parameters: "{app}\.env"
 
 [Run]
-Filename: "notepad.exe"; Parameters: "{app}\.env"; Description: "Open .env to enter your OpenAI API key"; Flags: postinstall shellexec skipifsilent
+Filename: "{app}\SRTLinker.bat"; Description: "Launch SRTLinker"; Flags: postinstall nowait skipifsilent
 
 [Code]
 procedure CurStepChanged(CurStep: TSetupStep);

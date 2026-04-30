@@ -82,8 +82,8 @@ class Translator:
     # ---------- \ub0b4\ubd80: \ub2e8\uc77c API \ud638\ucd9c (\uc77c\uc2dc \uc7a5\uc560\uc5d0\ub9cc \uc7ac\uc2dc\ub3c4) ----------
     @retry(
         reraise=True,
-        stop=stop_after_attempt(3),
-        wait=wait_exponential(multiplier=1, min=1, max=10),
+        stop=stop_after_attempt(2),
+        wait=wait_exponential(multiplier=1, min=1, max=5),
         retry=retry_if_exception_type(Exception),
     )
     def _call_api(self, translate_blocks: list[Block], context_before: list[Block], context_after: list[Block]) -> dict[int, str]:
@@ -108,7 +108,7 @@ class Translator:
         return {int(it["id"]): _clean_translation(it["text"]) for it in items if "id" in it and "text" in it}
 
     # ---------- \uacf5\uac1c: \uacac\uace0\ud55c \ucd9c\ub825 \ubcf4\uc7a5 ----------
-    def translate_chunk(self, chunk: Chunk, max_retry_missing: int = 2) -> dict[int, str]:
+    def translate_chunk(self, chunk: Chunk, max_retry_missing: int = 1) -> dict[int, str]:
         """\uccad\ud06c \ud558\ub098 \ubc88\uc5ed. id \ub204\ub77d\uc774 \uc788\uc73c\uba74 \ub204\ub77d\ubd84\ub9cc \uc7ac\uc694\uccad, \ucd5c\uc885\uc801\uc73c\ub85c\ub3c4 \uc548 \ub418\uba74 \uc6d0\ubcf8 \uc720\uc9c0."""
         expected_ids = [b.id for b in chunk.translate]
         id_to_block = {b.id: b for b in chunk.translate}
@@ -123,10 +123,8 @@ class Translator:
         missing = [i for i in expected_ids if i not in got]
 
         # 2) \ub204\ub77d\ub41c id\ub9cc \ub2e4\uc2dc \uc694\uccad (\uc791\uac8c \ucabc\uac1c\uc11c)
-        attempt = 0
-        while missing and attempt < max_retry_missing:
-            attempt += 1
-            log.info("Retrying missing ids %s (attempt %d)", missing, attempt)
+        if missing:
+            log.info("Retrying missing ids %s", missing)
             sub_blocks = [id_to_block[i] for i in missing]
             try:
                 more = self._call_api(sub_blocks, chunk.context_before, chunk.context_after)
@@ -134,18 +132,8 @@ class Translator:
                 log.warning("Retry call failed: %s", e)
                 more = {}
             got.update({i: t for i, t in more.items() if i in id_to_block})
-            missing = [i for i in expected_ids if i not in got]
 
         # 3) \uac01\uac1c \ub2e8\uc704 \ucd5c\uc885 \uc2dc\ub3c4
-        for i in list(missing):
-            try:
-                solo = self._call_api([id_to_block[i]], chunk.context_before, chunk.context_after)
-                if i in solo:
-                    got[i] = solo[i]
-            except Exception as e:
-                log.warning("Solo retry failed for id %d: %s", i, e)
-
-        # 4) \uadf8\ub798\ub3c4 \ube60\uc9c4 \uac8c \uc788\uc73c\uba74 \uc6d0\ubcf8 \ud14d\uc2a4\ud2b8\ub85c \ud3f4\ubc31
         result: dict[int, str] = {}
         fallback_ids: list[int] = []
         for i in expected_ids:
