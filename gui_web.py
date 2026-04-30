@@ -104,6 +104,7 @@ HTML = r"""
 
   <div class="card">
     <div class="section-title">설정</div>
+    <div><label>OpenAI API Key</label><input type="password" id="apiKey" placeholder="sk-proj-..." value=""></div>
     <div class="grid2">
       <div><label>번역 언어</label><input type="text" id="lang" value="Korean"></div>
       <div><label>원본 언어 (선택)</label><input type="text" id="srcLang" value="en"></div>
@@ -234,6 +235,7 @@ async function startTranslation() {
         src_lang: document.getElementById('srcLang').value,
         model: document.getElementById('model').value,
         stt_model: document.getElementById('sttModel').value,
+        api_key: document.getElementById('apiKey').value,
       })
     });
     const data = await res.json();
@@ -335,6 +337,13 @@ def api_translate():
     src_lang = data.get('src_lang', '') or None
     model = data.get('model', 'gpt-4o')
     stt_model = data.get('stt_model', 'whisper-1')
+    api_key = data.get('api_key', '') or os.environ.get('OPENAI_API_KEY', '')
+
+    if not api_key:
+        return jsonify(error="OpenAI API Key가 필요합니다. 설정에서 입력해주세요."), 400
+
+    # 런타임에 API 키 설정
+    os.environ['OPENAI_API_KEY'] = api_key
 
     output_dir = Path("output")
     output_dir.mkdir(exist_ok=True)
