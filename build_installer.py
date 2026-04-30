@@ -158,7 +158,6 @@ Source: "DIST_PATH\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs cre
 [Icons]
 Name: "{autodesktop}\SRTLinker"; Filename: "{app}\SRTLinker.bat"; IconFilename: "{app}\python\python.exe"; Comment: "SRTLinker - Auto Subtitle Translator"
 Name: "{group}\SRTLinker"; Filename: "{app}\SRTLinker.bat"; IconFilename: "{app}\python\python.exe"
-Name: "{group}\Edit API Key"; Filename: "notepad.exe"; Parameters: "{app}\.env"
 
 [Run]
 Filename: "{app}\SRTLinker.bat"; Description: "Launch SRTLinker"; Flags: postinstall nowait skipifsilent
