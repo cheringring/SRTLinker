@@ -98,9 +98,12 @@ def group_sentences(subs: pysrt.SubRipFile, max_blocks: int = 8, gap_ms: int = 1
             should_break = False
             if prev_ended_question:
                 should_break = True
-            elif time_gap >= gap_ms and prev_ended_sentence:
+            # 이전 블록이 완결된 문장이면 새 그룹 시작 (최우선)
+            elif prev_ended_sentence:
                 should_break = True
-            elif prev_ended_sentence and is_response_start:
+            elif time_gap >= gap_ms:
+                should_break = True
+            elif is_response_start:
                 should_break = True
 
             if should_break:
@@ -114,8 +117,10 @@ def group_sentences(subs: pysrt.SubRipFile, max_blocks: int = 8, gap_ms: int = 1
         prev_ended_question = text.rstrip().endswith('?')
         prev_end_ms = int(sub.end.ordinal)
 
+        # 문장이 끝나면 그룹 종료 (다음 루프에서 flush됨)
         if ends:
-            flush_all()
+            # flush_all() 제거 - 다음 루프에서 처리
+            pass
         elif len(cur_idx) >= max_blocks:
             # max_blocks 도달: 마지막으로 문장이 끝난 지점까지만 flush
             last_end_pos = -1

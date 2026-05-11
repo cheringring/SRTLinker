@@ -100,26 +100,28 @@ def process_file(src: Path, cfg: PipelineConfig, progress: ProgressCb | None = N
     en_dir.mkdir(parents=True, exist_ok=True)
     ko_dir.mkdir(parents=True, exist_ok=True)
 
-    # 1) 전사 원본(raw) 확보
-    raw_srt_path = _transcribe_if_needed(src, cfg, progress)
-
-    # 2) raw → 긴 블록 분할 + 필러 제거 + 화자 분리
-    raw_text = raw_srt_path.read_text(encoding="utf-8")
-    clean_text = _split_long_blocks(raw_text)
-    clean_text = _clean_whisper_artifacts(clean_text)
-    clean_text = _split_long_blocks(clean_text)  # clean에서 다시 길어진 블록 재분할
-
-    # 3) 문장 병합: 한 블록 = 한 문장으로 정리 (화자 전환 감지 포함)
-    clean_subs = pysrt.from_string(clean_text)
-    groups = group_sentences(clean_subs, max_blocks=8)
-    merged_en = build_merged_srt(groups, {i + 1: g.text for i, g in enumerate(groups)})
-
     en_path = en_dir / f"{src.stem}.en.srt"
-    merged_en.save(str(en_path), encoding="utf-8")
-    if progress:
-        progress(f"영어 SRT: {len(clean_subs)}블록 → {len(merged_en)}문장", 0.43)
 
-    # 4) 정리된 영어 SRT를 1:1 번역 → ko/
+    # 1) 기존 en.srt가 있으면 전사+후처리 건너뜀 (수동 편집본 보존)
+    if en_path.exists() and en_path.stat().st_size > 0:
+        if progress:
+            progress(f"기존 영어 SRT 재사용: {en_path.name}", 0.43)
+    else:
+        # 전사 원본(raw) 확보
+        raw_srt_path = _transcribe_if_needed(src, cfg, progress)
+
+        # raw → 긴 블록 분할 + 필러 제거 + 화자 분리
+        raw_text = raw_srt_path.read_text(encoding="utf-8")
+        clean_text = _split_long_blocks(raw_text)
+        clean_text = _clean_whisper_artifacts(clean_text)
+
+        # 정리된 영어 SRT 저장
+        clean_subs = pysrt.from_string(clean_text)
+        clean_subs.save(str(en_path), encoding="utf-8")
+        if progress:
+            progress(f"영어 SRT: {len(clean_subs)}블록 정리 완료", 0.43)
+
+    # 2) 정리된 영어 SRT를 1:1 번역 → ko/
     translator = Translator(TranslatorConfig(
         model=cfg.model_translate,
         target_lang=cfg.target_lang,

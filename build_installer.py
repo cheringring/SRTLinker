@@ -206,6 +206,82 @@ def main():
     step4_copy_project()
     step5_create_iss()
 
+    # 6) Inno Setup 컴파일
+    iscc_paths = [
+        Path(r"C:\Users\gksmf\AppData\Local\Programs\Inno Setup 6\ISCC.exe"),
+        Path(r"C:\Program Files\Inno Setup 6\ISCC.exe"),
+        Path(r"C:\Program Files (x86)\Inno Setup 6\ISCC.exe"),
+    ]
+    iscc = next((p for p in iscc_paths if p.exists()), None)
+    iss_path = BUILD_DIR / "SRTLinker.iss"
+    exe_path = BUILD_DIR / "SRTLinker_Setup.exe"
+
+    if iscc:
+        print()
+        print("[6/7] Compiling installer...")
+        subprocess.run([str(iscc), str(iss_path)], check=True)
+        print("  Done.")
+    else:
+        print()
+        print("[6/7] Inno Setup not found - skipping.")
+
+    # 7) 네트워크 폴더에 자동 복사
+    DEPLOY_DIR = Path(r"\\intranet.spss.co.kr\개인폴더\권체은\SRTLinker")
+    if exe_path.exists():
+        try:
+            DEPLOY_DIR.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(exe_path, DEPLOY_DIR / "SRTLinker_Setup.exe")
+            print()
+            print(f"[7/7] Deployed: {DEPLOY_DIR}\\SRTLinker_Setup.exe")
+        except Exception as e:
+            print(f"[7/7] Deploy failed: {e}")
+    print()
+    print("=" * 50)
+    print("  Build complete!")
+    print("=" * 50)
+
+    # 6) Inno Setup 컴파일 (설치되어 있으면 자동 실행)
+    iscc_paths = [
+        Path(r"C:\Users\gksmf\AppData\Local\Programs\Inno Setup 6\ISCC.exe"),
+        Path(r"C:\Program Files\Inno Setup 6\ISCC.exe"),
+        Path(r"C:\Program Files (x86)\Inno Setup 6\ISCC.exe"),
+    ]
+    iscc = next((p for p in iscc_paths if p.exists()), None)
+    iss_path = BUILD_DIR / "SRTLinker.iss"
+    exe_path = BUILD_DIR / "SRTLinker_Setup.exe"
+
+    if iscc:
+        print()
+        print("[6/7] Compiling installer with Inno Setup...")
+        subprocess.run([str(iscc), str(iss_path)], check=True)
+        print("  Done.")
+    else:
+        print()
+        print("[6/7] Inno Setup not found - skipping exe compile.")
+        print(f'  Manually run: iscc "{iss_path}"')
+
+    # 7) 네트워크 폴더에 자동 복사
+    DEPLOY_DIR = Path(r"\\intranet.spss.co.kr\개인폴더\권체은\SRTLinker")
+    if exe_path.exists():
+        try:
+            DEPLOY_DIR.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(exe_path, DEPLOY_DIR / "SRTLinker_Setup.exe")
+            print()
+            print(f"[7/7] Deployed to: {DEPLOY_DIR}\\SRTLinker_Setup.exe")
+        except Exception as e:
+            print()
+            print(f"[7/7] Deploy failed (network unavailable?): {e}")
+            print(f"  Manual copy: {exe_path}")
+    else:
+        print()
+        print("[7/7] No exe to deploy - compile first.")
+
+    print()
+    print("=" * 50)
+    print("  Build complete!")
+    print("=" * 50)
+
+
 
 if __name__ == "__main__":
     main()

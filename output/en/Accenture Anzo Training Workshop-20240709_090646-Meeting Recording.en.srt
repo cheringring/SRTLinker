@@ -1,0 +1,5704 @@
+1
+00:00:00,000 --> 00:00:08,360
+We did recently switch our version of Teams, so I just need to find how it works now.
+
+2
+00:00:08,360 --> 00:00:11,960
+This is online and not yours, so you don't have to worry.
+
+3
+00:00:11,960 --> 00:00:15,720
+But for now, let me share my screen.
+
+4
+00:00:23,320 --> 00:00:26,920
+Can you all see?
+
+5
+00:00:27,920 --> 00:00:29,920
+Yeah, I can see that.
+
+6
+00:00:29,920 --> 00:00:31,920
+Awesome.
+
+7
+00:00:31,920 --> 00:00:46,919
+So, before we jump in today, I want to take a minute to basically address a few questions that came up yesterday that we didn't get into or didn't have time to talk about.
+
+8
+00:00:46,919 --> 00:00:48,919
+I gathered a few resources.
+
+9
+00:00:48,919 --> 00:00:50,919
+I put all of these in the chat.
+
+10
+00:00:50,919 --> 00:00:56,919
+The first is what I already put in the chat, which is this is our service desk.
+
+11
+00:00:56,919 --> 00:01:25,919
+In order to basically create any sort of ticket, you can submit your tickets as getting IT help for now, since obviously we aren't actually doing development yet, but we want to make sure that any questions or issues that you're having, whether it's with how the trainings are going or with content that you feel is being missed, feel free to use this top box in order to create a ticket to get that concern heard.
+
+12
+00:01:25,919 --> 00:01:40,919
+I believe that you will have to create an account using your email in order to access this page, but to get a link it should walk you through the account creation process.
+
+13
+00:01:40,919 --> 00:01:47,919
+Thank you for that note in the chat.
+
+14
+00:01:47,919 --> 00:01:49,919
+I will look into that.
+
+15
+00:01:49,919 --> 00:01:58,919
+I thought we resolved that yesterday, but I will make sure that's resolved today before I end my day.
+
+16
+00:01:58,919 --> 00:02:10,919
+For anyone else who's not seeing the chat, some people are getting the no access issue, which I thought was resolved, but we will try to get that fixed for you today so you can create tickets.
+
+17
+00:02:10,919 --> 00:02:12,919
+Sorry about that.
+
+18
+00:02:12,919 --> 00:02:19,919
+Just to continue with the different resources I've gathered here, I'm going to put this next one in the chat.
+
+19
+00:02:19,919 --> 00:02:31,919
+This one should require no authentication whatsoever, so you should be able to access it, but it's a slightly older resource, but it has some really good information.
+
+20
+00:02:31,919 --> 00:02:39,919
+This is called the Semantic University, and so it has articles here on all sorts of things.
+
+21
+00:02:39,919 --> 00:02:42,919
+Basically, there were questions yesterday about email.
+
+22
+00:02:42,919 --> 00:02:43,919
+How did I learn more about RDF?
+
+23
+00:02:43,919 --> 00:02:45,919
+What does RDF look like?
+
+24
+00:02:45,919 --> 00:02:47,919
+How did I learn more about writing Sparkle?
+
+25
+00:02:47,919 --> 00:02:55,919
+This page in particular has some really great resources on what is RDF and what is Sparkle?
+
+26
+00:02:55,919 --> 00:02:57,919
+How do I use these things?
+
+27
+00:02:57,919 --> 00:03:00,919
+We'll talk a little bit later on about OWL and RDFS.
+
+28
+00:03:00,919 --> 00:03:07,919
+These things are just, if we can start becoming a little more familiar, it's going to really enable us as we continue.
+
+29
+00:03:07,919 --> 00:03:14,919
+I thought this was a good resource that's a little bit less dense than reading some of the documentation from the W3C that I was sending yesterday.
+
+30
+00:03:15,919 --> 00:03:30,919
+Another link here that I'm going to put in the chat, this is a PDF PowerPoint of just some Sparkle by example, just to help familiarize you a little bit more.
+
+31
+00:03:30,919 --> 00:03:34,919
+I'm not going to go through these slides in today's training.
+
+32
+00:03:34,919 --> 00:03:37,919
+I just wanted to make this available as supplemental material.
+
+33
+00:03:37,919 --> 00:03:46,919
+It's basically going to walk you through a lot of the ins and outs of, if I'm looking at a Sparkle query, how do I actually read this?
+
+34
+00:03:46,919 --> 00:03:50,919
+What are some common prefixes I might see and what are they referring to?
+
+35
+00:03:50,919 --> 00:03:54,919
+Then how I actually format my own Sparkle query.
+
+36
+00:03:54,919 --> 00:03:58,919
+These are some really, really good examples.
+
+37
+00:03:58,919 --> 00:04:03,919
+Again, it's less dense than the W3C documentation, but it's a really good reference.
+
+38
+00:04:03,919 --> 00:04:15,919
+The next and last resource that I gathered for you all is, there was a question yesterday regarding window aggregate functions that we can use in the Anzo high-res environment.
+
+39
+00:04:15,919 --> 00:04:26,920
+I told you I didn't really know the answer, but I pulled this from the Anzo documentation regarding all the window aggregate functions that we currently support within the high-res.
+
+40
+00:04:26,920 --> 00:04:39,920
+If that feels to you like it's of particular interest, I encourage you to look through this document and see what all you can do within the high-res environment.
+
+41
+00:04:39,920 --> 00:04:54,920
+Personally, I've never really used the window aggregate functions in the dashboards that I've made, which is why I couldn't answer the question, but I talked to some team members who have and they said these typically work pretty well.
+
+42
+00:04:54,920 --> 00:05:20,920
+All of that out of the way, I know that when we finished up yesterday, we were basically halfway through an example using some data relating to movies and how we're connecting the raw data to a canonical model.
+
+43
+00:05:20,920 --> 00:05:33,920
+I do think this example is worth continuing because we're going to see how the canonical model is going to allow us to link together this raw auto-generated ontology.
+
+44
+00:05:33,920 --> 00:05:41,920
+But today's topic is largely involving data onboarding.
+
+45
+00:05:41,920 --> 00:05:54,920
+I'd like to get a little bit through the slides before we continue that example, if that's okay with everybody.
+
+46
+00:05:57,283 --> 00:05:58,920
+Great.
+
+47
+00:05:58,920 --> 00:06:06,920
+Like I was mentioning, today we're talking a lot about what we call developer training.
+
+48
+00:06:06,920 --> 00:06:13,920
+This is a lot of what we were talking about yesterday in terms of how to onboard new data and how to interlink it.
+
+49
+00:06:13,920 --> 00:06:16,920
+We're going to talk both about unstructured and structured data.
+
+50
+00:06:16,920 --> 00:06:30,920
+The first topic here is we're going to get a lot of this discussion regarding unstructured out of the way since we didn't skip over it, but we certainly didn't delve in yesterday.
+
+51
+00:06:30,920 --> 00:06:50,920
+Once we talk about the distributed unstructured, which is our way of onboarding all the unstructured data, such as PDFs, email transcripts, et cetera, we'll then get into more of the fine details of the Graph Data Interface, the GDI, which you saw we used yesterday to onboard our CSV files.
+
+52
+00:06:50,920 --> 00:06:57,920
+GDI is also how you will ultimately onboard data from your Snowflake database.
+
+53
+00:06:57,920 --> 00:07:03,920
+And from there, we'll talk about, in greater detail, building a data model.
+
+54
+00:07:03,920 --> 00:07:14,920
+Again, a lot of these topics are things that we actually walked through in the demo yesterday, which is why I want to make sure that we cover the slides so you can actually know the details as opposed to just seeing me do these things.
+
+55
+00:07:14,920 --> 00:07:20,920
+Once we get through the building a data model, we're going to talk more about the advanced ANZO usage.
+
+56
+00:07:20,920 --> 00:07:24,920
+So we'll touch again here on materialization and virtualization.
+
+57
+00:07:24,920 --> 00:07:35,920
+We'll also talk about how to perform some quality control checks within ANZO, as well as how we can interact between the different components of ANZO, whether it's between ANZO and ANZO Graph, et cetera.
+
+58
+00:07:35,920 --> 00:07:41,920
+And then lastly, we're going to spend some time here on visualizing and accessing data.
+
+59
+00:07:41,920 --> 00:07:46,920
+I have a few demos prepared for you in terms of how to visualize and access your data.
+
+60
+00:07:47,920 --> 00:07:58,920
+I'll also walk you a little bit more slowly through how to use the query builder in order to enable not only your analytics, but also just your development process in general.
+
+61
+00:07:58,920 --> 00:08:00,920
+And we should have time at the end for Q&A.
+
+62
+00:08:00,920 --> 00:08:07,920
+Again, a reminder that all of these times that you see on the right are very, very loose guidelines.
+
+63
+00:08:07,920 --> 00:08:13,920
+If we spend an hour on one section, three minutes on another section, it's completely okay.
+
+64
+00:08:13,920 --> 00:08:18,920
+These are just based on projections we've seen with past trainings.
+
+65
+00:08:18,920 --> 00:08:38,919
+So, again, we want to really become experts today in just the overall workflow of ANZO, from onboarding to modeling to the blending, and blending is the word for using those GraphMart pipelines to onboard, transform your data, to then accessing your data.
+
+66
+00:08:38,919 --> 00:08:47,919
+And by access, we mean either using your third-party apps, or today we're going to show you how to use high-res to really get some nice visualizations of your data.
+
+67
+00:08:47,919 --> 00:08:54,919
+So, we're going to become familiar, like I said, with both structured and unstructured data and how to onboard both.
+
+68
+00:08:54,919 --> 00:08:59,919
+We're going to become familiar with how to model ontologies, the basics of SPARQL.
+
+69
+00:08:59,919 --> 00:09:15,919
+I know that there were some questions yesterday about, you know, how the SPARQL query is formatted and what it's doing, and we'll get into that more today, as well as, you know, blending different data sets and ontologies together and then finish up with that high-res visualization.
+
+70
+00:09:15,919 --> 00:09:18,919
+Are there any questions here before we jump in?
+
+71
+00:09:26,919 --> 00:09:31,919
+So, this graphic should look pretty familiar to you at this point.
+
+72
+00:09:31,919 --> 00:09:38,919
+This is what you'll see when you log into the ANZO UI, and these are our four keywords that we use to describe what we're doing in ANZO.
+
+73
+00:09:38,919 --> 00:09:40,919
+Onboarding is pretty self-explanatory.
+
+74
+00:09:40,919 --> 00:09:44,919
+We're taking your data from your external source, and we're bringing it into ANZO.
+
+75
+00:09:44,919 --> 00:09:57,919
+Modeling is where we're creating or modifying an existing ontology in order to basically represent the different ways that your data might link itself together.
+
+76
+00:09:57,919 --> 00:09:59,919
+And then blending is where actual…
+
+77
+00:10:00,000 --> 00:10:08,234
+going to take that instance data and we are going to transform it and to kind of form to that model that you made.
+
+78
+00:10:08,234 --> 00:10:22,920
+And accessing is where we have some visualizations and tables to help us actually understand what we're looking at and ultimately the goal here is answer our business questions and get more to the heart of the truth.
+
+79
+00:10:22,920 --> 00:10:38,480
+So the first thing that we're going to jump into here is one of our more dense topics as these trainings go but it's something that provides a lot of value within Anzo which is distributed unstructured.
+
+80
+00:10:39,200 --> 00:10:44,283
+Again yesterday you might have seen the acronym AU for Anzo unstructured.
+
+81
+00:10:44,283 --> 00:10:50,338
+Typically we in most situations refer to as distributed unstructured.
+
+82
+00:10:50,338 --> 00:10:55,279
+The term AU I think was deprecated but if you see the two just know we're talking about the same thing.
+
+83
+00:10:57,759 --> 00:11:00,791
+So here are some screenshots from the Anzo UI.
+
+84
+00:11:00,791 --> 00:11:12,503
+So under onboard you'll see that we have this unstructured data option and so suppose you have some PDF files you want to onboard.
+
+85
+00:11:12,503 --> 00:11:17,760
+The first thing to do is go to unstructured data and you'll create a new unstructured pipeline.
+
+86
+00:11:17,760 --> 00:11:25,580
+When you create a new unstructured pipeline it's going to pop up this dialogue that you see at the bottom where it's going to ask you amongst other things to name it.
+
+87
+00:11:25,580 --> 00:11:28,207
+Sorry my mouse has mind of its own today.
+
+88
+00:11:28,207 --> 00:11:38,480
+It's going to ask you amongst other things to name that pipeline and you know this is going to be good for anything like Word documents, PDFs, web pages, emails, etc.
+
+89
+00:11:39,760 --> 00:11:48,579
+So Anzo is going to find, analyze, extract, ingest concepts, entities, and topics based on different parameters that we give it.
+
+90
+00:11:48,579 --> 00:11:54,219
+But this unstructured pipeline is going to leverage the Elasticsearch instance that ships with Anzo.
+
+91
+00:11:54,219 --> 00:12:03,120
+So any installation of Anzo is going to include this Elasticsearch instance and so we are basically going to leverage the power of Elasticsearch, the power of indexing.
+
+92
+00:12:03,680 --> 00:12:09,159
+And if you aren't familiar with Elasticsearch and you aren't familiar with the concept of indexing don't worry about it.
+
+93
+00:12:09,159 --> 00:12:17,951
+You don't really need to know a lot of the technical details here in order to use unstructured but just so you know how it's working under the hood in case you were curious.
+
+94
+00:12:17,951 --> 00:12:31,039
+And again when I send these slides out all these links should work or if you want to read more about any particular topic you see here we have some more documentation on creating new unstructured data sources.
+
+95
+00:12:34,160 --> 00:12:44,559
+So once you create your new unstructured pipeline you're going to see something like this in the top left where you can then specify you want to create a crawler or an annotator.
+
+96
+00:12:45,279 --> 00:12:51,028
+When you add a crawler it's basically going to say what kind of crawler am I going to be and some options here.
+
+97
+00:12:51,028 --> 00:12:55,499
+The file-based dataset crawler is going to crawl through one of your FLDS.
+
+98
+00:12:55,499 --> 00:13:10,111
+We talked just about that how FLDS stands for the file-based linked dataset and essentially it is RDF data that is already related to your ontology that has some built-in version control so you can crawl through anything in your FLDS.
+
+99
+00:13:10,111 --> 00:13:21,358
+So for example if you loaded all your data from Snowflake and now you want to use unstructured to crawl through that data you could export your data that you loaded from Snowflake and then crawl it here.
+
+100
+00:13:21,358 --> 00:13:24,798
+Another option here is the file-based is the file system crawler.
+
+101
+00:13:24,798 --> 00:13:37,034
+Suppose you just upload a bunch of PDF files or suppose you upload a bunch of Excel spreadsheets or whatever it may be to your server and you want to crawl through those that's another option to you.
+
+102
+00:13:37,034 --> 00:13:43,175
+Another option here is to actually crawl through the RDF that has been loaded into a graph mark.
+
+103
+00:13:43,175 --> 00:13:54,386
+So remember that when we run a graph mark it's essentially going to anything that we insert when we run the various queries in that graph mark is going to live in memory.
+
+104
+00:13:54,386 --> 00:14:04,976
+So that allows us to use leverage the Elasticsearch leverage DU to crawl through the RDF that we have in memory through that graph mark.
+
+105
+00:14:04,976 --> 00:14:10,041
+So and then the local volume dataset crawler is a pretty niche one.
+
+106
+00:14:10,041 --> 00:14:18,613
+Typically if the either the file-based dataset crawler or the graph mark crawler or the file system crawler are the three that I see used the most often.
+
+107
+00:14:18,613 --> 00:14:20,396
+I see a question.
+
+108
+00:14:20,396 --> 00:14:23,228
+Yeah hi thanks a lot Steve.
+
+109
+00:14:23,228 --> 00:14:50,373
+So it just came to my attention image in the file system crawler right and I wanted to ask like are we talking about factor recognition in images or just a pure image in a kind of NoSQL fashion?
+
+110
+00:14:50,373 --> 00:14:58,733
+So I don't believe and I can I'll follow up with after this call to make sure that this is correct.
+
+111
+00:14:58,733 --> 00:15:02,232
+I don't believe that we have image processing as part of DU.
+
+112
+00:15:02,232 --> 00:15:04,650
+So I'm talking about unstructured data.
+
+113
+00:15:04,650 --> 00:15:09,947
+This is really just files that have text that aren't in a given structure.
+
+114
+00:15:09,947 --> 00:15:20,130
+So for example if I have an Excel file or CSV file these are values delimited by commas and by new line characters and so they have a certain structure to them.
+
+115
+00:15:20,130 --> 00:15:23,513
+If I have a JSON file they all have a certain structure.
+
+116
+00:15:23,513 --> 00:15:41,265
+This is just you know if I have a Word document if I have you know a PDF export of a chapter of a textbook things like this that you know there are words that we can you know scan and highlight but they aren't necessarily get a holding to a certain structure.
+
+117
+00:15:41,265 --> 00:15:49,234
+That's all you care about unstructured data. Does this answer your question?
+
+118
+00:15:49,234 --> 00:16:14,399
+Yeah and also if the if the document has files in it just like trying to maybe link this to for example a rag application and I've heard I have no experience with it but the answer is a pretty good option to implement it right.
+
+119
+00:16:15,519 --> 00:16:18,620
+I'm just trying to figure that out.
+
+120
+00:16:18,620 --> 00:16:29,996
+Yeah I may need to look into the details of that on my own because I've also heard that but I haven't necessarily had an opportunity to play with that on my own.
+
+121
+00:16:29,996 --> 00:16:36,237
+So I may need to reach out to some of my colleagues from engineering and ask you know how does this necessarily work.
+
+122
+00:16:36,237 --> 00:16:40,433
+We got a question and I can update you on that tomorrow if that works for you.
+
+123
+00:16:40,433 --> 00:16:42,559
+It will be a great follow-up.
+
+124
+00:16:42,559 --> 00:16:44,612
+Sure I see another question.
+
+125
+00:16:44,612 --> 00:16:45,509
+Thanks a lot.
+
+126
+00:16:45,509 --> 00:16:46,591
+Yeah hi Steve.
+
+127
+00:16:46,591 --> 00:16:50,996
+I just want to clarify about ingesting unstructured data.
+
+128
+00:16:50,996 --> 00:16:54,205
+This is mainly has to come from a file right.
+
+129
+00:16:54,205 --> 00:17:05,279
+So if you have like for example a NoSQL database or maybe if you have some unstructured data within Snowflake then we can't work on that by connecting it from Snowflake.
+
+130
+00:17:05,279 --> 00:17:14,014
+We need to export the data as you mentioned earlier to extract it from our database system and upload it here. Is that correct?
+
+131
+00:17:14,014 --> 00:17:19,354
+That's so my short answer is that's how I've done it in the past.
+
+132
+00:17:19,354 --> 00:17:31,386
+I need to look into whether or not we can connect directly to the Snowflake database to read the files and as opposed to bringing them over into our file system.
+
+133
+00:17:31,386 --> 00:17:38,839
+That's a good question that can also follow up on. Sure thanks much. Sure any more questions here?
+
+134
+00:17:38,839 --> 00:17:40,959
+Yeah Steve just one more.
+
+135
+00:17:40,959 --> 00:17:52,065
+So let's say we have connected we extracted comments okay from social media like LinkedIn and other. So are we considering this as unstructured data?
+
+136
+00:17:52,065 --> 00:17:54,799
+That's a great example of unstructured data.
+
+137
+00:17:55,119 --> 00:17:56,602
+For sentiment analysis.
+
+138
+00:17:56,602 --> 00:18:13,226
+Yeah I think that's a great example because we'll go into how we could then if we have just say you know say we export all of those into either PDF or just like JSON or whatever we get that data out.
+
+139
+00:18:13,226 --> 00:18:16,705
+We can then crawl it for certain things that we're looking for.
+
+140
+00:18:16,705 --> 00:18:19,056
+Say we're looking for negative comments.
+
+141
+00:18:19,056 --> 00:18:20,880
+Say we're looking for comments.
+
+142
+00:18:21,359 --> 00:18:30,977
+Say we're looking for comments that seem based on certain keywords that might be coming from internal even though they're anonymous.
+
+143
+00:18:30,977 --> 00:18:33,599
+But there are different ways we can parse these things.
+
+144
+00:18:37,280 --> 00:18:39,465
+I see one more hand raised maybe.
+
+145
+00:18:39,465 --> 00:18:40,458
+Yeah it was me.
+
+146
+00:18:40,458 --> 00:18:45,051
+Sorry I joined a bit later because I was on a overlapping call.
+
+147
+00:18:45,051 --> 00:18:56,903
+But just to add on the unstructured data where we read them from just from the PMI perspective at the moment the proof pattern is from S3 buckets.
+
+148
+00:18:56,903 --> 00:19:05,931
+So snowflake is for structured data and then S3 bucket for unstructured just as a side note get a bit of context.
+
+149
+00:19:05,931 --> 00:19:06,601
+Thanks.
+
+150
+00:19:06,601 --> 00:19:08,038
+That's helpful.
+
+151
+00:19:08,038 --> 00:19:09,762
+Thank you Claudia.
+
+152
+00:19:09,762 --> 00:19:21,435
+I'll look into how we can connect the S3 buckets directly to the DU pipeline because like I said I've historically used it from just files that are already on the system.
+
+153
+00:19:21,435 --> 00:19:25,953
+So I'll need to look into the best way to bridge that gap.
+
+154
+00:19:25,953 --> 00:19:33,919
+Yeah and Kirti did some back in the days something on this on the environment.
+
+155
+00:19:34,880 --> 00:19:38,497
+Yeah we can definitely follow up with him.
+
+156
+00:19:38,497 --> 00:19:40,047
+Yeah cool perfect.
+
+157
+00:19:40,047 --> 00:19:41,599
+Thank you Claudia.
+
+158
+00:19:42,159 --> 00:19:47,252
+So Claudia it means that it's approved but it's not being used yet yeah?
+
+159
+00:19:47,252 --> 00:19:51,348
+Yeah so it was used for one small POC a while back.
+
+160
+00:19:51,348 --> 00:19:57,840
+I was not involved in that one so where Kirti from Altera worked on it.
+
+161
+00:19:58,719 --> 00:20:02,560
+So it is in Yeah, indeed, you're correct.
+
+162
+00:20:02,560 --> 00:20:12,060
+So it's approved, it has been tried out, but it's not in a project currently or in production or so, yeah.
+
+163
+00:20:12,060 --> 00:20:13,386
+Okay, great.
+
+164
+00:20:13,386 --> 00:20:17,920
+One question, Steve, to you from my side.
+
+165
+00:20:17,920 --> 00:20:25,459
+Sorry if I missed something, but when we are talking about the design structure data, it's also some kind of scheduling.
+
+166
+00:20:25,459 --> 00:20:44,400
+So it's connect, for example, one per day and check whether there are new files or, for example, every time when there is, no, sorry, connect one time for the new data or, for example, every time when there is something new, it's been correct or how does it work?
+
+167
+00:20:44,400 --> 00:20:52,740
+So there is a certain way that we schedule things in Anzo using workflows that we're going to cover in detail tomorrow.
+
+168
+00:20:52,740 --> 00:21:01,939
+But basically, anything that you want to schedule, whether it's graph mark reload or whether it's running one of these unstructured pipelines, you're going to schedule that way.
+
+169
+00:21:01,939 --> 00:21:04,540
+We're going to cover this in detail tomorrow.
+
+170
+00:21:04,540 --> 00:21:06,459
+Okay, thank you.
+
+171
+00:21:06,459 --> 00:21:07,197
+Sure.
+
+172
+00:21:07,197 --> 00:21:16,940
+Just to, I think it will help if I go through the next slide here.
+
+173
+00:21:17,779 --> 00:21:28,559
+Basically, talk about the annotators because I think this will help get through what we're talking of.
+
+174
+00:21:28,559 --> 00:21:34,559
+How we actually then extract the value and the information from this unstructured data.
+
+175
+00:21:34,559 --> 00:21:44,599
+Essentially, an annotator is going to allow us to describe, categorize the data that we're looking at based on specific parameters that we get it.
+
+176
+00:21:44,599 --> 00:21:46,360
+So there are certain kinds of annotators.
+
+177
+00:21:46,360 --> 00:21:49,120
+I don't believe that we have all of them listed here.
+
+178
+00:21:49,139 --> 00:21:58,139
+But an example is the most common ones that I see that really provide a lot of value are the keyword and phrase annotators.
+
+179
+00:21:58,139 --> 00:22:07,980
+Where like I was saying, we're looking for certain keywords or phrases that in an example, we're looking through comments on LinkedIn or we're looking through comments on social media.
+
+180
+00:22:07,980 --> 00:22:12,300
+We're looking for a certain negative phrasing or even positive phrasing.
+
+181
+00:22:12,300 --> 00:22:17,100
+We want to see what percentage of our comments are positive about what we're posting.
+
+182
+00:22:17,100 --> 00:22:23,119
+It's a good way to say you could put in keywords like great or good, etc.
+
+183
+00:22:23,119 --> 00:22:35,360
+Another good one is the RegEx annotator, which if you are coming from the world of development, RegEx should be pretty familiar to you in terms of a way to reflect a certain pattern of text.
+
+184
+00:22:35,360 --> 00:22:47,220
+Suppose that's a good way if we have this whole manual, we just want to find all the contact information within the manual because we want to reach out to the people who wrote it.
+
+185
+00:22:47,220 --> 00:22:53,259
+We could say parse it just for all the e-mail addresses or all the phone numbers.
+
+186
+00:22:53,259 --> 00:23:01,380
+Then another great one that allows us to basically link our structured and unstructured data together is the knowledge-based annotator.
+
+187
+00:23:01,380 --> 00:23:08,380
+Knowledge-based annotator is going to essentially use a knowledge graph that you've already constructed through a graph mark.
+
+188
+00:23:08,380 --> 00:23:18,919
+It's going to essentially allow us to use terms that we loaded and transformed in that graph mark in order to then annotate the unstructured data.
+
+189
+00:23:18,919 --> 00:23:22,000
+So it's a good blending together of the two.
+
+190
+00:23:22,639 --> 00:23:31,039
+So this is an example here of the keyword and phrase annotator I was talking about, where in this case, we're searching for positive phrases.
+
+191
+00:23:31,039 --> 00:23:36,639
+So you are free as the user to type in whatever phrase you're looking for here.
+
+192
+00:23:36,639 --> 00:23:40,679
+It's very analog in that way.
+
+193
+00:23:40,679 --> 00:23:49,899
+We say we want a phrase annotator, positive phrase, and type in those keywords, enjoyable, pleasant, sensitive, etc.
+
+194
+00:23:50,380 --> 00:23:57,300
+Here's where we get a little bit interesting here with that knowledge-based annotator that I was just talking about.
+
+195
+00:23:57,300 --> 00:24:09,259
+Where in the case of the knowledge-based annotator, we are going to leverage, as you see here, it's going to ask us for what graph mark are we using.
+
+196
+00:24:09,259 --> 00:24:14,600
+In this case, this is assuming we're continuing with our movie example.
+
+197
+00:24:14,600 --> 00:24:20,920
+We have our movie graph mark and we have the movie autogeneratology behind it.
+
+198
+00:24:20,920 --> 00:24:26,559
+In this case, we're looking for a specific class.
+
+199
+00:24:26,559 --> 00:24:33,480
+We're looking for the editors and ask us for the property, we give it the property.
+
+200
+00:24:33,480 --> 00:24:43,220
+Essentially, what this is doing is we're saying, look through this unstructured document for the names of any editors that come by.
+
+201
+00:24:43,220 --> 00:24:45,260
+How do we know it's the name of an editor?
+
+202
+00:24:45,260 --> 00:24:49,540
+We already loaded that data in our graph mark from a structured data.
+
+203
+00:24:49,540 --> 00:24:55,820
+This is the way that we leverage together the power of structured data and unstructured data.
+
+204
+00:24:57,820 --> 00:25:03,779
+The regex, again, if you come from the world development, this should be pretty self-explanatory.
+
+205
+00:25:03,779 --> 00:25:07,600
+We put in a regular expression for getting pattern.
+
+206
+00:25:07,600 --> 00:25:22,760
+If you don't come from the world of programming or development, this phrase here, the regular expression might look confusing, but don't worry about it.
+
+207
+00:25:22,760 --> 00:25:27,279
+If you choose to do it this way, you're going to search for a specific pattern.
+
+208
+00:25:27,279 --> 00:25:36,420
+There are different ways that we can show you basically how to generate these for yourself, and you don't have to worry about typing these out.
+
+209
+00:25:36,420 --> 00:25:41,660
+ChatGPT is a great tool for creating regular expressions a lot of the times.
+
+210
+00:25:44,380 --> 00:25:54,540
+Once you have created your annotator, you see this button up here saying, Run Pipeline, and you can view the progress.
+
+211
+00:25:54,540 --> 00:26:09,799
+You can view if it failed, if it succeeded, how long it took to process through the documents, and then your history of all your runs so that you can get some good analytics here on how you're doing at processing your various pipelines.
+
+212
+00:26:10,399 --> 00:26:15,119
+That's what we have here on distributed unstructured.
+
+213
+00:26:15,440 --> 00:26:26,480
+In terms of demos, it's typically a little bit more involved to set up a demo for unstructured.
+
+214
+00:26:26,480 --> 00:26:32,459
+So I don't have anything prepared at least this week in terms of seeing it for your own eyes.
+
+215
+00:26:32,459 --> 00:26:47,459
+But again, if this becomes relevant to your use case, we can spend some time in walking through how do we set this up properly for our needs, and we can enable this as part of the driving force of your use case.
+
+216
+00:26:50,059 --> 00:26:56,260
+Any questions here before we move on to our next section on the structured data?
+
+217
+00:27:05,260 --> 00:27:09,660
+So for unstructured data, always we do have crawling.
+
+218
+00:27:09,660 --> 00:27:11,579
+By a crawling method, we have to go.
+
+219
+00:27:11,579 --> 00:27:21,179
+Or are there other methods also we can do, including bulk or some other methods that we can apply?
+
+220
+00:27:22,160 --> 00:27:28,880
+The crawler can crawl bulk files.
+
+221
+00:27:28,880 --> 00:27:39,679
+So in the case that you have the files in your file system, you can specify an entire directory, and that's okay, and it can crawl all the files.
+
+222
+00:27:39,679 --> 00:27:42,320
+It's typically pretty quick for that, especially if they're local.
+
+223
+00:27:42,320 --> 00:27:52,540
+I need to look up exactly how the crawler works for connecting to the S3 bucket to basically get through the files that are located there.
+
+224
+00:27:52,540 --> 00:27:56,140
+But I'm not sure if this answers your question or not.
+
+225
+00:27:56,835 --> 00:28:02,179
+So here for ingestion, we have these crawling options.
+
+226
+00:28:02,179 --> 00:28:04,380
+We do use the crawlers in here.
+
+227
+00:28:04,380 --> 00:28:14,100
+Do we have any other mechanism also if we don't want to use crawlers and we want to ingest via any other means?
+
+228
+00:28:14,100 --> 00:28:24,399
+I think this is the way that DU and distributed unstructured will basically onboard the unstructured data.
+
+229
+00:28:24,399 --> 00:28:25,880
+It's with the crawlers.
+
+230
+00:28:25,880 --> 00:28:30,359
+I'm not aware of another method, but I can look into it.
+
+231
+00:28:30,359 --> 00:28:39,960
+If there's something specific that you're looking for, I can look into it internally with engineering and try to get you a more concrete answer.
+
+232
+00:28:40,419 --> 00:28:48,580
+Is it also helping to have streaming data via crawlers in case of unstructured data?
+
+233
+00:28:48,580 --> 00:28:52,419
+So is it a reason also to use crawlers?
+
+234
+00:28:52,419 --> 00:28:54,539
+Streaming data?
+
+235
+00:28:55,940 --> 00:29:03,020
+In terms of streaming data, you're asking?
+
+236
+00:29:03,020 --> 00:29:05,900
+Real-time data we can get, yeah?
+
+237
+00:29:05,900 --> 00:29:10,200
+You can say Internet of Things kind.
+
+238
+00:29:10,200 --> 00:29:21,400
+So nothing as far as I'm aware in ANZOs typically set for ANZO reflecting real-time data beyond something that's scheduled.
+
+239
+00:29:21,400 --> 00:29:32,520
+So you won't necessarily open a dashboard and see the real-time up-to-date data unless you say ran the pipeline just a second ago.
+
+240
+00:29:35,960 --> 00:29:42,840
+ANZO is meant to capture descriptive analytics for essentially a snapshot in time.
+
+241
+00:29:42,840 --> 00:29:47,119
+We can choose how often that snapshot updates.
+
+242
+00:29:47,880 --> 00:29:55,200
+So you mean it is best suited for OLAP instead of OLTP?
+
+243
+00:29:56,919 --> 00:29:59,320
+I believe so.
+
+244
+00:29:59,320 --> 00:30:02,800
+I'm going to need to to confirm that with engineering.
+
+245
+00:30:02,800 --> 00:30:12,240
+But I believe that at the time at this time. That's um that's what I would say.
+
+246
+00:30:12,240 --> 00:30:15,120
+It's also how it's.
+
+247
+00:30:15,120 --> 00:30:22,480
+Let's say in categorized at PMI, so all up not RTP.
+
+248
+00:30:22,480 --> 00:30:24,580
+OK.
+
+249
+00:30:24,580 --> 00:30:26,680
+OK.
+
+250
+00:30:26,680 --> 00:30:28,110
+OK, thanks.
+
+251
+00:30:28,110 --> 00:30:30,320
+Thanks, I'm safe.
+
+252
+00:30:30,320 --> 00:30:30,848
+Sure.
+
+253
+00:30:30,848 --> 00:30:36,320
+I never want to give a big sweeping statement that.
+
+254
+00:30:36,320 --> 00:30:43,840
+Something is never going to work that way, and so, but in this case, I'm pretty sure that there are no instances where we're really trying to reflect real time data.
+
+255
+00:30:43,840 --> 00:30:51,520
+It's always, you know, a snapshot of a certain of a certain time of our data, and so the question is, how often do we want to refresh that snapshot?
+
+256
+00:30:51,799 --> 00:31:04,160
+So any more questions here on the unstructured data, whether it's the annotators, the crawlers, or just, you know how we might.
+
+257
+00:31:04,160 --> 00:31:07,680
+Um, structure different annotators maybe.
+
+258
+00:31:07,680 --> 00:31:09,279
+Or we can move on to the structured data.
+
+259
+00:31:11,639 --> 00:31:18,040
+Yeah, I think we want to be more more focused on the structured data during this session.
+
+260
+00:31:18,040 --> 00:31:23,279
+So the structured data onboarding again is going to use this tool that we've talked about before.
+
+261
+00:31:23,279 --> 00:31:25,400
+The graph data interface.
+
+262
+00:31:25,400 --> 00:31:30,959
+Oftentimes, especially internally, we'll almost always use the acronym GDI.
+
+263
+00:31:30,959 --> 00:31:51,839
+So just know if I'm saying GDI, it stands for graph data interface, and this is the tool that we have through Anso graph in order to onboard data of all sorts of different sources that are structured data from all different sources in order to translate that data into RDF and to get into our system.
+
+264
+00:31:51,839 --> 00:32:02,879
+So we saw this yesterday in terms of, you know how we would on this left hand here click where it says unstructured up, click where it says structured data.
+
+265
+00:32:02,879 --> 00:32:06,040
+And then create a.
+
+266
+00:32:06,040 --> 00:32:08,559
+A different data source based on.
+
+267
+00:32:08,559 --> 00:32:12,559
+In this case again, this is CSV files and we talked about before.
+
+268
+00:32:12,559 --> 00:32:14,600
+If I go back to the Anso UI.
+
+269
+00:32:18,119 --> 00:32:27,440
+We talked about how when you add a new data source they'll ask you basically what sort of connection are we doing so you could say snowflake here and you would need your connection details.
+
+270
+00:32:27,440 --> 00:32:31,880
+Or in our case we created a CSV with files that are on our system.
+
+271
+00:32:31,880 --> 00:32:33,679
+And we talked about how that all works.
+
+272
+00:32:38,600 --> 00:32:40,919
+In this case, we've already selected our files.
+
+273
+00:32:40,919 --> 00:32:41,919
+We've processed them all.
+
+274
+00:32:41,919 --> 00:32:51,080
+You can see the sample data over on the right and we create a graph mark based on these files that we selected.
+
+275
+00:32:51,080 --> 00:33:05,080
+And so here's just highlighting a few things I might glossed over yesterday because I was trying to go a little bit quickly, which is basically if a graph is currently activating, you'll see this sort of blue progress bar loading.
+
+276
+00:33:05,080 --> 00:33:27,080
+In general, trying to modify a query or modify a step in your graph mark while you see this progress bar loading isn't the best idea because you might lose your progress when the graph mark completes and then once a graph mark has activated you will see this green check mark here and it will also show you which Anzo graph instance you've connected to.
+
+277
+00:33:27,080 --> 00:33:36,039
+A good point of reference here again is that anytime you see this green check mark symbol, you can always click that green check mark to see some analytics.
+
+278
+00:33:36,039 --> 00:33:39,320
+So if I go out here and go back to Anzo.
+
+279
+00:33:39,320 --> 00:33:43,279
+And we go to a graph mark and we can even try to pick the one that.
+
+280
+00:33:43,279 --> 00:33:44,440
+We created yesterday.
+
+281
+00:33:48,240 --> 00:33:50,399
+And so I see a green check mark here.
+
+282
+00:33:50,399 --> 00:33:51,880
+I can click that green check mark.
+
+283
+00:33:51,880 --> 00:33:58,160
+It will take me to my data layers and I have these guys here and I click them to see some analytics.
+
+284
+00:33:58,160 --> 00:34:00,440
+Again, the more that.
+
+285
+00:34:00,440 --> 00:34:10,199
+Uhm, basically all these analytics are just here to help you and trying to understand you know what we're looking at and what we're trying to do.
+
+286
+00:34:10,199 --> 00:34:11,119
+So jumping back in.
+
+287
+00:34:13,520 --> 00:34:18,559
+So once we set green check mark, we know we are graph mark has successfully activated.
+
+288
+00:34:18,559 --> 00:34:22,600
+And so we talk, we then talk about GDI.
+
+289
+00:34:22,600 --> 00:34:27,079
+So GDI, as I mentioned yesterday, is extremely flexible configurable.
+
+290
+00:34:27,079 --> 00:34:38,119
+We saw yesterday how we might use GDI to load a file, but there are lots of different options in terms of loading from different types of databases in terms of loading from different types of.
+
+291
+00:34:42,359 --> 00:35:02,279
+Let me types databases load for different types of external HTTP connections on the arrest endpoints, and so there are a lot of different configurations that we have for GDI and will send you some additional documentation too so you can see all different options available to you.
+
+292
+00:35:02,279 --> 00:35:04,600
+They might provide different connection parameters.
+
+293
+00:35:04,600 --> 00:35:07,720
+Again, remember that when we click over here.
+
+294
+00:35:08,160 --> 00:35:11,399
+This create graph mark button and we create this graph mark.
+
+295
+00:35:11,399 --> 00:35:18,519
+It's going to automatically configure for us a GDI query, which will onboard the data from our external connection.
+
+296
+00:35:18,519 --> 00:35:31,399
+So in the. Unless you're doing some slightly more advanced development, you may never need to write one of these GDI queries yourself, but it's important to how they work.
+
+297
+00:35:31,399 --> 00:35:35,239
+So again, we're going to call GDI.
+
+298
+00:35:35,239 --> 00:35:39,239
+With this service and then data toolkit statement.
+
+299
+00:35:39,239 --> 00:35:48,040
+Remember, we can add this optional top down parameter if we want to, let's say feed in to our GDI query.
+
+300
+00:35:48,040 --> 00:35:54,519
+Other information query for elsewhere in the where clause of our Sparkle query.
+
+301
+00:35:54,519 --> 00:36:02,399
+And then if we are trying to virtualize data instead of the data toolkit, we will reference the data toolkit view here.
+
+302
+00:36:02,399 --> 00:36:05,679
+Same time you see this and we're inside one of these brackets.
+
+303
+00:36:05,679 --> 00:36:15,239
+Just know that means that we're going to have to load something from some sort of external source, whether it's a file or a REST endpoint or an external database.
+
+304
+00:36:17,480 --> 00:36:18,000
+Sorry.
+
+305
+00:36:21,349 --> 00:36:30,399
+Here on the right we have a an example GDI query where we are loading data from an XML file.
+
+306
+00:36:30,399 --> 00:36:32,079
+You'll see here that.
+
+307
+00:36:32,079 --> 00:36:34,320
+Sorry, my mouse is really.
+
+308
+00:36:34,320 --> 00:36:36,399
+Has minus in today.
+
+309
+00:36:36,399 --> 00:36:40,720
+So you see here that we have a file source and so this URL parameter.
+
+310
+00:36:40,720 --> 00:36:51,399
+In the case that we had a HTTP connection, this URL will be the actual URL, but in the case of a file, this is going to be the path on disk where this file is located.
+
+311
+00:36:51,399 --> 00:36:57,720
+And so in this case, you know before we use solid, we're tracking specific files from our server from our server.
+
+312
+00:36:57,720 --> 00:37:07,519
+In this case, in this example, we are using this S pattern parameter to target all files of a certain format within a certain directory.
+
+313
+00:37:07,519 --> 00:37:16,160
+And we can target it to a certain model, give the name and this RDF generator and RDF on the.
+
+314
+00:37:16,160 --> 00:37:29,018
+A data toolkit ontology generator, but that's going to do is that is going to take all the triples that we've loaded from these files and create a new ontology and insert all of our.
+
+315
+00:37:29,018 --> 00:37:33,160
+Statements from the files into that ontology.
+
+316
+00:37:34,760 --> 00:37:38,799
+So this RDF generator and ontology in the ontology generator.
+
+317
+00:37:38,799 --> 00:37:50,399
+That's what's really doing the work to convert the whatever data that we've found in these files into the RDF and to relate them to some sort of auto generated ontology.
+
+318
+00:37:52,440 --> 00:38:00,600
+And again, we can make the this statement more complicated if we want to have to do less manual work down the line.
+
+319
+00:38:00,600 --> 00:38:14,679
+But typically I find it easier from a development standpoint to create that canonical model so that we don't have to touch much the GDI query and our queries that we do have end up being much more simple to read and to develop and to troubleshoot.
+
+320
+00:38:18,679 --> 00:38:23,160
+So if we go back to our example from yesterday.
+
+321
+00:38:23,160 --> 00:38:25,760
+We had this example here.
+
+322
+00:38:25,760 --> 00:38:31,839
+Where we are loading our data in from GDI.
+
+323
+00:38:31,839 --> 00:38:40,359
+What's important to note here is that in data models, whereas before we were putting something to help us with our autocomplete.
+
+324
+00:38:40,359 --> 00:38:53,520
+Uhm, here whenever we are trying to generate a new model or ontology, we always as data models put this managed and the case here it was auto generated for us.
+
+325
+00:38:53,520 --> 00:38:57,119
+So this managed was here when we got here.
+
+326
+00:38:57,119 --> 00:39:03,919
+But just so you know when we're trying to generate an ontology under data models, it will always say managed here.
+
+327
+00:39:06,039 --> 00:39:08,280
+And then if you look at our query.
+
+328
+00:39:08,280 --> 00:39:18,200
+I didn't go too much into this query yesterday because a lot of us were pretty new to Sparkle, but I want to talk a little bit more about what's happening.
+
+329
+00:39:18,200 --> 00:39:21,799
+So at the top here you see we have some prefixes.
+
+330
+00:39:21,799 --> 00:39:27,880
+So you see we have essentially this Accenture movie CSV example files.
+
+331
+00:39:27,880 --> 00:39:40,960
+And it's referring to. Whatever this is. This is just saying that anytime you see this in in the.
+
+332
+00:39:40,960 --> 00:39:48,039
+Uh, in the query, so for example down here, this is colon movie directors.
+
+333
+00:39:48,039 --> 00:39:50,679
+It's going to basically.
+
+334
+00:39:50,679 --> 00:39:58,840
+At the time that we query everything prior to this colon on this line, it's going to be replaced with all of this.
+
+335
+00:39:58,840 --> 00:40:00,000
+That's all prefixes do.
+
+336
+00:40:00,000 --> 00:40:03,540
+Again, they're very similar to aliases in SQL.
+
+337
+00:40:03,780 --> 00:40:08,980
+As we continue on, you see this insert graph target graph statement.
+
+338
+00:40:08,980 --> 00:40:22,700
+We didn't talk about this yesterday very much, but when we're running Sparkle and particularly when we were doing insert, construct, or delete queries, we are going to have to insert that into something.
+
+339
+00:40:22,700 --> 00:40:27,260
+That thing that we're inserting into is called the named graph.
+
+340
+00:40:27,260 --> 00:40:44,919
+A lot of times, especially when you're developing within a graph mark, you'll see it like this where we don't have to worry about configuring the exact URI of that named graph because the graph mark is going to take care of all of that for us.
+
+341
+00:40:44,919 --> 00:40:52,240
+You see here, we're trying to insert into our named graph, these triples that we've processed.
+
+342
+00:40:52,240 --> 00:40:54,320
+Where are we processing them from?
+
+343
+00:40:54,380 --> 00:41:03,340
+They're being processed from the files that we have here and they're being fed into the RDF generator.
+
+344
+00:41:04,300 --> 00:41:33,519
+Generally here, when I see the statement subject predicate object, if there's nothing else basically being given to these, I'm not specifying a certain object or a certain subject, but all three of these are variables, it's going to try to get out all of the subject predicate object triples from the data that we have, the data that we have being the data that we've asked for from these different file sources.
+
+345
+00:41:35,839 --> 00:41:47,559
+Again, we are trying to insert into our named graph that our graph mark has configured for us, all of the triples that are reading from these different file sources.
+
+346
+00:41:47,620 --> 00:42:04,419
+We don't have to worry about how the file sources are actually extracting those triples, that's a little bit part of the magic of GDI that I don't want to get too bogged down into because it's a lot of back-end things that on our level and use on my level, we don't really need to worry about that much.
+
+347
+00:42:04,419 --> 00:42:09,779
+But you see here, this URL statement, we're going to specify the path of the file.
+
+348
+00:42:09,779 --> 00:42:15,699
+Here, this S models where we're specifying basically the name of the class we want to create with this.
+
+349
+00:42:15,699 --> 00:42:30,880
+Then in some cases, we specify that this file has a specific encoding, and that can just help us sometimes there are weird quirks with certain encodings that we like to specify so that GDI knows how to pick it up.
+
+350
+00:42:33,440 --> 00:42:37,639
+That's how the GDI query looks and how it works.
+
+351
+00:42:37,639 --> 00:42:50,380
+Then when we talked about, we want to actually map from our auto-generated ontology sometimes I'll refer to that as raw ontology to our canonical ontology.
+
+352
+00:42:50,380 --> 00:42:58,059
+You see here instead managed in the data models, I specified the actual models I want to talk to.
+
+353
+00:42:58,059 --> 00:43:05,779
+This one on the left being our auto-generated ontology, and this one on the right being our canonical one that we made together.
+
+354
+00:43:05,779 --> 00:43:15,759
+You see here how I'm not referencing GDI, you're not seeing that data toolkit statement in this query because we already loaded all our data.
+
+355
+00:43:15,759 --> 00:43:26,880
+By the fact that we already executed layer 1 when this happens, we don't need to worry about loading the data in, it's already in memory, it's already available for us to play with.
+
+356
+00:43:26,880 --> 00:43:32,440
+When we get to this point, you see again we're going to insert into our named graph.
+
+357
+00:43:32,440 --> 00:43:42,699
+We don't have to worry about what that named graph is because we're inside the safety of our graph mark, so we just leave this target graph statement.
+
+358
+00:43:42,699 --> 00:43:46,059
+We say where, and we then try to grab.
+
+359
+00:43:46,059 --> 00:43:56,580
+We say, hey, we think we created some instances of movie actors one when we actually ran that previous step.
+
+360
+00:43:56,580 --> 00:44:03,940
+So give me all instances that you may have created it, and for every instance, I want to know what its actor ID is.
+
+361
+00:44:03,940 --> 00:44:12,800
+So from there, we then say, we want to create instances of the canonical movie actor.
+
+362
+00:44:12,800 --> 00:44:17,640
+Basically, we need to have some IRI to reference here.
+
+363
+00:44:17,640 --> 00:44:29,000
+We can't, if I comment out this line and I try to run this query, just say, give me a new variable for actor that's an instance of actor.
+
+364
+00:44:29,000 --> 00:44:42,059
+So say I comment out that line and I run this again, we're going to get an error here, and it's basically going to say, load failed.
+
+365
+00:44:42,059 --> 00:44:44,940
+Usually, it might give us something more than this.
+
+366
+00:44:44,940 --> 00:44:45,551
+That's okay.
+
+367
+00:44:45,551 --> 00:44:59,820
+Basically, the reason that this load is failing is because in the insert, we're trying to reference a variable that we never defined in our where clause.
+
+368
+00:44:59,820 --> 00:45:01,820
+So okay, that's fine.
+
+369
+00:45:01,820 --> 00:45:14,000
+What if I just say, let's say, what if actor is just a string.
+
+370
+00:45:14,000 --> 00:45:26,160
+Let's say, actor is actor colon and then actor ID.
+
+371
+00:45:31,839 --> 00:45:34,359
+We'll comment out this line again.
+
+372
+00:45:34,359 --> 00:45:38,160
+So now, we have defined actor in our where clause, so in theory, this might work.
+
+373
+00:45:38,160 --> 00:45:47,359
+You refresh your GraphMirror again, and you see that we get a whole new error, load failed.
+
+374
+00:45:47,679 --> 00:45:54,559
+Sorry, the UI doesn't reload all the way in this environment, because we don't have a lot of resources.
+
+375
+00:45:54,559 --> 00:45:59,239
+So we click here, and we see the error.
+
+376
+00:45:59,239 --> 00:46:03,779
+We gave it a string, but this has to be a URI.
+
+377
+00:46:03,779 --> 00:46:10,500
+So that's why we're doing this the way that we are, where we're basically saying, okay, we can't just do it like this.
+
+378
+00:46:10,500 --> 00:46:12,579
+So let's get rid of the statement.
+
+379
+00:46:12,579 --> 00:46:15,980
+So we have to have a URI here, here.
+
+380
+00:46:15,980 --> 00:46:17,619
+So how are we going to do that?
+
+381
+00:46:17,619 --> 00:46:26,859
+We're going to try to use a primary key, so that we know that for every raw movie actor, we are creating a unique canonical actor.
+
+382
+00:46:26,859 --> 00:46:39,519
+So we have a statement where we have IRI function on this, which will basically cast the string to a unique URI, and then this query will now work for us.
+
+383
+00:46:42,600 --> 00:46:49,399
+Any questions here on how the queries are working in our example?
+
+384
+00:46:49,399 --> 00:46:59,940
+Sorry, I may be touching the basics, but can you show just one example query?
+
+385
+00:47:00,260 --> 00:47:06,940
+The last one, for example, in the presentation, I just want to ask a question looking at the example.
+
+386
+00:47:08,299 --> 00:47:21,174
+So the way I see it, maybe just first of all, GDI, I understand it's like an extension to Spark, so we can do more manipulation with the data.
+
+387
+00:47:21,174 --> 00:47:22,200
+Is it correct?
+
+388
+00:47:24,040 --> 00:47:33,079
+Then I understand that in this where statement, it looked like it's a little bit not like in SQL, it's more like procedural.
+
+389
+00:47:33,079 --> 00:47:46,200
+You first use one thing, so you create code, you invoke GDI, then you generate ontology, and you use a dot to separate those statement.
+
+390
+00:47:46,200 --> 00:47:51,459
+In general, it's like a procedural language, at least in this one statement.
+
+391
+00:47:51,831 --> 00:47:57,420
+Let me show you an even simpler example here in the ANSI UI.
+
+392
+00:47:57,420 --> 00:48:07,019
+So I'm going to go over here to where it says, access to the query builder, and let me query on our graph that we've been using.
+
+393
+00:48:07,339 --> 00:48:15,220
+So you see here, I click this pencil, and I have options for different sources I can query against.
+
+394
+00:48:15,279 --> 00:48:18,579
+I chose that I'm going to send a query to the graph mark.
+
+395
+00:48:18,579 --> 00:48:24,500
+So in this case, I'm not trying to insert any data, I'm not trying to delete any data.
+
+396
+00:48:24,500 --> 00:48:27,920
+I'm just trying to see something, so I'm going to use a select statement.
+
+397
+00:48:27,920 --> 00:48:37,640
+Just like in SQL, when I use select, I can put a star here to say, I'm just going to grab everything that I'm querying.
+
+398
+00:48:37,640 --> 00:48:51,979
+You'll notice here that as opposed to SQL, in SQL, I might have a from here where I'm specifying, this is where I'm specifying exactly which class I'd be querying against.
+
+399
+00:48:51,979 --> 00:48:54,820
+In Sparkle, we don't need that from.
+
+400
+00:48:54,820 --> 00:49:09,179
+We can just go straight into the where, where we're not only going to just specify our table or class that we're querying against, but we're also going to specify the various conditions that we might have.
+
+401
+00:49:09,179 --> 00:49:13,140
+So let's talk about how this might work.
+
+402
+00:49:13,479 --> 00:49:29,039
+Here, what I'm trying to do is I'm trying to query for just any movie that we have from our auto-ingested ontology.
+
+403
+00:49:29,039 --> 00:49:37,960
+So if I just run this query, you'll see that I get 500 results, meaning 500 unique movies.
+
+404
+00:49:37,960 --> 00:49:43,340
+The reason that I'm getting 500 here is you see that I have my results limited.
+
+405
+00:49:43,340 --> 00:49:47,059
+I can change this to 10,000 and rerun the query.
+
+406
+00:49:47,059 --> 00:49:52,979
+You see that there are 8,100 approximately unique movies that we're getting.
+
+407
+00:49:52,979 --> 00:50:03,520
+You can see here, the IRIs all look the same, but they have slightly different numbers they have slightly different IRIs at the very, very end.
+
+408
+00:50:03,520 --> 00:50:05,160
+So that's okay.
+
+409
+00:50:05,160 --> 00:50:09,400
+You see that I've ended here with a semicolon and down here I have a dot.
+
+410
+00:50:10,280 --> 00:50:22,080
+So basically what this is saying in terms of how Sparkle sees this is on the line after a semicolon or any line, I can go two or three down.
+
+411
+00:50:23,180 --> 00:50:28,180
+After a semicolon, it is going to reuse that subject.
+
+412
+00:50:29,180 --> 00:50:31,420
+I don't have to restate my subject.
+
+413
+00:50:31,420 --> 00:50:48,939
+It's going to assume that if I give it a new predicate, suppose I give it this predicate, movies.movieID, and I say ID, and I put another semicolon.
+
+414
+00:50:53,419 --> 00:50:57,779
+I can run this and now for each movie that's getting, I can see the ID field, which is great.
+
+415
+00:50:59,139 --> 00:51:00,020
+This is really helpful.
+
+416
+00:51:00,020 --> 00:51:05,279
+So I can then say, well, other properties, I have movies.maybeTitle, and I can get a title.
+
+417
+00:51:09,820 --> 00:51:10,900
+And so this is great.
+
+418
+00:51:10,900 --> 00:51:11,720
+I can see this.
+
+419
+00:51:11,720 --> 00:51:17,300
+I can even make this query even more readable by creating a prefix.
+
+420
+00:51:17,300 --> 00:51:25,959
+Let's say prefix, and I want to say, let's say auto movies.
+
+421
+00:51:26,959 --> 00:51:36,160
+So I just made up a name on the spot, and I want to put all of this into there.
+
+422
+00:51:40,559 --> 00:51:41,599
+So let's put that.
+
+423
+00:51:49,559 --> 00:51:54,559
+And now I can replace all of this now with my prefix.
+
+424
+00:51:55,959 --> 00:52:00,959
+Actually, I might need to change this here.
+
+425
+00:52:04,120 --> 00:52:09,119
+Let's just say auto ontology.
+
+426
+00:52:12,199 --> 00:52:16,919
+Let's fix this a little bit, say auto ontology colon.
+
+427
+00:52:16,919 --> 00:52:23,020
+And you see here, because I'm querying with a graph mark, I can automatically see the options here.
+
+428
+00:52:24,279 --> 00:52:27,679
+And so this is much more readable in terms of what I'm actually doing.
+
+429
+00:52:27,679 --> 00:52:32,679
+Auto ontology movies.movieID.
+
+430
+00:52:42,919 --> 00:52:50,779
+Can run this, and it'll work exactly how it did just a second ago, where I can see here, you know, I have this IRI for my movie.
+
+431
+00:52:50,779 --> 00:52:55,320
+I have my ID, and I have the title of that movie.
+
+432
+00:52:55,880 --> 00:52:59,600
+So I still have semicolons here, which means I'm still reusing the same thing.
+
+433
+00:52:59,600 --> 00:53:08,399
+So let's now say, now I want to get the movie actors one actor ID.
+
+434
+00:53:12,039 --> 00:53:13,179
+And I run this query.
+
+435
+00:53:17,080 --> 00:53:19,240
+I have now zero results.
+
+436
+00:53:19,240 --> 00:53:23,119
+It cannot find any more triples for me.
+
+437
+00:53:23,119 --> 00:53:26,800
+There's no more, there's no longer 8100 triples.
+
+438
+00:53:26,800 --> 00:53:34,160
+And that's simply because movie here does not have an actor ID.
+
+439
+00:53:34,160 --> 00:53:38,479
+There is no movie in my data that I loaded that has an actor ID.
+
+440
+00:53:38,479 --> 00:53:40,619
+There are actors that have an actor ID.
+
+441
+00:53:41,600 --> 00:53:45,139
+So what I can do here is, let's copy out this line.
+
+442
+00:53:46,320 --> 00:53:48,119
+Let's put my period here.
+
+443
+00:53:48,119 --> 00:53:52,479
+The period's gonna tell it, okay, I'm done reusing that subject.
+
+444
+00:53:52,479 --> 00:53:53,919
+So now let's get a new subject.
+
+445
+00:53:53,919 --> 00:53:58,919
+Let's say an actor is an auto-ontology movie actors one.
+
+446
+00:54:00,399 --> 00:54:11,779
+And now I'm gonna say, put my statement values head back, where I had auto-ontology movie actors one actor ID.
+
+447
+00:54:15,320 --> 00:54:16,420
+I'll run this now.
+
+448
+00:54:17,440 --> 00:54:22,059
+And we're gonna notice another issue here that we haven't talked about yet.
+
+449
+00:54:22,579 --> 00:54:23,679
+This is a good example.
+
+450
+00:54:26,500 --> 00:54:29,220
+You notice that I no longer have 8100 results.
+
+451
+00:54:29,220 --> 00:54:32,619
+I no longer have no number of results of actors.
+
+452
+00:54:32,619 --> 00:54:35,540
+I have over 10,000 results.
+
+453
+00:54:35,540 --> 00:54:43,299
+I know it's over 10,000 because I've limited my results to 10,000 and the odds that it's exactly that are pretty low.
+
+454
+00:54:43,299 --> 00:54:46,660
+And if I look here, I'm gonna notice something interesting.
+
+455
+00:54:46,660 --> 00:54:57,399
+You see that every single movie that I'm getting here, when I'm querying, has the same exact URI, the same ID, the same title.
+
+456
+00:54:58,500 --> 00:55:03,160
+And if I can scroll to the right, it has a different actor.
+
+457
+00:55:04,059 --> 00:55:06,420
+Same movie, same ID, same title, different actor.
+
+458
+00:55:06,420 --> 00:55:10,779
+And it's not like we're necessarily listing all the actors of Blazing Saddles.
+
+459
+00:55:10,779 --> 00:55:13,440
+Blazing Saddles does not have this many actors.
+
+460
+00:55:14,119 --> 00:55:19,119
+There's not 150 plus named actors in Blazing Saddles.
+
+461
+00:55:21,559 --> 00:55:22,720
+What could be going on?
+
+462
+00:55:24,279 --> 00:55:34,000
+The answer is that this is something that is a very, very common error that we see when we are developing within Sparkle.
+
+463
+00:55:34,000 --> 00:55:40,239
+It's particularly common when you're kind of new to it, but this is a cross product.
+
+464
+00:55:40,480 --> 00:55:54,079
+Essentially, we are multiplying the number of unique actors by the number of unique movies in our query, particularly because there's nothing linking actor here to movie.
+
+465
+00:55:55,359 --> 00:56:08,279
+So the way that we can resolve this cross product is we can either say, let's not ask for actors in the same query, let's just stick to movies, or we can say, how might we be able to connect these two so that we don't have this issue?
+
+466
+00:56:10,239 --> 00:56:24,000
+So on, if we look at our movies, there's not really a property on movies that we have that we can necessarily link it to.
+
+467
+00:56:24,000 --> 00:56:27,440
+So we jumped down here and we see what properties are on actors.
+
+468
+00:56:27,440 --> 00:56:31,559
+Again, because I'm after a semicolon, I can reuse the same subject.
+
+469
+00:56:31,559 --> 00:56:34,000
+I don't need to create a new one.
+
+470
+00:56:34,000 --> 00:56:37,640
+So movie actor is one.
+
+471
+00:56:41,200 --> 00:56:44,359
+And I can see that I can tell it what movie ID.
+
+472
+00:56:46,000 --> 00:56:51,359
+It seems like one actor has a list of movie IDs that they perform in.
+
+473
+00:56:51,359 --> 00:57:06,640
+I can now say, now there's a link here between movie and actor, because no matter who you are, you performed in some number of movies, and we can get that list here.
+
+474
+00:57:07,519 --> 00:57:10,079
+So let's run this query.
+
+475
+00:57:12,119 --> 00:57:21,440
+And you see here, we have our actor with our actor ID, and they performed in this movie.
+
+476
+00:57:21,760 --> 00:57:29,480
+We have another actor who also performed in this movie, and now we have a new movie, and we get the actors who performed in that.
+
+477
+00:57:29,480 --> 00:57:33,640
+And so we no longer have our issue with the cross product.
+
+478
+00:57:33,640 --> 00:57:38,359
+And now let's modify our select so we can see some better information here.
+
+479
+00:57:38,359 --> 00:57:43,359
+Let's select, let's get one more property from actor.
+
+480
+00:57:44,720 --> 00:57:48,519
+Actually, I want to get the name so that we can actually make sense of what we're looking at.
+
+481
+00:57:49,519 --> 00:57:52,559
+Auto ontology, movie actor is one.
+
+482
+00:57:57,480 --> 00:58:01,399
+Let's get the title and the name.
+
+483
+00:58:03,160 --> 00:58:05,279
+And you see here, I have an error.
+
+484
+00:58:05,640 --> 00:58:08,600
+It's because I didn't put a semicolon or a period.
+
+485
+00:58:08,600 --> 00:58:12,480
+So it just needs to know that, yeah, we're continuing with the same subject.
+
+486
+00:58:12,480 --> 00:58:16,239
+And again, I have a period here at the end saying that I'm done reusing that subject.
+
+487
+00:58:17,399 --> 00:58:23,559
+So I run this query, and now I can see this actor is in this movie.
+
+488
+00:58:23,559 --> 00:58:28,000
+These two actors are in this movie, et cetera, et cetera.
+
+489
+00:58:29,279 --> 00:58:36,239
+And so now we have an actual useful query where we are gaining information based on the data that we have at our fingertips.
+
+490
+00:58:40,520 --> 00:58:43,320
+How does it know that it's the same ID, right?
+
+491
+00:58:43,320 --> 00:58:49,960
+Because you use kind of the ID in the two, so you have, okay, movie ID and here.
+
+492
+00:58:49,960 --> 00:58:50,799
+It knows that?
+
+493
+00:58:50,799 --> 00:58:53,000
+How does it know the same ID?
+
+494
+00:58:53,000 --> 00:58:55,200
+Because I'm reusing the same variable name.
+
+495
+00:58:58,359 --> 00:59:09,679
+So if I call that one ID uppercase and I call this one ID with the lowercase letters, we'll go back to having that cross product.
+
+496
+00:59:10,599 --> 00:59:15,599
+We'll no longer have the uniqueness there.
+
+497
+00:59:17,400 --> 00:59:27,440
+But if we put in these variables are the same, now when I run this, you'll see that these are properly getting linked.
+
+498
+00:59:27,440 --> 00:59:36,159
+And so the key here is that when we name that variable, it has to have the exact same name, including the capitalization.
+
+499
+00:59:36,159 --> 00:59:38,719
+And that will automatically create that link.
+
+500
+00:59:38,719 --> 00:59:43,200
+And so this is different from SQL in that we no longer require joins or anything like that.
+
+501
+00:59:43,200 --> 00:59:45,520
+That's all automatically handled for us.
+
+502
+00:59:46,559 --> 00:59:53,719
+And so in just a few lines, I'm now querying against two different files, looking for the joins between them.
+
+503
+00:59:53,719 --> 00:59:57,479
+Yeah, that makes more sense to me.
+
+504
+01:00:00,000 --> 01:00:01,680
+I mean, can you oh?
+
+505
+01:00:03,840 --> 01:00:07,280
+Yeah, sorry, uh, no, no it is so Steve.
+
+506
+01:00:07,280 --> 01:00:11,280
+Are we saying that Anzo is a case sensitive as well?
+
+507
+01:00:12,960 --> 01:00:15,400
+The sparkle is case sensitive, yes.
+
+508
+01:00:18,240 --> 01:00:29,240
+So let's say if my database OK, the table is having a column name ID, but in a small letters does it make any issues?
+
+509
+01:00:31,000 --> 01:00:41,919
+No, you for example, we can say ID in small letters here and we can say ID in small letters here as long as we're matching, it's OK, OK?
+
+510
+01:00:44,599 --> 01:00:45,919
+Yep, thanks, there's no.
+
+511
+01:00:45,919 --> 01:00:49,480
+There's no in terms of what you name your variables.
+
+512
+01:00:49,480 --> 01:00:52,560
+You can name them ultimately whatever you want.
+
+513
+01:00:52,560 --> 01:01:03,599
+There are certain cases where if you're doing more complicated GDI queries, it will try to match your variable name to the actual columns in your database.
+
+514
+01:01:03,599 --> 01:01:09,199
+So there's certain cases where I'm in a GDI query and I have a column.
+
+515
+01:01:09,199 --> 01:01:11,760
+Let's go.
+
+516
+01:01:11,760 --> 01:01:15,000
+Let's go a little bit further down so we don't have to look at this.
+
+517
+01:01:15,000 --> 01:01:23,000
+Suppose I have a column and I need to grab it and it it has the my column title.
+
+518
+01:01:23,000 --> 01:01:25,599
+Is let's say it's.
+
+519
+01:01:25,599 --> 01:01:30,760
+Part ID dash and GX.
+
+520
+01:01:30,760 --> 01:01:34,760
+So I would either have to have something here saying.
+
+521
+01:01:34,760 --> 01:01:45,199
+Part And basically match that name exactly.
+
+522
+01:01:45,199 --> 01:01:50,160
+Or what I have to do here is just say, you know this is the part ID.
+
+523
+01:01:50,160 --> 01:01:54,959
+And in here I'm gonna say look for something.
+
+524
+01:01:54,959 --> 01:01:57,040
+That matches this pattern.
+
+525
+01:01:57,040 --> 01:02:01,279
+There are a few ways you can do it, but particularly if you're using the.
+
+526
+01:02:01,279 --> 01:02:06,360
+Uh, if you're using the GDI queries automatically generated for you, you don't have to worry about this.
+
+527
+01:02:06,360 --> 01:02:09,199
+This is some more advanced Sparkle technique.
+
+528
+01:02:11,360 --> 01:02:13,520
+So I see a question.
+
+529
+01:02:13,520 --> 01:02:19,520
+Yeah, thanks is line 11 actually need it.
+
+530
+01:02:19,520 --> 01:02:33,039
+No, so in this query, because I'm querying for title and name this line 11 essentially. Isn't doing anything aside from one important fact, which is.
+
+531
+01:02:33,039 --> 01:02:42,960
+Suppose there's an option in my data in my data set that actor ID can optionally be no.
+
+532
+01:02:42,960 --> 01:02:45,520
+I'm in that case.
+
+533
+01:02:45,520 --> 01:02:50,360
+I will only be grabbing the values here where actor ID is actually populated.
+
+534
+01:02:50,360 --> 01:02:59,880
+So even though we're not building a relationship with actor ID, you could use that variable for something else.
+
+535
+01:02:59,880 --> 01:03:03,839
+Exactly so I could use that actor ID to then link to something else.
+
+536
+01:03:03,839 --> 01:03:10,279
+Or I could just say. Comment that line out and that's completely OK too.
+
+537
+01:03:10,279 --> 01:03:17,960
+So just to. So suppose that optionally this field might not be populated.
+
+538
+01:03:17,960 --> 01:03:22,080
+And so I could be missing out on the actors that I'm curious about.
+
+539
+01:03:22,080 --> 01:03:24,679
+So I could do in that case is I could say remove this line.
+
+540
+01:03:28,160 --> 01:03:32,639
+And I could end that and down here. I can have in Sparkle. It's called an optional.
+
+541
+01:03:35,360 --> 01:03:37,759
+An optionally declared just like this.
+
+542
+01:03:37,759 --> 01:03:48,039
+And I can say sometimes. An actor. Will have. An actor ID.
+
+543
+01:03:50,279 --> 01:03:52,600
+Or I take one of this properly.
+
+544
+01:03:57,080 --> 01:04:01,709
+And so now I'm allowed into the possibility that an actor doesn't have an actor ID.
+
+545
+01:04:01,709 --> 01:04:07,199
+Or I could just say comment out because again, in our actual select we don't care about this field.
+
+546
+01:04:09,759 --> 01:04:11,600
+And it still works just fine as you can see.
+
+547
+01:04:12,600 --> 01:04:14,399
+Any questions here on this?
+
+548
+01:04:14,399 --> 01:04:18,600
+This kind of basic Sparkle query where we're linking between these two classes.
+
+549
+01:04:24,640 --> 01:04:29,239
+Do we have maybe any other joining possibilities?
+
+550
+01:04:29,239 --> 01:04:33,239
+Somehow like left outer joints or something like this?
+
+551
+01:04:33,239 --> 01:04:35,959
+Is it here so we don't have to?
+
+552
+01:04:35,959 --> 01:04:37,519
+We don't have to do that.
+
+553
+01:04:37,519 --> 01:04:39,040
+We don't have to do that.
+
+554
+01:04:39,040 --> 01:04:40,640
+We don't have to do that.
+
+555
+01:04:40,640 --> 01:04:45,079
+So we we don't have to worry about left or right or anything like that.
+
+556
+01:04:45,079 --> 01:04:50,880
+It's all just done automatically for us based on this and we can add different.
+
+557
+01:04:50,880 --> 01:04:52,279
+Filters and things like that.
+
+558
+01:04:52,279 --> 01:04:55,679
+If there are certain parameters that we need to consider before we make that join.
+
+559
+01:04:58,000 --> 01:04:59,305
+Oh sorry.
+
+560
+01:04:59,305 --> 01:05:02,640
+For example, I can say.
+
+561
+01:05:02,640 --> 01:05:06,640
+You know, I call this one ID now in ID.
+
+562
+01:05:06,640 --> 01:05:09,760
+And I can have a filter down here.
+
+563
+01:05:09,760 --> 01:05:12,320
+And I can say filter where.
+
+564
+01:05:12,320 --> 01:05:14,519
+Uhm, you know, ID.
+
+565
+01:05:14,519 --> 01:05:16,679
+Equals ID.
+
+566
+01:05:16,679 --> 01:05:20,160
+And I can have you say and and have a second condition.
+
+567
+01:05:20,160 --> 01:05:25,880
+There are ways to make this join more complicated and you know, filter on certain parameters.
+
+568
+01:05:25,880 --> 01:05:29,440
+But say if we have this filter.
+
+569
+01:05:29,440 --> 01:05:32,440
+It will still work the exact same way.
+
+570
+01:05:32,440 --> 01:05:37,200
+The difference is as these data sets get larger and more complicated.
+
+571
+01:05:37,200 --> 01:05:39,399
+Uhm, I I don't know this for sure.
+
+572
+01:05:39,399 --> 01:05:44,720
+This is more my experience, but I tend to find that doing it this way where you just name these two variables.
+
+573
+01:05:44,720 --> 01:05:48,320
+The same thing it tends to be a more efficiently run query.
+
+574
+01:05:51,399 --> 01:05:52,839
+It tends to run a little bit faster.
+
+575
+01:05:57,880 --> 01:05:58,679
+OK, thanks.
+
+576
+01:06:02,079 --> 01:06:03,679
+Uhm, any more questions here?
+
+577
+01:06:11,602 --> 01:06:16,279
+I'm going to jump back to the slides really quick.
+
+578
+01:06:16,279 --> 01:06:20,119
+I think we can get through our next section and then take a quick break.
+
+579
+01:06:22,600 --> 01:06:24,720
+So our next section we talked a lot about yesterday.
+
+580
+01:06:24,720 --> 01:06:27,600
+Oh, I see another hand, sorry.
+
+581
+01:06:27,600 --> 01:06:30,079
+Yeah, Steve, can we do some transformation also?
+
+582
+01:06:30,079 --> 01:06:31,839
+So here we have joined here.
+
+583
+01:06:31,839 --> 01:06:34,200
+We have seen outcome of this operation.
+
+584
+01:06:34,200 --> 01:06:38,079
+Can we do some transformation also like in in any normal ETL?
+
+585
+01:06:38,119 --> 01:06:41,920
+In any normal ETL process we can do.
+
+586
+01:06:41,920 --> 01:06:43,720
+Sure, what kind of transformation do you want to see?
+
+587
+01:06:47,480 --> 01:06:48,129
+Uhm?
+
+588
+01:06:48,129 --> 01:06:50,079
+For example.
+
+589
+01:06:52,320 --> 01:06:55,920
+What we could do here is say we need.
+
+590
+01:06:55,920 --> 01:06:59,079
+We need the names of the movies in a certain form.
+
+591
+01:06:59,079 --> 01:07:00,399
+We need them in.
+
+592
+01:07:00,399 --> 01:07:05,880
+We need them encoded for URI's so we could say.
+
+593
+01:07:05,880 --> 01:07:12,440
+Encode for URI. And then. Title as.
+
+594
+01:07:21,239 --> 01:07:27,640
+Depends on what kind of information you're looking for here, but now you see where we had these parentheses before we can.
+
+595
+01:07:27,640 --> 01:07:33,239
+We've now encoded those that we could potentially embed that in a.
+
+596
+01:07:33,279 --> 01:07:35,559
+Um, in its own URI.
+
+597
+01:07:37,959 --> 01:07:40,359
+Is this what you meant or we're looking for something more specific?
+
+598
+01:07:41,519 --> 01:07:50,047
+You know, in general, you know if you we have to handle data quality stuff and to have a proper data to be propagated to target.
+
+599
+01:07:50,047 --> 01:07:53,839
+So in case of, you know, handling data quality stuff at basic level.
+
+600
+01:07:53,839 --> 01:07:57,359
+So such kind of very basic transformation I was looking for.
+
+601
+01:07:57,359 --> 01:07:58,920
+If not in a complex ones.
+
+602
+01:08:00,119 --> 01:08:13,079
+Sure, a lot of times what we'll have and we're going to cover this in a little bit later is we might have a specific kind of query where instead of a select, we're going to have an ask.
+
+603
+01:08:15,720 --> 01:08:25,160
+And this isn't the right way to format and ask, but just to give you an idea what we're looking for, we're going to have an ask and then we can have some filters on the data quality.
+
+604
+01:08:25,160 --> 01:08:28,480
+Like we can have filter for example.
+
+605
+01:08:28,480 --> 01:08:29,399
+Is upper.
+
+606
+01:08:29,679 --> 01:08:33,640
+We got the exact format of this like the.
+
+607
+01:08:36,039 --> 01:08:41,239
+Um, whatever the format is, we have a basic saying is.
+
+608
+01:08:41,239 --> 01:08:44,960
+This title all in uppercase.
+
+609
+01:08:44,960 --> 01:08:52,919
+And this ask will basically put out a Boolean pass or fail based on filters that are applied and what we can do.
+
+610
+01:08:52,919 --> 01:09:00,880
+Then as we can send out flags and warnings based on hey, the data quality checks failed in these three key places.
+
+611
+01:09:00,880 --> 01:09:06,520
+And so those are different ways that within a graph mark we might have some validation in place for quality control.
+
+612
+01:09:09,280 --> 01:09:10,039
+OK.
+
+613
+01:09:12,840 --> 01:09:16,880
+But we're going to have some examples of that a little bit further down the line.
+
+614
+01:09:16,880 --> 01:09:20,280
+It's the specific validation.
+
+615
+01:09:20,280 --> 01:09:23,039
+OK, looking forward then, thanks.
+
+616
+01:09:23,039 --> 01:09:25,320
+Sure.
+
+617
+01:09:25,320 --> 01:09:26,359
+What's another question?
+
+618
+01:09:32,799 --> 01:09:42,679
+OK, so like I was saying, we're going to quickly cover this, which we talked a bit about yesterday, but just again, some things that I've done kind of quickly.
+
+619
+01:09:42,679 --> 01:09:46,919
+I want to stay on for a second to make sure that.
+
+620
+01:09:46,919 --> 01:09:48,960
+Um, the points are clear.
+
+621
+01:09:48,960 --> 01:10:10,160
+When we talk about building a data model in Anzo again, within Anzo specifically, when we say model, we are very, very often referring to an ontology in the world, in the domain of Anzo, these two words can sort of get mixed, can get used interchangeably.
+
+622
+01:10:10,160 --> 01:10:13,560
+This isn't true for other graph data platforms necessarily.
+
+623
+01:10:13,560 --> 01:10:21,400
+For example, if you're coming from the world of GraphDB, maybe these two things aren't interchangeable, but in this specific context, they are.
+
+624
+01:10:21,400 --> 01:10:32,020
+So we get to models by again, that left sidebar clicking where it says model, and I'll get to the model manager, which enables us to view, create, and manage our data models.
+
+625
+01:10:32,020 --> 01:10:35,820
+We can also upload existing data models from external sources.
+
+626
+01:10:35,820 --> 01:10:45,259
+And typically when we do that, when we upload those external data models or those external ontologies, we like them to be in the OWL format.
+
+627
+01:10:45,259 --> 01:10:51,340
+So when I say OWL, I mean that that's a specific syntax and a specific file extension.
+
+628
+01:10:51,340 --> 01:10:59,139
+And again, by clicking this link down here, and again, today I'm going to make sure that these documents get all sent out to you, including the slides.
+
+629
+01:11:01,299 --> 01:11:13,900
+So when we open that model, it's going to open up this dialogue that you see sort of cut off from the top here, where it's going to ask us, are we going to grab an existing model?
+
+630
+01:11:13,900 --> 01:11:15,300
+Are we going to add a model?
+
+631
+01:11:15,300 --> 01:11:16,300
+Is it going to be new?
+
+632
+01:11:16,300 --> 01:11:17,379
+Are we going to import something?
+
+633
+01:11:17,379 --> 01:11:19,400
+Are we going to upload something?
+
+634
+01:11:19,400 --> 01:11:27,500
+And so when we create a new model, you saw this yesterday, it looks like this, where we have to give our model a name before we can start adding classes and things like that.
+
+635
+01:11:28,260 --> 01:11:31,620
+We also have the option here to specify certain prefixes and properties.
+
+636
+01:11:31,620 --> 01:11:39,300
+If you know we have certain domain requirements on the format of the URIs, it can be easy way to control that.
+
+637
+01:11:42,019 --> 01:11:53,379
+So once we create a model, it might look something like this, where we have a number of classes we defined and a number of different ways that that model interlinks with itself.
+
+638
+01:11:53,379 --> 01:12:07,099
+So just to give an idea here, when we see these blue arrows connecting one blue circle to another blue circle, that is us indicating that there is an object property connecting the one to the other.
+
+639
+01:12:07,099 --> 01:12:12,179
+So in this case, product has an object property connecting itself to shipments.
+
+640
+01:12:12,179 --> 01:12:16,259
+Remember that object properties can either be one-to-one or one-to-many.
+
+641
+01:12:17,139 --> 01:12:27,580
+There is no need to worry about that besides, and I'll show you this in the ends UI really quickly.
+
+642
+01:12:27,580 --> 01:12:31,899
+If I go to model, I will save this query.
+
+643
+01:12:31,899 --> 01:12:35,820
+Now I'll say this is the center demo query.
+
+644
+01:12:35,820 --> 01:12:52,339
+Then I go to the model view and I say, okay, I want on my canonical model, I want actor, I want them to have a new property.
+
+645
+01:12:53,460 --> 01:13:00,899
+I want them to be able to perform in, and I want that range to be movie.
+
+646
+01:13:06,619 --> 01:13:12,899
+And so if I think about an actor, one actor very rarely performs in just one movie.
+
+647
+01:13:12,899 --> 01:13:24,979
+So in that case, I'm going to check this box saying, this is actually a one-to-many relationship, performs in, even though it's coming from one instance of actor, it's going to point to a variety of movies.
+
+648
+01:13:24,979 --> 01:13:30,740
+And you see here that I actually look here, only one arrow is actually connected.
+
+649
+01:13:32,740 --> 01:13:33,580
+That's how that works.
+
+650
+01:13:33,580 --> 01:13:51,139
+And then remember that when we were connecting this canonical actor to the raw movie actors, you'll see here that when we did that, this was only a one-to-one relationship, meaning that we did not check this box.
+
+651
+01:13:51,139 --> 01:13:58,979
+And if we actually download and look at the RDF representing this ontology, you'll see how we actually denote these things in RDF.
+
+652
+01:13:58,979 --> 01:14:04,100
+But for our purposes, when we're just modifying these things to the UI, this is a pretty nice way.
+
+653
+01:14:06,020 --> 01:14:08,020
+So, I see a hand raised.
+
+654
+01:14:10,740 --> 01:14:14,339
+How do you choose this property range and domain in general?
+
+655
+01:14:14,339 --> 01:14:19,059
+So here in one file, we have movie detail and in another file, we have actors detail.
+
+656
+01:14:19,059 --> 01:14:26,420
+But what if in one single file, we are receiving a whole of this information, then how do we choose out of that one file?
+
+657
+01:14:26,420 --> 01:14:27,540
+How are you choosing?
+
+658
+01:14:29,179 --> 01:14:33,779
+So I'm choosing based on what makes, and this is going to be a couple of things.
+
+659
+01:14:34,179 --> 01:14:42,260
+And this is going to be a kind of not great answer, but I'm going off based off what makes intuitive sense to me.
+
+660
+01:14:42,260 --> 01:14:53,820
+For example, I have enough domain knowledge of movies and actors to know that one act, to know that there should be a relationship between movies and actors.
+
+661
+01:14:53,820 --> 01:14:55,820
+And I can just make that property.
+
+662
+01:14:55,820 --> 01:15:02,019
+For example, I know that it's kind of hard to connect these two, but I know that movies and directors can be connected.
+
+663
+01:15:02,019 --> 01:15:04,220
+So here's what I can do.
+
+664
+01:15:05,500 --> 01:15:06,700
+I can add a class.
+
+665
+01:15:08,420 --> 01:15:10,260
+Say, I'm going to call this movie.
+
+666
+01:15:14,220 --> 01:15:21,940
+Add property as director, property range.
+
+667
+01:15:21,940 --> 01:15:26,100
+Now I grab that director from the raw.
+
+668
+01:15:26,100 --> 01:15:31,980
+Again, not trying to add any properties or anything to, I had typo.
+
+669
+01:15:33,500 --> 01:15:44,260
+I'm not trying to add any properties or anything to the raw or auto-generate ontology, because I know that every time I reload my graph mark, I'm going to lose those changes.
+
+670
+01:15:45,299 --> 01:15:56,339
+But I can then say, if I look here, movie is now has a connection to there.
+
+671
+01:15:56,339 --> 01:16:08,100
+And I can then say, movie and I can add another property here and I can say, as raw movie, I can point it to our auto-generate movies.
+
+672
+01:16:11,619 --> 01:16:25,380
+And so just like that, we are now jumping, we can now jump from, you know, our actual data related to actors and we can connect that to the raw, to the actual data related to the movies.
+
+673
+01:16:25,380 --> 01:16:27,299
+And I can then connect that to C.
+
+674
+01:16:27,299 --> 01:16:30,380
+Now I have a connection between an actor.
+
+675
+01:16:34,299 --> 01:16:38,940
+And so this is just based on my knowledge of the domain.
+
+676
+01:16:38,940 --> 01:16:52,380
+And so actual ontologists, you know, people who study these things on an academic level, have some very, very specific parameters for, you know, how they might model this.
+
+677
+01:16:52,380 --> 01:17:03,700
+But I find that it's best to go in with an approach that is easily reusable, easily understandable, and easily modular.
+
+678
+01:17:04,579 --> 01:17:14,980
+Meaning that I want to be able to reuse this connection for a variety of different questions that my business end users might have.
+
+679
+01:17:14,980 --> 01:17:26,500
+For example, my business end users might wanna say, if I wanna hire this director, what actors do they most like to work with who require the lowest pay typically?
+
+680
+01:17:27,579 --> 01:17:32,140
+So that's a business question that I could answer using these relationships.
+
+681
+01:17:33,140 --> 01:17:37,339
+So I want it to be reasonable for new use cases.
+
+682
+01:17:37,339 --> 01:17:45,059
+I want it to be modular, meaning I can easily say, add relationship from movie to movie editor or movie producer.
+
+683
+01:17:46,540 --> 01:17:55,220
+I don't have to do it at this time because the actual question that I just asked doesn't require that connection, but I could easily modify it later.
+
+684
+01:17:55,220 --> 01:17:58,140
+And then the last thing is easily readable.
+
+685
+01:17:58,140 --> 01:18:01,619
+You don't see any text here.
+
+686
+01:18:01,619 --> 01:18:03,820
+There's no weird hashes.
+
+687
+01:18:03,820 --> 01:18:08,899
+So it's easily readable to me and I can understand my domain just by looking at this.
+
+688
+01:18:08,899 --> 01:18:10,220
+I see another question.
+
+689
+01:18:11,380 --> 01:18:21,179
+Yeah, Steve, maybe a stupid one, but by taking this example, can we answer that there are a number of factors who turn to director later?
+
+690
+01:18:23,019 --> 01:18:24,420
+Sorry, can you repeat the question?
+
+691
+01:18:24,420 --> 01:18:25,619
+I'm not sure I heard you properly.
+
+692
+01:18:25,619 --> 01:18:30,619
+So just one question that actors turn to as directors.
+
+693
+01:18:33,059 --> 01:18:45,099
+Yeah, so the question here is whether or not we can see, what actors have later in their careers taken a chance at being a director of a movie?
+
+694
+01:18:46,739 --> 01:18:50,299
+And so the answer is yes and no.
+
+695
+01:18:52,859 --> 01:18:57,859
+So for an actor, their primary key is their actor ID.
+
+696
+01:19:01,340 --> 01:19:07,299
+We don't have any additional information from this source, such as their birth date or things like that.
+
+697
+01:19:07,299 --> 01:19:18,820
+So if I have one actor named John Smith and one movie director named John Smith, I don't have a way with this link to actually verify that they are the same John Smith.
+
+698
+01:19:19,820 --> 01:19:27,099
+So what I would probably want to do then is bring in some other external source in order to verify that sort of connection.
+
+699
+01:19:30,179 --> 01:19:32,859
+Okay, understood.
+
+700
+01:19:35,340 --> 01:19:36,780
+Sure, it's a really good question.
+
+701
+01:19:36,780 --> 01:19:48,059
+And it's a question that is a common reason that we might bring in external connection in order to say, we have this relationship that we've already established.
+
+702
+01:19:48,299 --> 01:20:02,160
+But we're missing a little bit of information to actually be able to verify that the deduction that our business team is forming based on the data, we need a little bit more extra information to actually verify that whether that conclusion is true and valid.
+
+703
+01:20:02,160 --> 01:20:04,480
+And that's a really common use case.
+
+704
+01:20:04,480 --> 01:20:09,080
+Another reason that we really want what we're doing here to be easily modular and extensible.
+
+705
+01:20:13,760 --> 01:20:14,720
+Any more questions here?
+
+706
+01:20:14,720 --> 01:20:18,200
+I think this is really good topic to linger on if we need to.
+
+707
+01:20:19,480 --> 01:20:21,719
+Yeah, in extension to this same example.
+
+708
+01:20:21,719 --> 01:20:35,520
+So in that case you know if we want to link them up we would need some bridge table here so we can create some link table and we can connect basically ingest in here and connect via them or no.
+
+709
+01:20:37,720 --> 01:20:43,320
+So you're saying create a link table in your snowflake database and then just ingest that link table.
+
+710
+01:20:43,320 --> 01:20:57,520
+So that link table the way that you guys can automatically ingest that it's basically going to represent it as its own class that it can then do the same thing we're doing here to basically grab out those properties and make it easily.
+
+711
+01:20:57,520 --> 01:21:01,919
+But at some point we're going to have to write some manual Sparkle.
+
+712
+01:21:01,919 --> 01:21:10,279
+There's no way that I'm aware of to just automatically pick that up and create the interlinked ontology from.
+
+713
+01:21:10,279 --> 01:21:12,199
+Uh, from the starting point.
+
+714
+01:21:15,480 --> 01:21:16,959
+So there there is a.
+
+715
+01:21:16,959 --> 01:21:21,959
+There's a chance of creating automatically also to feed to such use cases.
+
+716
+01:21:24,559 --> 01:21:30,320
+I'm saying that there's not a way to pick up that link table and create its object properties.
+
+717
+01:21:30,320 --> 01:21:35,160
+You're going to have to write some Sparkle in order to do that.
+
+718
+01:21:35,160 --> 01:21:36,279
+Hmm, OK.
+
+719
+01:21:38,879 --> 01:21:49,800
+Sorry, I'm not sure maybe helpful because in SSIS we used to have a fuzzy look up to find out such scenarios.
+
+720
+01:21:52,320 --> 01:22:00,959
+So the the fuzzy look up is there is a function in Sparkle by default for basically fuzzy matching.
+
+721
+01:22:00,959 --> 01:22:05,279
+In Sparkle built in shipping with Anzo, I think there are two.
+
+722
+01:22:05,279 --> 01:22:09,119
+The one that we most commonly use is the Levenstein distance algorithm.
+
+723
+01:22:12,160 --> 01:22:15,440
+So if I pull up here, the Sparkle reference again.
+
+724
+01:22:16,960 --> 01:22:18,360
+You saw we pull this up yesterday.
+
+725
+01:22:22,303 --> 01:22:31,360
+I'm never quite sure I'd spell this, but I can send you some details on how to use the Levenstein distance in your Sparkle queries.
+
+726
+01:22:31,360 --> 01:22:37,240
+But basically when we do this, and if you're familiar with the algorithm, it will compare two strings.
+
+727
+01:22:37,240 --> 01:22:41,720
+So suppose. Here.
+
+728
+01:22:41,720 --> 01:22:44,160
+I'll create a very simple query.
+
+729
+01:22:44,160 --> 01:22:58,240
+So let's say I have.
+
+730
+01:22:58,240 --> 01:23:00,679
+Apple as Apple.
+
+731
+01:23:03,679 --> 01:23:06,600
+I'm just saving some variables really quickly.
+
+732
+01:23:06,600 --> 01:23:15,720
+I'm storing the string uppercase Apple a here and storing the lowercase apple a here.
+
+733
+01:23:15,720 --> 01:23:18,043
+That's cool.
+
+734
+01:23:18,043 --> 01:23:27,800
+And so. I'm gonna look at how to spell this.
+
+735
+01:23:27,800 --> 01:23:30,880
+But then you see Levenstein, that's why.
+
+736
+01:23:47,679 --> 01:23:50,160
+It goes essentially like this where.
+
+737
+01:23:50,160 --> 01:23:52,679
+Apple Apple.
+
+738
+01:23:52,679 --> 01:23:56,479
+And I look up the exact syntax here because I'm doing something wrong.
+
+739
+01:23:56,479 --> 01:24:02,019
+As you can see by the red underline, I think it's just a spelling thing that I'm not seeing.
+
+740
+01:24:02,019 --> 01:24:02,839
+As score.
+
+741
+01:24:02,839 --> 01:24:05,800
+Basically, this will output the closeness score.
+
+742
+01:24:05,800 --> 01:24:13,880
+So here, because these are two very similar things, I might expect something such as a being on a scale of zero to one.
+
+743
+01:24:13,880 --> 01:24:15,839
+These things are very, very similar.
+
+744
+01:24:15,839 --> 01:24:21,000
+Whereas if I put here instead of uppercase a Apple, I put here elephant.
+
+745
+01:24:21,000 --> 01:24:25,559
+I would have a lower score and that's how you do fuzzy matching here with sparkles.
+
+746
+01:24:25,559 --> 01:24:28,040
+And I'll get you the proper syntax in order to do this here.
+
+747
+01:24:28,040 --> 01:24:29,720
+This isn't quite right.
+
+748
+01:24:29,720 --> 01:24:31,720
+I just need to remember how to do that.
+
+749
+01:24:36,000 --> 01:24:37,320
+Does that answer that question?
+
+750
+01:24:42,239 --> 01:24:43,239
+Yep.
+
+751
+01:24:52,320 --> 01:24:54,399
+Just to jump back to.
+
+752
+01:24:54,399 --> 01:24:57,200
+What we're talking about here.
+
+753
+01:24:58,600 --> 01:25:03,000
+I do want to talk very, very briefly about what you're seeing.
+
+754
+01:25:03,000 --> 01:25:08,720
+This graphic with the red lines because this is a it's related to a question that we had yesterday.
+
+755
+01:25:08,720 --> 01:25:10,600
+So I go back to our models.
+
+756
+01:25:10,640 --> 01:25:11,519
+Let me discard this.
+
+757
+01:25:13,559 --> 01:25:23,640
+You'll see here that all of our all of our classes and ontology are being linked by these object properties and they have blue lines.
+
+758
+01:25:23,640 --> 01:25:29,040
+But suppose in my canonical model I want to have a new class.
+
+759
+01:25:29,040 --> 01:25:32,440
+And I don't want this class to.
+
+760
+01:25:32,440 --> 01:25:34,959
+Necessarily.
+
+761
+01:25:34,959 --> 01:25:44,519
+Uh, this isn't necessarily going to link to our source data, just as an example, I want to get a little bit more specific and I want to say.
+
+762
+01:25:44,519 --> 01:25:48,119
+I want a class for specifically comedy movies.
+
+763
+01:25:48,119 --> 01:25:52,480
+Uh, this will be pretty familiar to you if you come from the world of.
+
+764
+01:25:52,480 --> 01:25:56,359
+Uh, you know, programming or object oriented programming.
+
+765
+01:25:56,359 --> 01:25:58,160
+But here were previously blessed.
+
+766
+01:25:58,160 --> 01:26:02,000
+We've left this parent classes field empty.
+
+767
+01:26:02,000 --> 01:26:07,640
+I'm going to say this is the parent of this is movie.
+
+768
+01:26:07,640 --> 01:26:10,160
+So if I save that.
+
+769
+01:26:10,160 --> 01:26:11,880
+And I go back to our visualization.
+
+770
+01:26:21,880 --> 01:26:24,799
+I might need to clear out the set.
+
+771
+01:26:24,799 --> 01:26:30,239
+Again, because this server doesn't have a lot of resources, sometimes I get some weird visual errors.
+
+772
+01:26:30,239 --> 01:26:31,880
+Just bear with me for just a second.
+
+773
+01:26:38,119 --> 01:26:53,519
+I'll figure out what's going on with the visualization in just a second here, but just so you can see here, movie is not connected to this comedy with a red arrow, meaning that movie is the parent of the comedy.
+
+774
+01:26:53,519 --> 01:26:59,119
+And what that means is I don't have to add any properties to this class.
+
+775
+01:26:59,119 --> 01:27:04,480
+I can just say, I want to have a new class for specifically comedy movies.
+
+776
+01:27:04,480 --> 01:27:15,160
+And what that means is I don't have to add any properties to comedy for R to have its relationship with HasDirector and HasRawMovie.
+
+777
+01:27:15,160 --> 01:27:21,959
+Comedy automatically gets those and inherits those from its parent, and that's what the red arrows in that graphic mean.
+
+778
+01:27:21,959 --> 01:27:24,519
+And so sometimes it's nice to.
+
+779
+01:27:24,519 --> 01:27:32,600
+In the specific use case that we had previously with PMI, we had like.
+
+780
+01:27:32,640 --> 01:27:42,040
+As a random example, if we have a part of a cigarette and then a subclass of that part could be the actual tobacco, is random example.
+
+781
+01:27:44,239 --> 01:27:47,559
+So going back to the slides here.
+
+782
+01:27:47,559 --> 01:27:53,679
+Let's make sure we get through this content, cause it's pretty, it's pretty well.
+
+783
+01:27:53,679 --> 01:27:56,040
+How about we've done already?
+
+784
+01:27:58,359 --> 01:28:03,359
+Are there any questions here on just creating and designing models and ontologies?
+
+785
+01:28:05,880 --> 01:28:07,600
+I'm just have a question.
+
+786
+01:28:07,600 --> 01:28:17,600
+Will we have a moment in this code where we do something practically so to open ourselves some environment, try to do something on our own?
+
+787
+01:28:17,600 --> 01:28:29,359
+Yeah, so what we're doing in the background here is we're trying to set up a demo environment that you all will have access to and you can try some of these things out for yourselves.
+
+788
+01:28:29,359 --> 01:28:44,400
+We didn't want to necessarily give you those connection details too soon and basically set you free without necessarily knowing you know where to go to do certain things because that from our experience can be kind of frustrating for the user.
+
+789
+01:28:44,400 --> 01:29:00,640
+So by the end of the week we should have a demo environment ready for and credentials for all of you to, if you so choose, get in and start trying some of these things, try to create graph mark, try to create a model for yourselves.
+
+790
+01:29:00,640 --> 01:29:11,599
+OK, that is awesome because honestly, I mean when you explain the Spark QL and so on, I mean it's clear, but I guess everyone needs a little bit of a practice to to send this.
+
+791
+01:29:11,599 --> 01:29:13,520
+Yeah, otherwise it's it's too deeply.
+
+792
+01:29:13,520 --> 01:29:15,679
+It's easily lost here, but that's awesome.
+
+793
+01:29:15,679 --> 01:29:19,440
+Yeah, no, let's let's let's look at.
+
+794
+01:29:19,440 --> 01:29:26,640
+It's definitely I have this experience to where it's easy when someone walks me through it and then I get in myself and I.
+
+795
+01:29:26,640 --> 01:29:30,159
+And a little bit stuck saying what the heck is actually going on here.
+
+796
+01:29:30,159 --> 01:29:38,159
+Uhm, so yeah, hopefully I'm our goal internally is to get this all set up for you by the end of the week so that you can start applying.
+
+797
+01:29:38,159 --> 01:29:47,440
+So what we've been talking about and then I'll be available to support your exploration as we, you know, wait to get into the actual project up and running.
+
+798
+01:29:47,440 --> 01:29:54,960
+I'll be here to support in your just exploration and any questions that come up during that process.
+
+799
+01:29:55,960 --> 01:29:59,039
+Cool, awesome, thank you.
+
+800
+01:29:59,039 --> 01:30:00,000
+Top right now, right?
+
+801
+01:30:00,000 --> 01:30:05,258
+Yeah, I think that we're going to take a short break here.
+
+802
+01:30:05,258 --> 01:30:12,396
+I have, it's 36 minutes past the hour here, so why don't we try to come back.
+
+803
+01:30:12,396 --> 01:30:24,926
+Let's say we don't have a ton more content to go through, so I say we can go to 45 and try to pick up then.
+
+804
+01:30:24,926 --> 01:30:28,639
+Does that work for everyone?
+
+805
+01:30:28,959 --> 01:30:31,960
+Great, I will see you all at 45 past the hour.
+
+806
+01:30:31,960 --> 01:30:33,200
+Thank you everyone.
+
+807
+01:30:35,040 --> 01:30:35,540
+Thanks.
+
+808
+01:30:39,279 --> 01:30:40,320
+Thank you.
+
+809
+01:38:58,640 --> 01:39:12,320
+Hi everyone, can we give a thumbs up if we're back in the break?
+
+810
+01:39:28,719 --> 01:39:36,115
+Okay, I'm seeing a number of thumbs up, so I'm going to pull the slides back up here.
+
+811
+01:39:36,115 --> 01:39:47,959
+I was, just a quick note, I was working during the break to make sure that we can, to make sure that we can get these recordings out to you.
+
+812
+01:39:47,959 --> 01:40:00,878
+I know that there are some permissions issues on my end with sharing recordings outside our organization, but I think I fixed that during the break, so I should have those links to you at the conclusion of this meeting.
+
+813
+01:40:00,878 --> 01:40:07,360
+So let me make sure I got the right window shared with you.
+
+814
+01:40:07,360 --> 01:40:34,360
+I'm trying to share my screen, I promise.
+
+815
+01:40:35,360 --> 01:40:38,360
+Can you all see?
+
+816
+01:40:38,360 --> 01:40:43,360
+Yeah, I can see it.
+
+817
+01:40:43,360 --> 01:40:48,360
+Great.
+
+818
+01:40:53,360 --> 01:40:55,202
+I think we are good.
+
+819
+01:40:55,202 --> 01:41:00,360
+So, I'm going to jump back into the slides really quick.
+
+820
+01:41:00,360 --> 01:41:05,360
+We're going to cover the next section, which is advanced ANZA usage.
+
+821
+01:41:05,360 --> 01:41:16,360
+Basically, a lot of the points covered in this section are going to be elaborated on in more detail tomorrow.
+
+822
+01:41:16,360 --> 01:41:24,360
+But there are some things that I think it's going to be better to go over sooner rather than later.
+
+823
+01:41:24,360 --> 01:41:41,360
+So, the first thing is something we've been talking about a lot, which is how to basically use query steps and Sparkle queries to get your data to conform to the data model that you've been already setting up using basically the model designer and the canonical model.
+
+824
+01:41:41,360 --> 01:42:03,360
+And so, again, just to remind you, graph marks are essentially the pipelines that enable us to grab our relevant data from either our external sources using GDI or that's already been loaded into ANZOGraph and to do some transformations with that data.
+
+825
+01:42:03,360 --> 01:42:12,360
+Data layers are these containers within the graph marks that are going to essentially contain our various query steps.
+
+826
+01:42:12,360 --> 01:42:20,360
+But another important detail to remember is that data layers and query steps can have their permissions assigned directly.
+
+827
+01:42:20,360 --> 01:42:26,360
+The permissions don't need to be sweeping across all graph marks or across one certain graph mark.
+
+828
+01:42:26,360 --> 01:42:35,360
+There is the ability to configure permissions on that more granular level, which is something that I think is worth reminding here.
+
+829
+01:42:35,360 --> 01:42:42,360
+Again, we saw this yesterday, but there are all sorts of different query steps that we can use as we're designing graph marks.
+
+830
+01:42:42,360 --> 01:42:43,360
+We talked about some of them yesterday.
+
+831
+01:42:43,360 --> 01:42:51,360
+For example, the basic query step is just going to write Sparkle to either insert or delete information from ANZOGraph.
+
+832
+01:42:51,360 --> 01:43:02,360
+Export step is where we're going to take that data that we've loaded into ANZOGraph and actually write it to the disk in the form of that FLDS, that file-based linked data set.
+
+833
+01:43:02,360 --> 01:43:05,360
+Another option is the view step, which we talked yesterday.
+
+834
+01:43:05,360 --> 01:43:10,360
+We aren't really going to need, at least for this use case, but that's how we would virtualize data.
+
+835
+01:43:10,360 --> 01:43:18,360
+And you see here we have certain steps for leveraging that unstructured data, leveraging that elastic search index that we talked about earlier today.
+
+836
+01:43:18,360 --> 01:43:27,360
+We also have a few more complicated options here that I'm going to talk about.
+
+837
+01:43:27,360 --> 01:43:32,360
+For example, the validation step is something that I mentioned just a little bit earlier.
+
+838
+01:43:32,360 --> 01:43:41,360
+But the validation step is essentially what is going to allow us to do that.
+
+839
+01:43:41,360 --> 01:43:50,360
+I guess validation is going to allow us to perform that ask in order to verify whether a certain condition is true or not.
+
+840
+01:43:50,360 --> 01:44:00,360
+So, for example, when I perform that validation step, it is going to tell me basically a Boolean pass or fail.
+
+841
+01:44:00,360 --> 01:44:11,360
+And then what we can do then is use that using either alert systems or with dashboards in order to configure something to tell us the actual state and quality of our data.
+
+842
+01:44:11,360 --> 01:44:19,359
+And so, again, there are some docs down here that I'm going to share with you today that you're going to get today when you get these slides.
+
+843
+01:44:19,359 --> 01:44:27,359
+That is going to include basically how all these steps might work and different ways you might use them.
+
+844
+01:44:27,359 --> 01:44:30,359
+I'm not going to go into too much detail on the other one.
+
+845
+01:44:30,359 --> 01:44:32,359
+I'm just going to give you a brief idea.
+
+846
+01:44:32,359 --> 01:44:34,359
+The templated step is something that's useful here.
+
+847
+01:44:34,359 --> 01:44:44,359
+If you have the same, let's say, string that's going to get reused over and over and over again in your query, suppose sometimes that string could be a username.
+
+848
+01:44:44,359 --> 01:44:49,359
+Sometimes that's the URL of the external connection that you're trying to target.
+
+849
+01:44:49,359 --> 01:45:01,359
+But sometimes it's nice to basically, through the UI, through a template, configure that so that you only ever have to reference the variable name that you assign.
+
+850
+01:45:01,359 --> 01:45:19,359
+Another nice one that uses a templated step sort of as a backbone is the query-driven templated step, where essentially you have a select query that pulls out certain parameters that you're looking for and then basically you can then use those parameters that you're looking for in an inner query.
+
+851
+01:45:19,359 --> 01:45:35,359
+So a query-driven templated step, a good way to think of this is as a, if it comes from world programming or development, a good way to think of this is as a for loop, where basically we're grabbing based on a certain thing we're looking for.
+
+852
+01:45:35,359 --> 01:45:39,359
+So for each of these things that we grabbed, perform that inner query.
+
+853
+01:45:42,359 --> 01:45:49,359
+So, again, if you want to know more about the different types of queries or how they work, you can click these links.
+
+854
+01:45:49,359 --> 01:46:07,359
+As we're developing your use case, as we're exploring more, if you're reading about some of these descriptions and you come to think, hey, I think this RDFS plus inference step is actually the best thing for my use case, I would be more than happy to, you know, look at your use case more closely and say, like, actually, yeah, I think that's a great idea.
+
+855
+01:46:07,359 --> 01:46:08,932
+Here's how you use this.
+
+856
+01:46:08,932 --> 01:46:15,359
+Or I say, you know, I think the basic Sparkle query step is actually what you're looking for here.
+
+857
+01:46:15,359 --> 01:46:26,359
+Typically, most scenarios, unless, like I said, you're writing the disk or trying to virtualize data, most scenarios are best off just writing a basic Sparkle query step.
+
+858
+01:46:26,359 --> 01:46:33,359
+That is typically the first place that I would look.
+
+859
+01:46:33,359 --> 01:46:39,359
+This here is a graphic that we saw yesterday, again, pertaining to virtualization.
+
+860
+01:46:39,359 --> 01:46:43,359
+We went into the pros and cons yesterday, so I'm not going to harp too much more.
+
+861
+01:46:43,359 --> 01:46:49,359
+Besides to note, again, that if you want to virtualize, you're going to be selecting that view step.
+
+862
+01:46:49,359 --> 01:47:00,359
+And, again, if you're going to be using PDI with virtualization, you're going to be using the data toolkit view as opposed to the data toolkit.
+
+863
+01:47:00,359 --> 01:47:06,359
+Sorry, my keyboard is a little bit acting like it's 9% now.
+
+864
+01:47:06,359 --> 01:47:21,359
+But, again, when we want to add a new step to our graph mark, we're going to select the data layer and the three dots on the right, you'll see the option to add step or view, and it will have that drop down there.
+
+865
+01:47:21,359 --> 01:47:25,359
+And if you go back into the ANZUI, we can show you.
+
+866
+01:47:25,359 --> 01:47:40,359
+So if I go into the graph mark, and let's say I want to go into the example that we had from yesterday and into our data layers, what I can do here is I can click these three dots on the data layer.
+
+867
+01:47:40,359 --> 01:47:45,359
+I know it's a data layer as opposed to a step because the steps are basically indented ones.
+
+868
+01:47:45,359 --> 01:47:47,359
+So these guys are a step.
+
+869
+01:47:47,359 --> 01:47:48,359
+This is a data layer.
+
+870
+01:47:48,359 --> 01:47:53,359
+Data layers also have the symbol of it looks kind of like a white sandwich on a blue background.
+
+871
+01:47:53,359 --> 01:47:59,359
+And so if I click on the data layer, three dots, and I can have an option here to add a step or view.
+
+872
+01:47:59,359 --> 01:48:04,359
+And it will show me all the options I have, and there will be a brief description of what each option is for.
+
+873
+01:48:04,359 --> 01:48:06,359
+But suppose I want to add a query step.
+
+874
+01:48:06,359 --> 01:48:10,359
+I can select this as the option.
+
+875
+01:48:10,359 --> 01:48:12,359
+And you'll see here.
+
+876
+01:48:12,359 --> 01:48:14,359
+I'm sorry, by the way, if you can see my notifications.
+
+877
+01:48:14,359 --> 01:48:18,359
+I was trying to fix that earlier.
+
+878
+01:48:18,359 --> 01:48:26,359
+But if I click that option there, you can then see here are all the parameters for creating a query.
+
+879
+01:48:26,359 --> 01:48:28,359
+So I have to give it a title.
+
+880
+01:48:28,359 --> 01:48:31,359
+So example query.
+
+881
+01:48:31,359 --> 01:48:32,359
+And I can look at the query.
+
+882
+01:48:32,359 --> 01:48:41,359
+And, again, remember that basically all queries that you run through a query step are typically either going to be delete or insert queries.
+
+883
+01:48:41,359 --> 01:48:44,359
+So this is essentially asking you, which one do you want to do?
+
+884
+01:48:44,359 --> 01:48:45,359
+Do you want to delete?
+
+885
+01:48:45,359 --> 01:48:46,359
+Do you want to insert?
+
+886
+01:48:46,359 --> 01:48:48,359
+Do you want to do both?
+
+887
+01:48:48,359 --> 01:48:53,359
+And so typically when we're just trying to transform data, it's going to be an insert.
+
+888
+01:48:53,359 --> 01:48:54,359
+Because think of it like this.
+
+889
+01:48:54,359 --> 01:48:59,359
+When we're transforming data, we're inserting some sort of new value.
+
+890
+01:48:59,359 --> 01:49:01,359
+Whether that's a transformation.
+
+891
+01:49:01,359 --> 01:49:07,359
+And then delete is pretty self-explanatory trying to remove a statement that's already there.
+
+892
+01:49:07,359 --> 01:49:11,359
+So in the case that I'm trying to do transformation, I'll remove this delete clause.
+
+893
+01:49:11,359 --> 01:49:15,359
+And now I'm free to populate the insert and where have or might like.
+
+894
+01:49:15,359 --> 01:49:23,359
+Remember that whenever we're inserting or deleting, we'll have to insert to or delete from a target named graph.
+
+895
+01:49:24,359 --> 01:49:33,359
+In the case that we're developing inside of a graph mark, this will automatically populate for us so we don't have to worry about it.
+
+896
+01:49:33,359 --> 01:49:39,359
+So back to the slides.
+
+897
+01:49:39,359 --> 01:49:47,359
+So that's everything about, you know, how to create different steps and then the steps you might do once you get there.
+
+898
+01:49:47,359 --> 01:49:50,359
+One last thing I want to point out here.
+
+899
+01:49:50,359 --> 01:49:52,359
+Sorry to jump back and forth like this.
+
+900
+01:49:52,359 --> 01:49:58,359
+But one last thing that I want to point out while we're here is if I am creating new steps, suppose this is my new step.
+
+901
+01:50:00,000 --> 01:50:15,520
+We've talked here about how the data models is basically any data model that I want to be able to have the autocomplete with, I'm going to put here, unless of course, we're talking about that auto-generated GDI step, in which case, this will say managed.
+
+902
+01:50:15,520 --> 01:50:18,719
+But we haven't talked about the source.
+
+903
+01:50:21,440 --> 01:50:25,879
+This is where separating out data layers can be powerful.
+
+904
+01:50:25,879 --> 01:50:38,279
+Because if we think about what we're doing here, in this data layer, we are loading in all of our data into that raw auto-generated ontology.
+
+905
+01:50:38,279 --> 01:50:44,759
+Here, in this data layer, we're trying to map to that canonical ontology.
+
+906
+01:50:44,759 --> 01:51:01,840
+If suppose I add a new data layer, and this is just going to be an example, and in that, I'm going to add a new query set.
+
+907
+01:51:06,959 --> 01:51:12,879
+You see in that source field, by default, it's going to say, I want to target myself.
+
+908
+01:51:12,879 --> 01:51:16,480
+Now, I'm going to target all previous layers in the graph mark.
+
+909
+01:51:16,480 --> 01:51:26,720
+But basically, what it's saying is, I want my query for the data that's going to power my query.
+
+910
+01:51:26,720 --> 01:51:34,800
+I'll be able to query the data that I've loaded in this layer, as well as all the previous layers.
+
+911
+01:51:34,800 --> 01:51:38,720
+So I'm going to have the raw data, I'm going to have the canonical data.
+
+912
+01:51:38,720 --> 01:51:41,279
+But suppose I'm really, really work.
+
+913
+01:51:41,279 --> 01:51:47,760
+There's a scenario where the naming conventions aren't that far from each other, and we're about getting confused.
+
+914
+01:51:47,760 --> 01:51:48,959
+I want to be safe.
+
+915
+01:51:48,959 --> 01:51:56,040
+I could then say, I don't use myself, I only want to use the data that's in this canonical data layer.
+
+916
+01:51:56,040 --> 01:52:05,839
+So basically, we're only then going to be able to query for data that we inserted with the queries in this layer.
+
+917
+01:52:05,839 --> 01:52:09,320
+So we're only going to see this.
+
+918
+01:52:09,320 --> 01:52:16,559
+We're only going to see these instances of actor and we're going to see their relationship to this IRI.
+
+919
+01:52:16,559 --> 01:52:19,119
+But we're not going to be able to query for this IRI there.
+
+920
+01:52:19,119 --> 01:52:25,240
+Because in the source, we said, don't look at any of this data that we loaded data layer 1.
+
+921
+01:52:25,240 --> 01:52:35,440
+There are a lot of specific examples for reasons that you might want to target specific layers as opposed to just leaving as the all previous layers option.
+
+922
+01:52:35,440 --> 01:52:48,199
+A really, really common example is, if I'm going to write an export step to write all my data to disk, I might not want to write the raw version of the data.
+
+923
+01:52:48,199 --> 01:52:55,520
+I might want to only write the version of data that I know is fully transformed and conforms to the format that I agreed upon.
+
+924
+01:52:55,520 --> 01:53:04,199
+That's a very common reason that you would change the source from all previous layers to actually targeting specific layers.
+
+925
+01:53:04,399 --> 01:53:13,880
+Any questions there on just making new steps within the data layers of a graph mark?
+
+926
+01:53:22,919 --> 01:53:34,720
+So the next topic that we'll obviously, we obviously, sorry to interrupt.
+
+927
+01:53:34,720 --> 01:53:37,800
+Sorry, one question.
+
+928
+01:53:37,800 --> 01:53:41,080
+Because we have those steps that you were talking about.
+
+929
+01:53:41,080 --> 01:53:51,679
+But I understand from the previous session that typically, the best practice is to somehow also leverage the split again different graph marks, right?
+
+930
+01:53:51,679 --> 01:53:57,160
+To have a graph mark to, I don't know, do just the ingestion, then the graph mark for the calculation.
+
+931
+01:53:57,160 --> 01:53:59,399
+Am I correct or?
+
+932
+01:54:03,399 --> 01:54:13,919
+Is there some cost implication if you do multiple graph marks to kind of distribute this or not really?
+
+933
+01:54:14,080 --> 01:54:21,559
+If you remember that in the example we had the multiple graph marks, the way that we set that up is down here.
+
+934
+01:54:21,559 --> 01:54:29,839
+We have some sort of export step to basically say, this is what an export step looks like by the way, where we give it a name and anything else.
+
+935
+01:54:29,839 --> 01:54:33,279
+We tell it what data models we're actually targeting.
+
+936
+01:54:33,440 --> 01:54:44,359
+In this case, our canonical models, we would probably learn to write, and we pick an FLDS, or we can say we create a new FLDS for this export step.
+
+937
+01:54:44,359 --> 01:54:54,480
+If you remember how that example works, we create an export step to write our data to disk, and the second graph mark is going to be loading that FLDS.
+
+938
+01:54:54,480 --> 01:55:08,640
+The reason we do that is so we don't have to copy and paste all of our transformation queries from here to that other graph mark, and that graph mark loads very, very quickly so that ultimately our consumers have less downtime.
+
+939
+01:55:11,239 --> 01:55:24,600
+If the question is, can this graph mark query information that is currently being loaded by another graph mark without loading in FLDS or something like that?
+
+940
+01:55:24,600 --> 01:55:26,119
+The answer is no.
+
+941
+01:55:26,119 --> 01:55:50,279
+Essentially, these graph marks, they essentially safeguard their data against other graph marks unless we otherwise specify, for example, in a very, very advanced implementation, you could use GDI to query against the rest endpoint built into Anzo, and that way, within one graph mark query against a different one.
+
+942
+01:55:50,279 --> 01:55:58,079
+But that's a very, very complex implementation that wouldn't necessarily make a lot of sense in a lot of these cases.
+
+943
+01:55:58,200 --> 01:56:08,440
+Are there any more questions on this topic?
+
+944
+01:56:08,440 --> 01:56:11,200
+Or did I answer your question?
+
+945
+01:56:22,799 --> 01:56:57,200
+So jumping back in here, here's where, as I promised, we're talking about how are we going to basically represent the same thing that we would in SQL and SPARQL because ultimately, the two querying languages, even though the world of relational knowledge graphs is a lot different from the world of relational databases, ultimately, our goal is the same, which is to extract valuable information from a bunch of data.
+
+946
+01:56:57,200 --> 01:57:01,519
+So how can we do something that we would do in SQL using SPARQL?
+
+947
+01:57:01,519 --> 01:57:09,000
+So you see here in our SQL statement, we have our select, and again, the select looks very, very similar.
+
+948
+01:57:09,000 --> 01:57:12,200
+Here, we're selecting from a table called movies.
+
+949
+01:57:12,200 --> 01:57:13,180
+Oops, sorry.
+
+950
+01:57:13,180 --> 01:57:14,079
+We have it.
+
+951
+01:57:14,079 --> 01:57:30,160
+We obviously define our variable names, and we have this inner join here on another table to relate from movies to directors, and we have to specify the property that we're joining on, and we get a movie ID.
+
+952
+01:57:30,160 --> 01:57:47,320
+So we're looking for essentially all movies and directors, or the movie ID is 3217.
+
+953
+01:57:47,320 --> 01:57:49,839
+So how do we do the same thing in SPARQL?
+
+954
+01:57:49,839 --> 01:57:53,839
+Well, you'll see here, like we talked about before, there's no actual join.
+
+955
+01:57:53,839 --> 01:57:59,239
+The join is done implicitly by naming the movie ID variable the same thing.
+
+956
+01:57:59,239 --> 01:58:14,359
+So by having the same capitalization in everything, we're essentially telling SPARQL in this example query, hey, we want to essentially do a link on this property across these two different classes.
+
+957
+01:58:14,359 --> 01:58:22,640
+Then where in SQL, we would then specify a certain condition using a where clause.
+
+958
+01:58:22,640 --> 01:58:26,559
+For example, the movie ID has to be 3217.
+
+959
+01:58:26,559 --> 01:58:36,400
+In SPARQL, we put a filter inside the our existing where clause, where we say the movie ID equals 3217.
+
+960
+01:58:36,400 --> 01:58:41,200
+So functionally, these two queries are doing the exact same thing.
+
+961
+01:58:41,200 --> 01:58:46,119
+Just it's important to note here the differences in how SPARQL works.
+
+962
+01:58:46,119 --> 01:58:50,239
+We're not specifying a certain table that we're querying from.
+
+963
+01:58:50,239 --> 01:59:00,200
+We can describe any class that's in our ontology or in a multitude of ontologies, as long as we're relating them on common factors, we're going to be okay.
+
+964
+01:59:08,840 --> 01:59:09,960
+Any questions here?
+
+965
+01:59:09,960 --> 01:59:14,520
+I know that we've had a lot of conversations about how we format SPARQL compared to SQL.
+
+966
+01:59:15,320 --> 01:59:37,119
+Hopefully, this is helping us get closer to disambiguating we already talked about this slide, I think I just jumped ahead of it.
+
+967
+01:59:38,119 --> 01:59:42,640
+So here's a little bit what a view step will look like on the inside.
+
+968
+01:59:43,039 --> 01:59:48,640
+It's very, very much the same to what we were looking at before.
+
+969
+01:59:48,640 --> 01:59:57,039
+The only difference here is that instead of an insert or delete, we're actually constructing a graph from scratch.
+
+970
+01:59:57,039 --> 01:59:59,440
+So you see that we have this construct statement.
+
+971
+02:00:00,000 --> 02:00:14,520
+And essentially, we are taking a subset of our data, and we are trying to create basically a subset of that graph to exist in memory at runtime.
+
+972
+02:00:14,520 --> 02:00:23,360
+Again, like Claudia mentioned, for your use case, we don't really anticipate needing this, but it's nice to see how these things look on the inside.
+
+973
+02:00:23,360 --> 02:00:28,280
+Just so if we get to that point, you're not scared by what you see.
+
+974
+02:00:28,280 --> 02:00:30,320
+It's nice to just have a reference.
+
+975
+02:00:37,040 --> 02:00:42,840
+So in terms of quality control, we've talked about a few different things.
+
+976
+02:00:42,840 --> 02:00:46,520
+But here are just some basic troubleshooting steps.
+
+977
+02:00:46,520 --> 02:00:51,200
+And we'll have some more in detail troubleshooting steps later down the line.
+
+978
+02:00:51,200 --> 02:01:00,240
+But as we go through troubleshooting and we're trying to figure out what's wrong, here are a few common steps that we might walk through.
+
+979
+02:01:00,240 --> 02:01:28,959
+So first of all, if we're trying to check the quality of our model, the most common things are, first of all, when we're mapping to the scheme of our source data, suppose that we're loading from your Snowflake database and we're trying to target very specific columns or trying to target very specific table names.
+
+980
+02:01:28,959 --> 02:01:42,559
+Very, very common error that we'll see when we're designing our model or designing our queries is that we might be, let's say, we have a column that is called part number and we're calling it part-no.
+
+981
+02:01:42,559 --> 02:01:49,599
+It's a very common issue when it comes to just model quality, query quality, et cetera.
+
+982
+02:01:49,599 --> 02:01:56,000
+The other thing is we saw this before when we were looking in our graph marks.
+
+983
+02:01:56,000 --> 02:01:59,919
+So suppose I'm modifying this query that we have here.
+
+984
+02:01:59,919 --> 02:02:01,160
+That is working.
+
+985
+02:02:01,160 --> 02:02:05,919
+You see I'm targeting this Accenture underscore movie underscore data.
+
+986
+02:02:05,919 --> 02:02:12,839
+But suppose instead I target this one, which has a very, very similar name, but obviously is wrong.
+
+987
+02:02:15,639 --> 02:02:21,039
+And it's obviously wrong because I can try the query against it and not going to see the class that we made.
+
+988
+02:02:21,039 --> 02:02:26,160
+There's two very similarly named models that we can get completed.
+
+989
+02:02:26,160 --> 02:02:36,600
+So when we're talking here about missing, wrong, or confusing the target ontology, that's what we're talking about where we're either picking the wrong one because of a confusing definition.
+
+990
+02:02:36,600 --> 02:02:39,479
+We aren't picking one at all, et cetera.
+
+991
+02:02:39,479 --> 02:02:45,440
+Another important note is checking the data quality.
+
+992
+02:02:45,440 --> 02:03:09,520
+Any time there is an enterprise big data deployment, doesn't matter whether it's Anzo or whether it's Snowflake with any tool, there is going to be some issue down the line of data quality, whether it comes to someone in some lab having a typo, whether it comes down to something else, maybe some issues related to data quality.
+
+993
+02:03:09,520 --> 02:03:17,639
+So when it comes to that, we can use our validation steps to validate, OK, this data is as expected.
+
+994
+02:03:17,639 --> 02:03:25,440
+I'm personally of the belief that there should always be some human level of data validation when it comes to enterprise level deployments.
+
+995
+02:03:25,440 --> 02:03:29,600
+But these ultimately come down to business preferences.
+
+996
+02:03:29,600 --> 02:03:32,440
+But these are some good notes here.
+
+997
+02:03:32,440 --> 02:03:36,279
+Avoid the usage of different predicates for the same relationship.
+
+998
+02:03:36,279 --> 02:03:54,119
+So that's if, for example, if we look at our movie example where we have actor ID, movie ID, if these are all just primary keys with essentially the field ID, could we just reuse the same predicate in all those situations?
+
+999
+02:03:54,119 --> 02:04:02,960
+Because if you recall, if we go back here and we look, suppose that we're making our canonical model.
+
+1000
+02:04:05,839 --> 02:04:09,199
+Let's say I add a property here, and I just call this ID.
+
+1001
+02:04:09,199 --> 02:04:10,479
+This isn't movie ID.
+
+1002
+02:04:10,479 --> 02:04:12,520
+This isn't canonical ID.
+
+1003
+02:04:12,520 --> 02:04:17,880
+Obviously, the string here is, the range here is going to be a string.
+
+1004
+02:04:17,880 --> 02:04:24,000
+I can put this on movie, and I can also say actors also have an ID.
+
+1005
+02:04:24,000 --> 02:04:36,079
+And now I get to reuse the same exact URI, but I don't have to reinvent the wheel just because I have a second class.
+
+1006
+02:04:36,079 --> 02:04:42,279
+And so that's what we're talking about there, where we're trying to avoid using different predicates when it's not necessary.
+
+1007
+02:04:42,279 --> 02:04:43,239
+It has the same range.
+
+1008
+02:04:43,239 --> 02:04:44,839
+It has the same purpose.
+
+1009
+02:04:44,839 --> 02:04:48,119
+Let's just reuse it across the different classes.
+
+1010
+02:04:48,119 --> 02:04:51,200
+There's nothing wrong with that.
+
+1011
+02:04:51,200 --> 02:04:58,880
+Another important note here is just detecting inconsistencies in data.
+
+1012
+02:04:58,880 --> 02:05:13,079
+And these are things like we're ingesting data from a file, and we're expecting a delimiter of a comma, but actually, in this one row, there's actually a delimiter of a semicolon.
+
+1013
+02:05:13,079 --> 02:05:19,679
+Things that counter expectations can often derail a project more than you might expect.
+
+1014
+02:05:19,679 --> 02:05:21,600
+So keep track of these things.
+
+1015
+02:05:21,600 --> 02:05:27,920
+And also, obviously, we want to keep in mind our custom business logic and making sure that the business rules are always being followed.
+
+1016
+02:05:30,959 --> 02:05:33,519
+So here's an example.
+
+1017
+02:05:33,519 --> 02:05:46,679
+We have a variety of queries that are designed to check various things based on, in this case, in this example, the user has created their own class to basically do quality control.
+
+1018
+02:05:46,679 --> 02:05:51,440
+So they have a class in ontology.
+
+1019
+02:05:51,440 --> 02:05:58,399
+So in this case, we have this quality control model on the right, where we see we have some data validation warnings.
+
+1020
+02:05:58,399 --> 02:06:05,959
+And so there's basically classes that we created called missing class warning, multi-value constraint violation, et cetera.
+
+1021
+02:06:05,959 --> 02:06:17,200
+And so these queries, all they're doing is they're going to create a new instance of these various violations and warnings based on what it's seeing from the actual source data.
+
+1022
+02:06:17,200 --> 02:06:19,359
+This is kind of a neat way to do that.
+
+1023
+02:06:19,359 --> 02:06:37,160
+Obviously, if you're really in touch with the world of knowledge engineering and semantic data, you might have heard of a standard for data validation called Shackle, which is doing a lot of the same things that this is doing.
+
+1024
+02:06:37,160 --> 02:06:41,440
+We have some Shackle tools that are third party that we like to use.
+
+1025
+02:06:41,440 --> 02:06:47,279
+And hopefully, in a later version of Anzo, we're going to get an engine built into Anzo that can do Shackle validation.
+
+1026
+02:06:47,279 --> 02:06:52,320
+But for now, just keep in mind that that's a standard that you might hear talked about if you're not familiar with the world.
+
+1027
+02:06:52,320 --> 02:06:57,279
+And it's not something that we're currently using in Anzo, but we're looking to do that potentially in the future.
+
+1028
+02:07:01,000 --> 02:07:18,519
+So just to keep charging ahead, because we have about 45 minutes left, we have our last section here on visualizing accessing data, unless anyone has questions about what we just covered in the broad advanced Anzo usage topic.
+
+1029
+02:07:24,959 --> 02:07:27,679
+OK.
+
+1030
+02:07:27,679 --> 02:07:39,079
+So when we're talking about visualizing and accessing data with Anzo, typically, we access our data in one of three ways.
+
+1031
+02:07:39,079 --> 02:07:54,040
+The two that we're going to talk about today are the high res analytics dashboard, which I very, very briefly showed you yesterday in the span of five minutes, and the query builder, which I've shown you somewhat extensively today.
+
+1032
+02:07:54,040 --> 02:08:01,040
+But the more that you're in power with the query builder, the better luck you'll tend to have.
+
+1033
+02:08:01,040 --> 02:08:06,480
+So let's just talk quickly about the query builder.
+
+1034
+02:08:06,480 --> 02:08:09,519
+Talk about some of the functions now that we haven't talked about.
+
+1035
+02:08:09,519 --> 02:08:16,880
+Again, when we're accessing data, we're talking about this bar down here on the left, and then the query builder.
+
+1036
+02:08:16,880 --> 02:08:18,519
+I've shown you how to write queries.
+
+1037
+02:08:18,519 --> 02:08:25,480
+I've shown you how to run them against certain, whether it's a graph mark or whether it's a data source.
+
+1038
+02:08:25,480 --> 02:08:27,200
+For example, I can query against the journal.
+
+1039
+02:08:27,200 --> 02:08:32,479
+I can query against everything that I've loaded into Anzo graph across all my graph marks.
+
+1040
+02:08:32,479 --> 02:08:35,440
+But what I can also do here is I can save queries.
+
+1041
+02:08:35,440 --> 02:08:39,840
+So I can look back at previous queries I've run.
+
+1042
+02:08:39,840 --> 02:08:47,520
+For example, this is the query that we were earlier that I saved to a certain folder.
+
+1043
+02:08:47,520 --> 02:08:50,880
+And so there are all sorts of different queries that I can run here.
+
+1044
+02:08:50,880 --> 02:09:00,359
+For example, if I'm curious what version of GDI I'm running on my system, this query can very easily tell me information such as that.
+
+1045
+02:09:00,359 --> 02:09:05,799
+So it's a pretty nice feature to be able to save and find your old queries.
+
+1046
+02:09:05,799 --> 02:09:14,799
+One thing that I do want to show you that we haven't really talked about very much before is, let me grab, go back to our example.
+
+1047
+02:09:15,119 --> 02:09:20,119
+Let me grab, select movie.
+
+1048
+02:09:23,119 --> 02:09:28,280
+So here I'm selecting the unique IRI of all the movies that we're talking about.
+
+1049
+02:09:28,280 --> 02:09:32,599
+So I'm going to grab one of these just by clicking here, and it'll copy that to my clipboard.
+
+1050
+02:09:32,599 --> 02:09:35,320
+And I'll move over here from query to where it says find.
+
+1051
+02:09:37,880 --> 02:09:41,880
+So find is going to be the query that I'm going to save.
+
+1052
+02:09:43,559 --> 02:09:52,919
+So find is going to, again, I select the data source where I want to query against my Anzograph or the journal itself.
+
+1053
+02:09:52,919 --> 02:10:02,902
+Here I'm going to select Anzograph, and I can put in any IRI I have into either of these the subject, the predicate object, or that named graph.
+
+1054
+02:10:02,902 --> 02:10:08,230
+Remember, the named graph is what we're always inserting into or deleting from.
+
+1055
+02:10:08,230 --> 02:10:11,920
+And so, I leave the other fields blank here.
+
+1056
+02:10:11,920 --> 02:10:23,870
+This is just going to very, very quickly run a query for me on basically all the predicates and objects related to this subject.
+
+1057
+02:10:23,870 --> 02:10:28,320
+And I can always move these things around.
+
+1058
+02:10:29,600 --> 02:10:31,832
+So, suppose I have this object here.
+
+1059
+02:10:31,832 --> 02:10:33,816
+You see, this is of type movies.
+
+1060
+02:10:33,816 --> 02:10:35,520
+Where do I know about movies?
+
+1061
+02:10:35,520 --> 02:10:40,906
+So , I can click these very, very, very small left arrows here and move that into the subject.
+
+1062
+02:10:40,906 --> 02:10:50,330
+And so, now I can see all these different parameters on movies, including all their predicates and objects, and then you see the named graphs here.
+
+1063
+02:10:50,330 --> 02:10:51,919
+So, that's kind of nice.
+
+1064
+02:10:51,919 --> 02:10:55,002
+Suppose I wanted to use this.
+
+1065
+02:10:55,002 --> 02:11:00,320
+And I want to get everything that's of type movie.
+
+1066
+02:11:00,959 --> 02:11:03,119
+So, I can just copy this into my predicate field.
+
+1067
+02:11:07,440 --> 02:11:12,663
+And now I'm basically seeing all my different URIs that are of type movie.
+
+1068
+02:11:12,663 --> 02:11:16,383
+So, all the different instances of movies just by using the fine lens.
+
+1069
+02:11:16,383 --> 02:11:18,573
+Not have to write any Sparkle to do this.
+
+1070
+02:11:18,573 --> 02:11:22,540
+This is just by knowing how triples work in RDF.
+
+1071
+02:11:22,540 --> 02:11:32,674
+So, the fine lens is typically a very powerful tool when it comes to debugging and accessing your data, as well as especially debugging different features within Anzo.
+
+1072
+02:11:32,674 --> 02:11:45,039
+You know, a very common situation that I end up in is I have a graph mart and for whatever reason I really want to know its URI, I don't know what the URI could be.
+
+1073
+02:11:45,039 --> 02:11:53,169
+First of all, what I should know is that I can always grab the URI of a graph mart from here.
+
+1074
+02:11:53,169 --> 02:12:07,371
+But if I didn't know that, what I could do is I could copy out the name of that graph mart, get in my query builder in the fine lens, put that in the object, and right there is the URI of my graph mart.
+
+1075
+02:12:07,371 --> 02:12:16,925
+So, it's very, very useful to know how to use the fine lens it's typically something that once you get the hang of, you can do a lot of really interesting things with it.
+
+1076
+02:12:16,925 --> 02:12:30,196
+You can also add statements here, which is something that I would recommend as you're learning these things, you don't really mess with because you can very easily sort of make things a little bit messed up.
+
+1077
+02:12:30,196 --> 02:12:36,433
+But for example, I could say I want to add a new statement to my graph mart, that's a description, and give it a description.
+
+1078
+02:12:36,433 --> 02:12:40,160
+As long as I have all the right URIs and predicates, that would work with no problem.
+
+1079
+02:12:43,839 --> 02:12:48,639
+So, the next thing that we should talk about here is the high-res analytics.
+
+1080
+02:12:51,839 --> 02:13:01,969
+So, when you click high-res analytics here, you might get it wrong because you're going to see all different dashboards that have been made across your entire server, at least all the ones that you have permissions to see.
+
+1081
+02:13:01,969 --> 02:13:14,426
+So, what I'm going to do here is I'm going to pull up our actual graph mart.
+
+1082
+02:13:14,426 --> 02:13:18,160
+So, we can look at the dashboard that we made yesterday.
+
+1083
+02:13:20,559 --> 02:13:29,948
+If you remember yesterday, we made a dashboard and that dashboard had the explicit purpose of just representing the actors that we were loading from our raw data.
+
+1084
+02:13:29,948 --> 02:13:35,543
+So, we have our actor's ID paired with the actual name of that actor.
+
+1085
+02:13:35,543 --> 02:13:41,505
+So, this alone isn't that useful to us, at least as it stands right now.
+
+1086
+02:13:41,505 --> 02:13:44,080
+So, how can we make this more useful?
+
+1087
+02:13:45,520 --> 02:13:50,478
+Let's talk about enhancing our example from yesterday.
+
+1088
+02:13:50,478 --> 02:13:58,027
+So, yesterday, I'm going to delete this example layer that I made before, just so we don't mess anything up.
+
+1089
+02:13:58,027 --> 02:14:12,836
+But if you recall, yesterday, we mapped from actors to movies, but since then, by exploring here, we have gone through and we have actually – will this visualization work for me now?
+
+1090
+02:14:12,836 --> 02:14:18,683
+Yes . Since then, we've gone through and we've actually done a couple extra mappings.
+
+1091
+02:14:18,683 --> 02:14:26,435
+So, first of all, let's modify our mapping of actor one to be able to map to the raw movie.
+
+1092
+02:14:26,435 --> 02:14:35,049
+So, in order to do that, I'm going to open this in a new tab so I don't lose this view.
+
+1093
+02:14:35,049 --> 02:14:46,239
+Just a note as you are developing your use cases that sometimes different instances of Anzo depend on how the underlying infrastructure is set up.
+
+1094
+02:14:46,799 --> 02:14:50,799
+They might not like having too many different tabs of Anzo open at the same time.
+
+1095
+02:14:51,440 --> 02:14:59,956
+So, if you're someone like me who likes a lot of tabs open, it's just something to keep in mind that you may experience slowdown if you have too many tabs open.
+
+1096
+02:14:59,956 --> 02:15:03,370
+But I'm going to open back up our example here.
+
+1097
+02:15:03,370 --> 02:15:08,239
+And in my data layers, I'm going to open this up.
+
+1098
+02:15:08,239 --> 02:15:18,144
+And what I really want to do here is I'm instantiating instances of my canonical actor class, but I'm only relating it to the raw movie actors one.
+
+1099
+02:15:18,144 --> 02:15:23,358
+And what I'd really, really like to do is be able to relate it to also the raw movies.
+
+1100
+02:15:23,358 --> 02:15:32,766
+So, I'm going to do that by saying I'm going to grab an instance of movies.
+
+1101
+02:15:32,766 --> 02:15:46,517
+If you remember, we do this just by saying, hey, you know, use this prefix because this is referring to our auto generated model and let's get me any instance of movie.
+
+1102
+02:15:46,517 --> 02:15:52,196
+And so, right now, we're not relating this at all to movie actors one.
+
+1103
+02:15:52,196 --> 02:16:07,474
+And so, our issue here is that if I just leave it like this, even though I'm not actually inserting anything else, we have a cross product in our where, which means that this query is not going to run very optimally and might take a long time to execute.
+
+1104
+02:16:07,474 --> 02:16:09,869
+So, we need to fix that pretty quickly.
+
+1105
+02:16:09,869 --> 02:16:13,937
+How we're going to do that, let's grab from movie actors one.
+
+1106
+02:16:13,937 --> 02:16:19,706
+Let's get that movie ID because we saw that existed earlier.
+
+1107
+02:16:19,706 --> 02:16:22,840
+And so, we grabbed our movie ID.
+
+1108
+02:16:22,840 --> 02:16:36,160
+And so, we are going to say let's say grab our auto ontology, movies.movie ID.
+
+1109
+02:16:39,200 --> 02:16:48,320
+And because we used the same exact capitalization here, we know that the Sparkle query is now performing a join between movie actors and movie ID.
+
+1110
+02:16:48,320 --> 02:16:53,698
+So, now, all we have to do here is point from our canonical and our insert to there.
+
+1111
+02:16:53,698 --> 02:16:55,279
+So, we can say canonical class.
+
+1112
+02:17:02,559 --> 02:17:10,239
+Now, we are connecting from actor to movie as well as from our canonical actor to our raw actor.
+
+1113
+02:17:11,200 --> 02:17:12,726
+So, let's save this.
+
+1114
+02:17:12,726 --> 02:17:14,559
+Let's give it a refresh.
+
+1115
+02:17:18,480 --> 02:17:31,103
+And you see, I always check that green checkbox, again, to remember, you know, have somewhere in the back of your mind that the number of statements that you expect to be affected.
+
+1116
+02:17:31,103 --> 02:17:38,599
+It's hard to estimate a lot of the time, but more than zero, less than a billion is typically what I try to check for.
+
+1117
+02:17:38,599 --> 02:17:45,579
+I know it's a very broad range, but generally, if you see something in that range, you know you did okay.
+
+1118
+02:17:45,579 --> 02:17:48,670
+So, I'll go back to my dashboard.
+
+1119
+02:17:48,670 --> 02:17:50,824
+I've reloaded my graph.
+
+1120
+02:17:50,824 --> 02:17:53,287
+I've established that relationship.
+
+1121
+02:17:53,287 --> 02:17:56,559
+I should be able to say give me the movie name.
+
+1122
+02:17:58,480 --> 02:18:01,554
+And let's see what I can do here.
+
+1123
+02:18:01,554 --> 02:18:04,721
+I can say performs in movie title.
+
+1124
+02:18:04,721 --> 02:18:11,839
+And now, because I just created that relationship in Sparkle, I'm now traversing my graph in this view.
+
+1125
+02:18:12,720 --> 02:18:13,676
+That's really cool.
+
+1126
+02:18:13,676 --> 02:18:18,130
+I can now see, you know, my actors, and I can see the movies that they perform in.
+
+1127
+02:18:18,130 --> 02:18:22,020
+You see here, there's 4,800 some entries here.
+
+1128
+02:18:22,020 --> 02:18:25,797
+I don't want to have to scroll out many pages.
+
+1129
+02:18:25,797 --> 02:18:27,035
+It's 245 pages.
+
+1130
+02:18:27,035 --> 02:18:31,079
+Let me say that my rows per page is actually 500.
+
+1131
+02:18:31,079 --> 02:18:32,400
+And there we go.
+
+1132
+02:18:32,400 --> 02:18:37,814
+And so, how can I get some more interesting visualizations here?
+
+1133
+02:18:37,814 --> 02:18:44,246
+You'll see here that if I make a new lens, there are lots of different options here.
+
+1134
+02:18:44,246 --> 02:18:46,640
+For example, I can make a chart.
+
+1135
+02:18:47,840 --> 02:18:50,702
+I can say this is the actors chart.
+
+1136
+02:18:50,702 --> 02:18:56,939
+And we'll have some options here in terms of what kind of chart we want to make.
+
+1137
+02:18:56,939 --> 02:18:59,560
+For example, column, the chart type.
+
+1138
+02:18:59,560 --> 02:19:02,293
+We have some different kinds of columns.
+
+1139
+02:19:02,293 --> 02:19:07,599
+We have some different types of bar charts, lines, bubble plots, funnels, et cetera.
+
+1140
+02:19:09,840 --> 02:19:20,084
+But what I particularly would like to do, and this works for me about half the time, just because of the resources on this server.
+
+1141
+02:19:20,084 --> 02:19:23,599
+So, bear with me if this is a complete failure.
+
+1142
+02:19:23,599 --> 02:19:30,559
+But I would like to create, before I create this graph mark dashboard, I want to show you this thing called the network navigator, which is kind of neat.
+
+1143
+02:19:31,599 --> 02:19:36,719
+I'm going to call this the movie actors network navigator.
+
+1144
+02:19:39,679 --> 02:19:46,400
+So, the network navigator is going to utilize our ontology for us to create a visual way to explore our graph.
+
+1145
+02:19:49,760 --> 02:19:52,512
+So, it's going to take it a minute to load.
+
+1146
+02:19:52,512 --> 02:19:53,280
+That's okay.
+
+1147
+02:19:55,520 --> 02:19:57,241
+So, again, we're going to look here.
+
+1148
+02:19:57,241 --> 02:20:03,440
+If I expand this out, you'll see that I'm looking at our canonical ontology here.
+
+1149
+02:20:03,440 --> 02:20:07,040
+And I'm going to select actor.
+
+1150
+02:20:07,040 --> 02:20:09,160
+You see I have all these instances of actors.
+
+1151
+02:20:09,160 --> 02:20:11,360
+So let's just click OK.
+
+1152
+02:20:11,360 --> 02:20:21,680
+And actually, let's just pick one at random.
+
+1153
+02:20:26,959 --> 02:20:30,320
+And bear with me, sometimes this is slower than I'd like it to be.
+
+1154
+02:20:35,279 --> 02:20:37,360
+OK.
+
+1155
+02:20:37,360 --> 02:20:38,720
+So I picked our one at random.
+
+1156
+02:20:47,320 --> 02:20:52,560
+We see that this canonical actor has a raw actor of Pacific Northwest Ballet.
+
+1157
+02:20:52,560 --> 02:21:01,400
+And the movie that it performs in is The Nutcracker.
+
+1158
+02:21:01,400 --> 02:21:02,720
+OK.
+
+1159
+02:21:02,720 --> 02:21:03,360
+Let's show that.
+
+1160
+02:21:07,839 --> 02:21:17,279
+So we now have this one-to-one relationship that we're showing, which is kind of neat that we can see these instances represented in this visual way.
+
+1161
+02:21:17,279 --> 02:21:40,360
+Ideally, what we'd like here is if we pick, let's say, a bunch more, say we pick a couple of movies, we're going to start seeing how these things have their different relationships.
+
+1162
+02:21:51,959 --> 02:21:56,279
+Again, sorry, this is a little bit resource-heavy, so it might not be loading super great.
+
+1163
+02:21:56,279 --> 02:22:08,639
+But I did want to show you sometimes it's nice for people who are coming from the world of relational databases to see how we can then visualize our graph in this neat way.
+
+1164
+02:22:08,639 --> 02:22:15,039
+And maybe we can give this some time for itself to load, and it'll do a little bit better.
+
+1165
+02:22:15,039 --> 02:22:20,520
+I can also make this a little bit more load, and it'll do a little bit better.
+
+1166
+02:22:20,520 --> 02:22:24,919
+I can also maybe open an old one.
+
+1167
+02:22:24,919 --> 02:22:45,399
+That's OK.
+
+1168
+02:22:48,479 --> 02:22:52,600
+I will try to get this visualization working a little bit better in a little bit.
+
+1169
+02:22:52,600 --> 02:23:01,399
+But just to first show you how we can visualize this relationship that we established, just by a few lines of sparkle in this query here.
+
+1170
+02:23:01,399 --> 02:23:06,320
+Are there any specific visualizations that we're hoping to see?
+
+1171
+02:23:06,320 --> 02:23:11,839
+Or is there anything that you don't understand about the query that we did to establish this relationship before we keep going?
+
+1172
+02:23:23,399 --> 02:23:25,880
+OK.
+
+1173
+02:23:25,880 --> 02:23:28,279
+Let me jump back to the slides here.
+
+1174
+02:23:28,279 --> 02:23:33,479
+And if we have extra time at the end, I can show some more visualizations and try to get that one working a little bit better.
+
+1175
+02:23:39,600 --> 02:23:43,839
+As we talked about, we can then run these queries to the Query Builder.
+
+1176
+02:23:43,839 --> 02:23:48,000
+And then in the graph, I'm going to put that blue Create Dashboard button.
+
+1177
+02:23:48,440 --> 02:23:56,360
+And then in the graph, I'm going to put that blue Create Dashboard button to create the various different dashboards.
+
+1178
+02:23:56,360 --> 02:24:03,919
+And you've seen me click this gear for the Designer button to then configure the columns, all of their names, and what properties we're showing.
+
+1179
+02:24:03,919 --> 02:24:29,440
+One thing that I haven't shown here is how in the Hi-Res dashboard, if we go back to our example where, back to our example with the Actors table, we can affect the values that we're seeing here with various functions.
+
+1180
+02:24:29,440 --> 02:24:32,679
+So I have the movie name here.
+
+1181
+02:24:32,679 --> 02:24:36,160
+And I can open up, you see I have various options here.
+
+1182
+02:24:36,160 --> 02:24:39,359
+But I can say, open up this advanced option.
+
+1183
+02:24:39,440 --> 02:24:55,440
+And so now I have options to basically write out a formula, a little bit similar to how I would in something like Microsoft Excel, to say I can enforce various checks or enforce various encoding just at this level.
+
+1184
+02:24:55,440 --> 02:25:00,040
+The concern is, if you want to persist this data in some way, it's not good.
+
+1185
+02:25:00,040 --> 02:25:08,160
+The only way to do that would be to basically say export and take a CSV from this table.
+
+1186
+02:25:08,160 --> 02:25:12,399
+It's not going to persist in the way that it's in the Anzo graph in some way.
+
+1187
+02:25:12,399 --> 02:25:16,200
+But if you so choose, you can go to Designer.
+
+1188
+02:25:16,200 --> 02:25:18,440
+And you can say movie name.
+
+1189
+02:25:18,440 --> 02:25:23,320
+And we can change this to say advanced.
+
+1190
+02:25:23,320 --> 02:25:50,880
+And we can say, and so now you see here how I can just very easily modify what we're seeing here on the right by changing this formula.
+
+1191
+02:25:50,880 --> 02:25:56,119
+There's a few fun things you can do in the Anzo high-res environment using the Designer.
+
+1192
+02:25:58,839 --> 02:26:01,000
+And so that's everything I have prepared today.
+
+1193
+02:26:01,000 --> 02:26:04,839
+So I can try to walk you through a few more visualization examples.
+
+1194
+02:26:04,839 --> 02:26:10,079
+We can try to flesh out this example that we have with the movies data more.
+
+1195
+02:26:10,079 --> 02:26:15,519
+Or I can give you all about 25 minutes back.
+
+1196
+02:26:15,519 --> 02:26:17,279
+It's your preference.
+
+1197
+02:26:17,359 --> 02:26:19,399
+My time is your time, as far as I'm concerned.
+
+1198
+02:26:25,119 --> 02:26:29,559
+It does look like, looking at the chat, that a couple of people need to drop early.
+
+1199
+02:26:31,559 --> 02:26:35,200
+Guys, do you want to see at least one more example?
+
+1200
+02:26:35,200 --> 02:26:40,720
+Maybe not for just for 25 minutes, but maybe something more?
+
+1201
+02:26:40,720 --> 02:26:41,200
+Sure.
+
+1202
+02:26:41,200 --> 02:26:41,839
+So we have them.
+
+1203
+02:26:41,839 --> 02:26:43,600
+It's not a problem.
+
+1204
+02:26:43,600 --> 02:26:46,399
+So Peter replied for everyone.
+
+1205
+02:26:46,399 --> 02:26:48,239
+One thumbs up is all I need.
+
+1206
+02:26:48,239 --> 02:26:49,760
+Yeah, exactly.
+
+1207
+02:26:49,760 --> 02:26:51,279
+Bartek?
+
+1208
+02:26:51,279 --> 02:26:57,440
+Yeah, I have maybe one question related to integration with Snowflake.
+
+1209
+02:26:57,440 --> 02:27:13,679
+Because we, assuming we have this data already in Anzo, and now we would like to export it to Snowflake or import from Snowflake the Anzo graphs.
+
+1210
+02:27:13,679 --> 02:27:17,040
+How we can approach this?
+
+1211
+02:27:17,040 --> 02:27:23,399
+So there are a couple of different options that I've seen at different customers I've worked with.
+
+1212
+02:27:23,399 --> 02:27:39,200
+The easiest way to do that is, essentially, I was mentioning before, if we go back to the slides, and go to, I think, give or take here.
+
+1213
+02:27:39,239 --> 02:27:51,959
+I was mentioning before how GDI can connect to HTTP and REST endpoints, as well as using JDBC drivers.
+
+1214
+02:27:51,959 --> 02:27:58,480
+And when we're doing that, it's not just GET requests that we're using.
+
+1215
+02:27:58,480 --> 02:28:04,239
+We are doing everything, essentially, from GET to POST.
+
+1216
+02:28:04,239 --> 02:28:13,160
+So how I've done it before is I've had, basically, the receiver database open some sort of endpoint that we can then leverage to send a POST.
+
+1217
+02:28:13,160 --> 02:28:19,200
+And that POST contains, in the body, the data that we want to send over.
+
+1218
+02:28:19,200 --> 02:28:25,000
+And typically, with Snowflake, there's some sort of external API that we can leverage to make sure that data is coming in the right format.
+
+1219
+02:28:25,000 --> 02:28:33,000
+But it's something that we would format in a SPARQL query so that then, when we reload that respective graph mark, the data is properly getting sent over using GDI.
+
+1220
+02:28:36,440 --> 02:28:45,599
+I guess, in context of PMI, it's that we're using the direct connectivity to fetch the data, right?
+
+1221
+02:28:45,599 --> 02:28:48,039
+There is Snowflake connector, right, Steve, you showed us?
+
+1222
+02:28:48,880 --> 02:28:57,760
+And then, to put the data back to Snowflake, I believe either Matillion was used or some other tool.
+
+1223
+02:28:57,760 --> 02:28:59,359
+I don't remember.
+
+1224
+02:28:59,359 --> 02:29:03,719
+Let's say, to pull it from ANZO.
+
+1225
+02:29:03,719 --> 02:29:14,440
+I need to verify on my end whether we use the same Snowflake connector to send data back or whether it has to be through this HTTP REST endpoint.
+
+1226
+02:29:14,440 --> 02:29:16,039
+I've seen it done both ways.
+
+1227
+02:29:16,039 --> 02:29:25,080
+I've seen it basically the most efficiently done using the REST endpoints because it's a little bit easier queries to write.
+
+1228
+02:29:25,080 --> 02:29:29,880
+But I need to verify with engineering what they would advise in that situation.
+
+1229
+02:29:34,719 --> 02:29:41,239
+But I think it would be good, sorry, because this connection already exists, I believe, yeah?
+
+1230
+02:29:41,239 --> 02:29:46,119
+Because PMI is using this tool for another project.
+
+1231
+02:29:46,119 --> 02:29:55,719
+So it will be good to understand how the architecture looks like in PMI exactly, yeah?
+
+1232
+02:29:55,719 --> 02:30:01,280
+That would, if slash one, I gained access.
+
+1233
+02:30:00,000 --> 02:30:22,000
+I'll be able to answer this question in a lot more detail, but sort of viewing PMI right now as a black box where I'm not necessarily sure what's going on, how the project's being – how the MVP has been developed internally, this is the best answer I can give at the moment.
+
+1234
+02:30:22,000 --> 02:30:33,959
+Again, I can confirm with engineering what they would advise in terms of sending data to a Snowflake database, because I know that there are a couple of different ways, and the question is just which one is best.
+
+1235
+02:30:34,959 --> 02:30:35,959
+I understand.
+
+1236
+02:30:35,959 --> 02:30:41,959
+So, let's do it this way.
+
+1237
+02:30:41,959 --> 02:30:42,959
+Sure.
+
+1238
+02:30:42,959 --> 02:30:55,560
+Any more questions I can help with, or at least promise a follow-up on here in our last couple of minutes?
+
+1239
+02:30:55,560 --> 02:31:00,799
+Maybe one thing, because I tried to get to the portal, I see that Mateusz as well and Bartek as well.
+
+1240
+02:31:00,799 --> 02:31:02,400
+We have all the same issue, okay?
+
+1241
+02:31:02,400 --> 02:31:04,400
+So – With the access?
+
+1242
+02:31:04,400 --> 02:31:11,279
+Yes, access to this portal when we can put our topics, questions.
+
+1243
+02:31:11,279 --> 02:31:20,599
+So, yeah, it will be good to have access to – Yeah, we're getting that resolved here today, based on the amount of this call.
+
+1244
+02:31:20,599 --> 02:31:31,599
+But if you can all at least go through the process of creating the account to get to that page where it says no access, that would give me then the ability to then grant your specific email access.
+
+1245
+02:31:32,599 --> 02:31:36,000
+So, guys, please do so.
+
+1246
+02:31:36,000 --> 02:31:37,000
+I've done it already.
+
+1247
+02:31:37,000 --> 02:31:42,559
+Bartek, Mateusz, hopefully some more as well.
+
+1248
+02:31:42,559 --> 02:31:45,680
+I see there's another hand raised.
+
+1249
+02:31:45,680 --> 02:32:04,279
+Yeah, Steve, maybe it would be a stupid one, but – So, when we are saying graph, okay, so – and visualization, so, Anzo, do you have a capability to produce predictive analytics?
+
+1250
+02:32:04,279 --> 02:32:18,119
+Just out of the box question, but – So it has the ability to produce predictive analytics to an extent that, you know, there's an algorithm, there's a formula that we're trying to use.
+
+1251
+02:32:18,119 --> 02:32:43,880
+If you're asking whether or not Anzo out-of-the-box leverages something such as, like, GPT or AI, there is an in-development feature right now called the Knowledge Guru, which essentially uses GPT to transform questions that are asked in basically spoken – in basically written language into Sparkle queries to then answer questions for you.
+
+1252
+02:32:43,919 --> 02:33:02,919
+In terms of are we outputting predictive analytics, it just depends on, you know, if I understood your exact use case and, like, why you would and, you know, exactly what you're asking for, my best answer I can give you is maybe.
+
+1253
+02:33:02,919 --> 02:33:06,479
+And another one is, again, on the visualization.
+
+1254
+02:33:06,479 --> 02:33:12,800
+So can we create bar charts and pie charts kind of stuff?
+
+1255
+02:33:13,800 --> 02:33:17,479
+That's a question I do know the answer to.
+
+1256
+02:33:17,479 --> 02:33:24,199
+So as I was trying to show before, if I'm in a dashboard, I have a few options here.
+
+1257
+02:33:24,199 --> 02:33:31,399
+One option is to – and up here in the top, you see where I say Lenses and New, and it's going to ask me what kind of lens I want to create.
+
+1258
+02:33:31,399 --> 02:33:42,559
+And if I say Chart, I can just give it a name, say Example Chart, and it will ask for the chart type.
+
+1259
+02:33:42,600 --> 02:33:47,080
+And here's where I can see all the different types of charts that I want to do.
+
+1260
+02:33:47,080 --> 02:34:00,759
+And so, for example, if I want to see, I don't know, a pie chart, and then the chart data is – I'm not exactly sure what I would do here.
+
+1261
+02:34:00,759 --> 02:34:07,279
+The count of distinct actors in a movie to see what movies utilize the most actors.
+
+1262
+02:34:07,279 --> 02:34:10,000
+I could do a chart like that here.
+
+1263
+02:34:10,000 --> 02:34:12,360
+But that's how you would get to that.
+
+1264
+02:34:13,160 --> 02:34:17,720
+So you click the Lenses, New, select your chart, and then select what type of chart you want.
+
+1265
+02:34:17,720 --> 02:34:18,720
+Perfect.
+
+1266
+02:34:18,720 --> 02:34:19,720
+Thanks.
+
+1267
+02:34:19,720 --> 02:34:20,720
+Thanks.
+
+1268
+02:34:20,720 --> 02:34:21,720
+Thanks.
+
+1269
+02:34:21,720 --> 02:34:22,720
+Awesome.
+
+1270
+02:34:22,720 --> 02:34:23,720
+Sure.
+
+1271
+02:34:23,720 --> 02:34:31,000
+Any more questions I can help address here?
+
+1272
+02:34:31,000 --> 02:34:43,440
+No question from my side, but another comment, guys, really feel free to ask any questions you have or ask Steve to repeat if something is not clear.
+
+1273
+02:34:43,440 --> 02:34:48,399
+I even searched for the, like, you know, some kind of vocabulary.
+
+1274
+02:34:48,399 --> 02:34:50,519
+I'm sending the link via chat.
+
+1275
+02:34:50,519 --> 02:34:55,160
+Steve, if you have – because this is from Cambridge Semantics website.
+
+1276
+02:34:55,160 --> 02:35:00,679
+If you have something, maybe more details or whatever, you can also share it with us.
+
+1277
+02:35:00,679 --> 02:35:03,640
+It's really new for all of us.
+
+1278
+02:35:04,359 --> 02:35:10,000
+So yeah, there is quite a lot of new, I believe, I don't know, abbreviations or concepts.
+
+1279
+02:35:10,000 --> 02:35:13,040
+So yeah, I'm sending the link.
+
+1280
+02:35:13,040 --> 02:35:18,480
+But as I said, if you have some more details, you can also share with us.
+
+1281
+02:35:18,480 --> 02:35:23,359
+And yeah, guys, ask questions.
+
+1282
+02:35:23,359 --> 02:35:32,279
+This is a pretty good resource, at least in terms of – there are a few things here that I've deprecated.
+
+1283
+02:35:32,279 --> 02:35:59,200
+I might get you a more recent version of this document, but this is going to – this has a lot of good information, at least in terms of, you know, disambiguating some terms and just having the ability to – you know, if I'm saying Anzograph, you know, a reference for what I mean by Anzograph, knowing that it's that in-memory database where we're storing all of our data that we've used in GraphMarts and things along that nature.
+
+1284
+02:36:03,200 --> 02:36:08,799
+Again, I will try to get you a more updated version, because you see that's for Anzo 5.3.
+
+1285
+02:36:08,799 --> 02:36:18,720
+I believe that the version that we're installing with PMI and the latest version is Anzo 5.4, which made some pretty big changes.
+
+1286
+02:36:18,799 --> 02:36:32,119
+So, for example, in 5.4, Anzo came out with its own internal REST API, so to make it easy to query different aspects of Anzo, whether it's the actual data or the metadata of the components.
+
+1287
+02:36:32,119 --> 02:36:40,119
+So, I'll make sure to get you an updated version of that.
+
+1288
+02:36:44,119 --> 02:36:45,119
+Perfect.
+
+1289
+02:36:45,119 --> 02:36:46,119
+Thank you.
+
+1290
+02:36:46,119 --> 02:36:47,119
+Sure.
+
+1291
+02:36:49,119 --> 02:36:54,119
+Do you have a question?
+
+1292
+02:36:54,119 --> 02:36:55,119
+Yes, probably.
+
+1293
+02:36:55,119 --> 02:37:01,119
+It has already been discussed, but still probably it will be repeated for you, Steve.
+
+1294
+02:37:01,119 --> 02:37:14,880
+So here, with the period, we are basically, you know, whenever we are mentioning this period, basically we are providing the information based on which element we have to join to data set, yeah?
+
+1295
+02:37:14,880 --> 02:37:19,880
+By that structure, what I understood.
+
+1296
+02:37:19,880 --> 02:37:27,880
+So, when we are joining these two data sets, we are just, you know, mentioning those, that period, which is indicating the joining key or no?
+
+1297
+02:37:27,880 --> 02:37:29,880
+Did I understand correctly?
+
+1298
+02:37:29,880 --> 02:37:32,880
+So, the question is about SPARQL syntax, correct?
+
+1299
+02:37:32,880 --> 02:37:33,880
+Yeah, yeah, yeah.
+
+1300
+02:37:33,880 --> 02:37:34,880
+Correct.
+
+1301
+02:37:34,880 --> 02:37:41,880
+So, let's open back up our example here.
+
+1302
+02:37:41,959 --> 02:37:48,959
+So, we are getting the title of movies and the names of actors who are in those movies.
+
+1303
+02:37:48,959 --> 02:37:54,959
+So, your question is what the period is doing, whether the period is reflecting a join?
+
+1304
+02:37:54,959 --> 02:37:55,959
+Exactly.
+
+1305
+02:37:55,959 --> 02:37:58,959
+The period is not reflecting a join.
+
+1306
+02:37:58,959 --> 02:38:12,040
+Essentially, think of when I say movie is a auto-ontology movies, all that I'm doing here is stating a SPARQL triple.
+
+1307
+02:38:12,040 --> 02:38:20,040
+So, the movie variable here is the subject, a is the trip, is the predicate, and this is the object.
+
+1308
+02:38:20,040 --> 02:38:31,040
+So, now, when I use the semicolon, what that says is I'm going to reuse that same subject on the following line, but I only need a predicate and object on the following line.
+
+1309
+02:38:31,119 --> 02:38:52,119
+So, I'm basically saying get me an instance of movie that has a movie ID, which I'm going to cast to the variable ID, which has a movie title, which I'm going to cast to the variable title, and then when I put that period, that's all I'm saying is I am no longer reusing the subject.
+
+1310
+02:38:52,119 --> 02:38:57,119
+The next line of code that I write is going to have a new subject.
+
+1311
+02:38:57,119 --> 02:38:59,119
+So, what is that new subject?
+
+1312
+02:38:59,200 --> 02:39:02,200
+I'm now in a completely separate statement.
+
+1313
+02:39:02,200 --> 02:39:15,200
+This is the same as basically writing, if this were plain English, I could say, no, Jane is very smart, and then I could say, Paul has a dog.
+
+1314
+02:39:18,200 --> 02:39:31,280
+These are just two completely separate statements, and you see here how in just plain English, these are finalized by a period to know that I'm moving on to a new thought, and so the same thing here.
+
+1315
+02:39:33,280 --> 02:39:37,280
+Okay, so, and by default, the join is always inner join?
+
+1316
+02:39:39,280 --> 02:39:44,280
+As I understand it, the join most reflects inner join.
+
+1317
+02:39:45,280 --> 02:39:51,280
+I would caution you to not necessarily think of these joins in those terms.
+
+1318
+02:39:51,359 --> 02:40:02,980
+That's really the distinction between inner join and outer join is really particular to SQL and relational databases whereas that's not quite how it works here.
+
+1319
+02:40:02,980 --> 02:40:07,100
+But in terms of functionally, it most resembles an interjoin.
+
+1320
+02:40:11,980 --> 02:40:12,980
+OK.
+
+1321
+02:40:15,820 --> 02:40:16,100
+OK.
+
+1322
+02:40:16,100 --> 02:40:21,980
+And I'm about this triple sentence, so it is just by default structure.
+
+1323
+02:40:21,980 --> 02:40:29,980
+Now that we know that here we want to see title from this data set and from another data set this name.
+
+1324
+02:40:29,980 --> 02:40:37,299
+If we had to reflect more, you know more columns and also would it become you know four or five sentences?
+
+1325
+02:40:37,299 --> 02:40:42,980
+I mean, how do we fit in with this triple triple statement structure?
+
+1326
+02:40:42,980 --> 02:40:46,020
+Yeah, so suppose we had.
+
+1327
+02:40:46,020 --> 02:40:50,220
+Suppose we had eight different tables and we're trying to get information across all of these.
+
+1328
+02:40:50,220 --> 02:40:54,860
+One important thing to remember is what I mentioned about the cross product.
+
+1329
+02:40:54,860 --> 02:40:58,500
+So if I then say you know director.
+
+1330
+02:40:58,500 --> 02:41:05,580
+They. And you know, director has weather.
+
+1331
+02:41:10,339 --> 02:41:11,220
+They have a name.
+
+1332
+02:41:15,393 --> 02:41:27,900
+Essentially, if we're talking about in terms of the world of relational database in the world of SQL, on doing now is I'm adding a third table that I'm querying from.
+
+1333
+02:41:27,900 --> 02:41:33,540
+I'm asking for that director name, which is not really that big a deal.
+
+1334
+02:41:33,540 --> 02:41:36,180
+Um, except for the fact that.
+
+1335
+02:41:36,180 --> 02:41:38,900
+I can say director name.
+
+1336
+02:41:38,900 --> 02:41:42,019
+If I now run this query.
+
+1337
+02:41:42,019 --> 02:41:46,220
+You see, it's gonna take a little bit longer to run and now all of a sudden.
+
+1338
+02:41:46,220 --> 02:41:52,220
+It seems like. John Woo just directs every single movie.
+
+1339
+02:41:52,220 --> 02:41:55,300
+Well, shown even though.
+
+1340
+02:41:55,300 --> 02:41:58,940
+Obviously, he doesn't direct every movie.
+
+1341
+02:41:58,940 --> 02:42:01,099
+And so the question is.
+
+1342
+02:42:01,099 --> 02:42:02,739
+How do we prevent this cross product?
+
+1343
+02:42:02,739 --> 02:42:06,139
+We have to find some way to relate him to a movie.
+
+1344
+02:42:06,639 --> 02:42:10,979
+Let's say movie directors.
+
+1345
+02:42:10,979 --> 02:42:16,820
+And so he has a movie ID so he has, and this is me understanding the data I'm looking at.
+
+1346
+02:42:16,820 --> 02:42:24,820
+I know that this is the primary key for movies that relates these, and so if I say his movie is also equal to ID.
+
+1347
+02:42:24,820 --> 02:42:29,220
+Now, basically I want to get a movie that has a certain ID.
+
+1348
+02:42:29,220 --> 02:42:35,259
+I'm looking for an actor that has that same ID and the director that has the same ID.
+
+1349
+02:42:35,259 --> 02:42:37,979
+Now if I run this.
+
+1350
+02:42:37,979 --> 02:42:41,020
+I'm no longer going to get that cross product.
+
+1351
+02:42:41,020 --> 02:42:43,699
+I'm going to get.
+
+1352
+02:42:43,699 --> 02:42:48,059
+The movie. I'm gonna get director.
+
+1353
+02:42:48,059 --> 02:42:50,139
+I'm gonna get the actors.
+
+1354
+02:42:50,139 --> 02:43:11,500
+And this even still isn't the best query, because even though I've now prevented the cross product between director and movie, there's still probably cross product here between actor and director, but I would need to probably if I were choosing to write this, I might separate this task out into its own separate query.
+
+1355
+02:43:11,500 --> 02:43:20,139
+But just to know that there are issues here we have to keep in mind, and that's why it seems like there are all these different directors for Alvin and Chipmunks.
+
+1356
+02:43:20,139 --> 02:43:24,699
+There are all these different directors for the Bourne series, etc.
+
+1357
+02:43:24,699 --> 02:43:29,899
+Even though. It's probably not the case, and then for example.
+
+1358
+02:43:29,899 --> 02:43:35,339
+You see multiple entries here for transformers, even though it all has one director.
+
+1359
+02:43:35,339 --> 02:43:40,660
+Because. It just ultimately doesn't format your results in the best possible way.
+
+1360
+02:43:44,500 --> 02:43:57,539
+But it is. So when we have a complex and join to be done, it is always better to do simpler joins and then at the end join between them.
+
+1361
+02:43:57,539 --> 02:44:03,899
+I wouldn't say it's better, it's just you need to put a little bit more thought into it as you do the more complex and then cross multiple tables.
+
+1362
+02:44:06,740 --> 02:44:08,500
+And actually, I think that this.
+
+1363
+02:44:11,220 --> 02:44:13,300
+I believe I said some wrong information.
+
+1364
+02:44:13,300 --> 02:44:21,140
+I believe that there is not a cross product here and that some of these movies are just listed as having multiple directors for some reason.
+
+1365
+02:44:21,140 --> 02:44:22,820
+Which is OK.
+
+1366
+02:44:22,820 --> 02:44:25,779
+Is a strange, but you'll see here how.
+
+1367
+02:44:25,779 --> 02:44:28,779
+I'm, you know, for each director.
+
+1368
+02:44:28,779 --> 02:44:37,540
+We have to have the name of the actor, so we have Kelly Asbury coming up twice.
+
+1369
+02:44:37,540 --> 02:44:43,299
+And Cameron Diaz being listed multiple times once for each director.
+
+1370
+02:44:43,299 --> 02:44:47,500
+And then we have Rupert Everett once for each director.
+
+1371
+02:44:47,540 --> 02:44:59,739
+There's probably a better way to query for this, and it's not that I wouldn't advise this, it's just that you need to think through how to actually get out the information that is most relevant to you and that you're most curious about.
+
+1372
+02:45:01,739 --> 02:45:05,739
+OK, looks bit of limitation than easygoing approach.
+
+1373
+02:45:05,739 --> 02:45:10,299
+So do we also have some list as Steve some about some limitation?
+
+1374
+02:45:10,299 --> 02:45:17,820
+I know which normally any relational database or any cloud data platform you can do and we cannot perform in here.
+
+1375
+02:45:19,660 --> 02:45:25,140
+I'm. I'm hesitant to say that there is a limitation, it's more just.
+
+1376
+02:45:27,140 --> 02:45:29,899
+Um, it's more that.
+
+1377
+02:45:29,899 --> 02:45:37,380
+You have to. It's more that you have to structure your sparkle in a in a careful way.
+
+1378
+02:45:39,638 --> 02:45:50,140
+It's something to think about, and in terms of is there a list of things that we straight up cannot do in Sparkle that we could do in potentially SQL?
+
+1379
+02:45:50,140 --> 02:45:59,540
+I don't believe there is, but just to be triple sure about that, I will ask engineering if they have a list or something like that and I can get back with that tomorrow.
+
+1380
+02:45:59,540 --> 02:46:17,140
+I but on a personal note, I've been developing with Sparkle with ends up with Sparkle for four years now with ends over three years now, and there's I've never experienced something that I know how I can program it in SQL or even with Python that I haven't been able to figure out how to do it here.
+
+1381
+02:46:20,019 --> 02:46:22,940
+OK, it's just a matter of.
+
+1382
+02:46:22,940 --> 02:46:26,859
+Knowing it's a matter of knowing and understanding all the tools in your tool box.
+
+1383
+02:46:28,619 --> 02:46:30,820
+And do you have also some editor?
+
+1384
+02:46:30,820 --> 02:46:37,579
+You know, apart from Sparkle, we can use some other language like you know you just mentioned about Python.
+
+1385
+02:46:37,579 --> 02:46:40,420
+So can we use directly Python also somehow in here?
+
+1386
+02:46:40,459 --> 02:46:47,980
+We're going to talk a little bit tomorrow and also on Friday about some Python integration that we have with Anzo.
+
+1387
+02:46:47,980 --> 02:46:51,859
+I like I mentioned a second ago.
+
+1388
+02:46:51,859 --> 02:47:07,179
+Anzo has a built in REST API to query on basically all the data within your different graph marts, as well as the metadata within the journal describing the various features like ontology and graph and graph marts.
+
+1389
+02:47:07,179 --> 02:47:12,779
+So what you could do is you could have a Python script that's using like the requests library.
+
+1390
+02:47:12,779 --> 02:47:29,420
+And you could, within your Python script, be querying data from Anzo and then use that to create something like a pandas data frame, or you can then do some visualizations using whatever Python library most suits you.
+
+1391
+02:47:29,420 --> 02:47:36,299
+But there's very easy ways to leverage Python in combination with Anzo to either extract information about the.
+
+1392
+02:47:37,579 --> 02:47:45,859
+Application or even sometimes you can use Python to actually trigger things within Anzo if you have Python running on external server somewhere.
+
+1393
+02:47:45,859 --> 02:47:48,140
+And so there's a lot of power you can do.
+
+1394
+02:47:48,140 --> 02:47:52,500
+The more tools that you have at your disposal.
+
+1395
+02:47:52,500 --> 02:47:53,492
+Hmm, OK.
+
+1396
+02:47:53,492 --> 02:47:56,220
+Thanks for explaining.
+
+1397
+02:47:56,220 --> 02:47:57,779
+Sure.
+
+1398
+02:47:57,779 --> 02:48:00,500
+And again, we'll cover Python a little bit tomorrow.
+
+1399
+02:48:00,500 --> 02:48:05,299
+I'm at least on a high level, and then I think on Friday might have one or two examples.
+
+1400
+02:48:05,299 --> 02:48:06,940
+OK.
+
+1401
+02:48:06,940 --> 02:48:08,220
+Thank you.
+
+1402
+02:48:08,220 --> 02:48:09,859
+Sure.
+
+1403
+02:48:09,859 --> 02:48:11,820
+Any more questions here?
+
+1404
+02:48:11,820 --> 02:48:13,100
+I know.
+
+1405
+02:48:13,100 --> 02:48:17,739
+We're just about out of time, so I think we have time for, you know, one, maybe two more questions.
+
+1406
+02:48:22,420 --> 02:48:30,380
+So I will repeat myself, but can we expect the video recording after the call?
+
+1407
+02:48:30,380 --> 02:48:44,140
+Yes, I I believe I figured out the permissions issues that are preventing you from seeing it yesterday, so I just need to add all of your emails to the approved list and then you should be able to see both yesterday's and today's.
+
+1408
+02:48:44,140 --> 02:48:49,260
+And then I will separately be sending an email, including all of the slides.
+
+1409
+02:48:49,260 --> 02:48:51,380
+OK, perfect.
+
+1410
+02:48:51,380 --> 02:48:52,380
+Sure.
+
+1411
+02:48:57,099 --> 02:49:03,859
+And sorry about the delay on that, we just had to figure out a few internal things, but it should be sorted now.
+
+1412
+02:49:03,859 --> 02:49:09,500
+And the same goes for the page to request tickets.
+
+1413
+02:49:09,500 --> 02:49:21,820
+We should be figuring that out today as well, so you guys can create tickets and hopefully let us know if you have any questions that you like to see specifically addressed or just issues with the platform as you begin your direct exploration.
+
+1414
+02:49:25,659 --> 02:49:34,179
+Right, it's not a problem, but yeah, if we will not get to recordings today, it will be really difficult to catch up on three sessions.
+
+1415
+02:49:34,179 --> 02:49:39,179
+Yeah, so it is extremely important to have it today.
+
+1416
+02:49:40,659 --> 02:49:42,380
+Perfect.
+
+1417
+02:49:42,380 --> 02:49:48,260
+But yeah, I'd like to thank you all for another really productive session.
+
+1418
+02:49:48,260 --> 02:49:53,179
+I really look forward to talking to you all again tomorrow.
+
+1419
+02:49:53,179 --> 02:49:55,020
+Alright, thanks to you.
+
+1420
+02:49:55,020 --> 02:49:57,700
+Great, thank you very much.
+
+1421
+02:49:57,700 --> 02:49:58,979
+Thank you.
+
+1422
+02:49:58,979 --> 02:49:59,979
+See ya, bye.
+
+1423
+02:50:00,000 --> 02:50:00,840
+Thank you.
+
+1424
+02:50:30,000 --> 02:50:31,000
+Thank you.
+
+1425
+02:50:31,000 --> 02:50:32,000
+Thank you.
+
+1426
+02:50:32,000 --> 02:50:33,000
+Thank you.
+

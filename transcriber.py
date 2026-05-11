@@ -112,9 +112,14 @@ def _split_long_blocks(srt_text: str, max_duration_sec: float = 8.0) -> str:
     if not subs:
         return srt_text
 
-    _SENT_SPLIT = re.compile(r'(?<=[.!?])\s+')
+    # 문장 분할: .!? 뒤에 대문자로 시작하는 새 문장이 올 때만 분할
+    # "Dr. Smith", "U.S. government" 등 약어 후 소문자는 분할 안 됨
+    _SENT_SPLIT = re.compile(r'(?<=[.!?])\s+(?=[A-Z])')
+    
+    # 화자 전환 패턴: 쉼표/마침표 뒤 + 명확한 전환어만 분할
+    # 주의: "make sure", "I think that..." 같은 일반 문장 중간 패턴은 절대 포함하지 않음
     _SPEAKER_SPLIT = re.compile(
-        r'(?<=[\s.!?])(?=(?:but just|so just|just to|yeah |yes |no |thanks|thank you|okay so|and so|so basically|I think|I would|I was|I see|I need|I don\'t|that\'s a |that\'s great|that\'s how|sure |for sentiment))',
+        r'(?<=[.!?,])\s+(?=(?:Yeah|Yes|No|Okay so|Thanks|Thank you|That\'s great|Absolutely|Exactly|Right so|All right))',
         re.I,
     )
     # ? 뒤에 답변이 오는 패턴 (화자 전환 거의 확실)
@@ -169,7 +174,30 @@ def _split_long_blocks(srt_text: str, max_duration_sec: float = 8.0) -> str:
                     ))
                 continue
 
-        # 짧은 블록은 그대로
+        # 짧은 블록도 여러 문장이 있으면 분할
+        sentences = [s.strip() for s in _SENT_SPLIT.split(text) if s.strip()]
+        
+        if len(sentences) > 1:
+            # 여러 문장이 있으면 분할
+            total_chars = sum(len(s) for s in sentences) or 1
+            cursor_ms = sub.start.ordinal
+            
+            for si, sent in enumerate(sentences):
+                ratio = len(sent) / total_chars
+                seg_duration = int(duration_ms * ratio)
+                seg_start = cursor_ms
+                seg_end = cursor_ms + seg_duration if si < len(sentences) - 1 else sub.end.ordinal
+                cursor_ms = seg_end
+                
+                out.append(pysrt.SubRipItem(
+                    index=len(out) + 1,
+                    start=pysrt.SubRipTime.from_ordinal(seg_start),
+                    end=pysrt.SubRipTime.from_ordinal(seg_end),
+                    text=sent,
+                ))
+            continue
+        
+        # 한 문장이면 그대로
         if duration_sec <= max_duration_sec:
             out.append(pysrt.SubRipItem(
                 index=len(out) + 1, start=sub.start, end=sub.end, text=text,
@@ -218,7 +246,9 @@ def _clean_whisper_artifacts(srt_text: str) -> str:
     """Whisper 전사 후처리: 필러 블록 제거 + 불완전 문장을 다음 블록에 병합.
 
     - "Uh.", "Um.", "Hmm." 등 필러만 있는 블록 제거
-    - 불완전 문장을 다음 블록에 병합 (단, 병합 결과가 8초를 넘지 않도록 제한)
+    - 불완전 문장을 다음 블록에 병합 (불완전 문장은 30초, 완결 문장은 15초 제한)
+    - 온점이 있으면 완결된 문장으로 간주하여 절대 병합하지 않음
+    - 온점이 없으면 불완전 문장으로 간주하여 다음 블록과 병합
     """
     import pysrt
     import re
@@ -234,69 +264,75 @@ def _clean_whisper_artifacts(srt_text: str) -> str:
     cleaned = [s for s in subs if not _FILLER_ONLY.match(s.text.strip())]
 
     _SENT_END = re.compile(r'[.!?\u2026][\"\'\)\]\u201d\u2019]?\s*$')
-    _DANGLING_END = re.compile(
-        r'\b(the|a|an|of|in|on|at|to|for|with|from|by|and|but|or|so|that|which|who'
-        r'|this|these|those|their|our|your|its|my|more|some|any|all|each|every'
-        r'|about|into|than|as|if|when|where|while|because|although|though'
-        r'|different types of|terms of|arm|let me)\s*[.!?,]?\s*$',
-        re.I,
-    )
 
-    MAX_MERGE_MS = 8000  # 병합 결과가 8초를 넘지 않도록
+    MAX_MERGE_MS = 15000  # 완결 문장 병합 soft 제한
+    MAX_MERGE_HARD_MS = 30000  # 불완전 문장은 여기까지 허용 (문장이 끊기는 것보다 나음)
 
     merged = []
     pending_text = ""
     pending_start = None
+    pending_end = None
 
-    for sub in cleaned:
+    for idx, sub in enumerate(cleaned):
         text = sub.text.strip()
         if not text:
             continue
 
+        # pending이 있으면 현재 블록과 병합
         if pending_text:
-            # 병합하면 너무 길어지는지 체크
             merged_duration = sub.end.ordinal - pending_start.ordinal
-            if merged_duration <= MAX_MERGE_MS:
+            # 불완전 문장(pending)은 hard 제한까지 병합 허용
+            limit = MAX_MERGE_HARD_MS if not _SENT_END.search(pending_text) else MAX_MERGE_MS
+            if merged_duration <= limit:
+                # 병합
                 text = pending_text + " " + text
                 start = pending_start
             else:
-                # 너무 길면 pending을 그냥 별도 블록으로 저장
+                # 너무 길면 pending을 별도 블록으로 저장
                 merged.append(pysrt.SubRipItem(
                     index=len(merged) + 1,
                     start=pending_start,
-                    end=sub.start,
+                    end=pending_end,
                     text=pending_text,
                 ))
                 start = sub.start
             pending_text = ""
             pending_start = None
+            pending_end = None
         else:
             start = sub.start
 
-        is_dangling = bool(_DANGLING_END.search(text))
-        is_short_no_end = not _SENT_END.search(text) and len(text) < 40
-        is_incomplete = is_dangling or is_short_no_end
-
-        if is_incomplete:
-            pending_text = text
-            pending_start = start
-        else:
+        # 온점이 있으면 완결된 문장, 없으면 불완전 문장
+        has_period = bool(_SENT_END.search(text))
+        
+        if has_period:
+            # 완결된 문장 → 바로 저장
             merged.append(pysrt.SubRipItem(
                 index=len(merged) + 1,
                 start=start,
                 end=sub.end,
                 text=text,
             ))
+        else:
+            # 불완전 문장 → pending에 저장하고 다음 블록과 병합 대기
+            pending_text = text
+            pending_start = start
+            pending_end = sub.end
 
-    if pending_text and merged:
-        merged[-1].text = merged[-1].text + " " + pending_text
-    elif pending_text:
-        merged.append(pysrt.SubRipItem(
-            index=1,
-            start=pending_start,
-            end=cleaned[-1].end if cleaned else pending_start,
-            text=pending_text,
-        ))
+    # 마지막 pending 처리
+    if pending_text:
+        if merged:
+            # 마지막 블록에 붙이기
+            merged[-1].text = merged[-1].text + " " + pending_text
+            merged[-1].end = pending_end
+        else:
+            # merged가 비어있으면 그냥 추가
+            merged.append(pysrt.SubRipItem(
+                index=1,
+                start=pending_start,
+                end=pending_end,
+                text=pending_text,
+            ))
 
     out = pysrt.SubRipFile(items=merged)
     out.clean_indexes()
@@ -340,14 +376,25 @@ def video_to_srt(src: Path, out_srt: Path, model: str = "whisper-1", language: s
                 if progress_cb:
                     cs = chunk_path.stat().st_size / (1024 * 1024)
                     progress_cb(f"\uccad\ud06c \uc804\uc0ac {i}/{total} ({cs:.1f}MB)...")
-                text = transcribe_audio(chunk_path, model, language, client)
+                try:
+                    text = transcribe_audio(chunk_path, model, language, client)
+                except Exception as e:
+                    # 중간 실패: 지금까지 전사된 부분이라도 저장
+                    if parts:
+                        partial = _renumber_srt("\n\n".join(p for p in parts if p.strip()))
+                        out_srt.parent.mkdir(parents=True, exist_ok=True)
+                        out_srt.write_text(partial, encoding="utf-8")
+                        if progress_cb:
+                            progress_cb(f"\uc804\uc0ac \uc911\ub2e8: {i-1}/{total} \uccad\ud06c\uae4c\uc9c0 \uc800\uc7a5\ub428 → {out_srt.name}")
+                    raise RuntimeError(
+                        f"\uc804\uc0ac \uc2e4\ud328 (청크 {i}/{total}): {e}\n"
+                        f"{'→ ' + str(i-1) + '개 청크는 ' + str(out_srt) + ' 에 부분 저장됨' if parts else '→ 저장된 부분 없음'}"
+                    ) from e
                 parts.append(_shift_srt(text, offset))
             srt_text = _renumber_srt("\n\n".join(p for p in parts if p.strip()))
 
         out_srt.parent.mkdir(parents=True, exist_ok=True)
-        # 후처리: 긴 블록 분할 → 필러 제거 + 불완전 문장 병합
-        srt_text = _split_long_blocks(srt_text)
-        srt_text = _clean_whisper_artifacts(srt_text)
+        # raw 그대로 저장 (후처리는 pipeline.process_file에서 1회만 수행)
         out_srt.write_text(srt_text, encoding="utf-8")
         return out_srt
     finally:

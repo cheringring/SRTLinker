@@ -29,24 +29,23 @@
 
 ## 빠른 시작 (Windows)
 
-> **사전 준비**: [Python 3.10 이상](https://www.python.org/downloads/) 설치 필요
-> 설치 시 **"Add Python to PATH"** 를 반드시 체크하세요.
+> **Python 별도 설치 불필요** — 설치 스크립트가 자동으로 처리합니다.
 
 ### 방법 1. 자동 설치 (추천)
 
-1. 이 저장소를 다운로드하거나 클론합니다:
+1. 이 저장소를 클론합니다:
    ```
    git clone https://github.com/cheringring/SRTLinker.git
    ```
-2. `SRTLinker` 폴더 안의 **`install.bat`** 을 더블클릭합니다.
-   - 가상환경 생성, 패키지 설치가 자동으로 진행됩니다 (1~2분 소요).
+2. `SRTLinker` 폴더 안의 **`설치_및_실행.bat`** 을 더블클릭합니다.
+   - Python 자동 다운로드 + 패키지 설치가 진행됩니다 (인터넷 필요, 1~2분).
    - `.env` 파일이 자동 생성됩니다.
 3. `.env` 파일을 메모장으로 열어 OpenAI API 키를 입력합니다:
    ```
    OPENAI_API_KEY=sk-proj-여기에-실제-키-입력
    OPENAI_MODEL=gpt-4o
    ```
-4. **`SRTLinker.bat`** 을 더블클릭하면 브라우저에서 자동으로 열립니다.
+4. 다음부터는 **`SRTLinker.bat`** 더블클릭으로 실행합니다.
 
 ### 방법 2. 수동 설치
 
@@ -188,6 +187,83 @@ python test_translate.py output/en/영상.en.srt --auto --pick 3
   │
   └─ 영어/한국어 SRT 동일한 블록 수·타임스탬프 유지
 ```
+
+---
+
+## 번역 프롬프팅 설계
+
+GPT에게 번역을 요청할 때 단순히 "번역해줘"가 아니라, 영상 자막 번역에 특화된 규칙들을 시스템 프롬프트로 전달합니다. 이 규칙들은 실제 번역 결과를 보면서 문제가 발견될 때마다 하나씩 추가/수정한 것입니다.
+
+### 시스템 프롬프트 구조
+
+GPT에게 "너는 전문 영상 자막 번역가이다"라는 역할을 부여하고, 아래 규칙들을 반드시 지키도록 지시합니다:
+
+**입출력 구조 규칙**
+- translate 배열의 각 블록만 번역하고, context_before/context_after는 문맥 참고용 (번역 대상 아님)
+- 출력의 id 집합과 순서는 입력과 정확히 일치해야 함 (id 추가/삭제/변경 금지)
+- 한 블록 = 하나의 번역 (블록 경계 바꾸기 안 됨)
+- 출력은 반드시 `{items:[{id, text}]}` JSON 스키마를 따름
+
+**번역 품질 규칙**
+- 의역 허용, 직역보다 의미 기반 자연스러운 표현 우선. 정보를 임의 추가/생략하지 않음
+- 회의/교육 톤에 맞는 경어 반말(~합니다 / ~입니다) 사용
+- 구어체(uh, um, you know, like 등 필러)는 자연스러운 범위 내에서 제거 가능
+
+**용어 처리 규칙**
+- 기술 용어(Anzo, Ontology, Dataset, Knowledge Graph, RDF, SPARQL, API, SDK, JSON 등)는 영문 그대로 유지
+- 고유명사/제품명/버전명은 원문 표기 유지
+- `glossary.json`에 정의된 고정 번역 반드시 적용
+
+**부호 구조 유지 규칙 (핵심)**
+- 원문이 쉼표(,)로 이어지는 문장이면 번역문도 쉼표로 이어야 함
+- 원문에 마침표(./!/?/)가 없는데 번역문에 마침표를 추가하지 않음
+- 원문의 문장 부호 구조를 그대로 따름
+
+이 규칙이 중요한 이유: Whisper가 만든 SRT에서 한 문장이 여러 블록으로 쪼개져 있을 때, 각 블록을 독립적으로 번역하면 GPT가 쉼표로 이어지는 문장을 마침표로 끊어버리는 문제가 있었음. 이 규칙을 추가해서 원문의 부호 구조를 유지하도록 강제함.
+
+### 유저 페이로드 구조
+
+번역 요청 시 GPT에게 보내는 데이터:
+
+```json
+{
+  "target_language": "Korean",
+  "context_before": [{"id": 8, "text": "이전 블록 텍스트"}],
+  "translate": [
+    {"id": 9, "text": "번역할 블록 1"},
+    {"id": 10, "text": "번역할 블록 2"}
+  ],
+  "context_after": [{"id": 11, "text": "다음 블록 텍스트"}],
+  "instruction": "translate 배열의 각 블록을 target_language로 번역하고, {items:[{id,text}]} 형태의 JSON으로만 응답하라."
+}
+```
+
+- `context_before/after`: 앞뒤 5개 블록을 문맥으로 제공 (번역 대상 아님)
+- `translate`: 실제 번역할 블록들 (30개씩 chunk)
+- GPT는 JSON Schema strict 모드로 응답하므로 id 매핑이 보장됨
+
+### 용어집 (glossary.json)
+
+```json
+{
+  "keep_as_is": ["Anzo", "Ontology", "SPARQL", "RDF", "Graph", "Cambridge Semantics"],
+  "fixed_translations": {
+    "knowledge graph": "지식 그래프",
+    "data fabric": "데이터 패브릭"
+  }
+}
+```
+
+- `keep_as_is`: 번역하지 않고 원문 그대로 유지할 단어 목록
+- `fixed_translations`: 항상 지정된 번역을 사용할 단어 매핑
+- 시스템 프롬프트에 자동으로 주입되어 GPT가 번역 시 참고
+
+### 번역 안정성 보장
+
+- OpenAI Structured Outputs (JSON Schema strict 모드)로 응답 형식 강제
+- id 누락 시 해당 블록만 자동 재요청 (최대 1회)
+- 최종적으로도 누락되면 원문 텍스트 유지 (빈 번역 방지)
+- API 일시 장애 시 exponential backoff 재시도 (tenacity 라이브러리)
 
 ---
 
@@ -340,3 +416,13 @@ OpenAI API를 사용하므로 인터넷 연결이 필요합니다.
 ## 라이선스
 
 MIT License
+-----
+
+
+#### 코드 수정 후 exe 다시 만들기
+
+
+```powershell
+python build_installer.py
+
+```
