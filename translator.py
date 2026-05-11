@@ -4,6 +4,7 @@ import json
 import logging
 import os
 import re
+import sys
 from dataclasses import dataclass
 from typing import Iterable
 from openai import OpenAI
@@ -118,6 +119,7 @@ class Translator:
             got = self._call_api(chunk.translate, chunk.context_before, chunk.context_after)
         except Exception as e:
             log.warning("API call failed for chunk: %s", e)
+            print(f"  [!] 번역 API 실패 (ids {expected_ids[0]}~{expected_ids[-1]}): {e}", file=sys.stderr)
             got = {}
 
         missing = [i for i in expected_ids if i not in got]
@@ -130,6 +132,7 @@ class Translator:
                 more = self._call_api(sub_blocks, chunk.context_before, chunk.context_after)
             except Exception as e:
                 log.warning("Retry call failed: %s", e)
+                print(f"  [!] 재시도 실패 (ids {missing}): {e}", file=sys.stderr)
                 more = {}
             got.update({i: t for i, t in more.items() if i in id_to_block})
 
@@ -144,6 +147,7 @@ class Translator:
                 fallback_ids.append(i)
         if fallback_ids:
             log.warning("Fell back to original text for ids: %s", fallback_ids)
+            print(f"  [!] 번역 실패 → 원문(영어) 유지: ids {fallback_ids}", file=sys.stderr)
         return result
 
     def translate_all(self, chunks: Iterable[Chunk]) -> dict[int, str]:

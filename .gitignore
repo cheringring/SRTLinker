@@ -3,9 +3,13 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+python/
 .idea/
 .vscode/
-output/
+output/**
+!output/**/
+!output/**/*.srt
+*.bak
 logs/
 build/
 dist/
@@ -13,4 +17,5 @@ installer_build/
 *.spec
 *.srt
 !samples/*.srt
+!output/**/*.srt
 uploads/

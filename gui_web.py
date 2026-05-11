@@ -2,6 +2,7 @@
 from __future__ import annotations
 import os
 import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import json
 import threading
 import webbrowser
@@ -178,18 +179,38 @@ dz.addEventListener('drop', async e => {
   }
 });
 
-// ── 파일 찾기 (서버 측 다이얼로그) ──
+// ── 파일 찾기 (브라우저 파일 선택 → 업로드) ──
+const browseInput = document.createElement('input');
+browseInput.type = 'file';
+browseInput.multiple = true;
+browseInput.style.display = 'none';
+document.body.appendChild(browseInput);
+
 async function browseFiles() {
-  try {
-    const res = await fetch('/api/browse');
-    const d = await res.json();
-    if (d.paths && d.paths.length) {
-      d.paths.forEach(p => { if (!filePaths.includes(p)) filePaths.push(p); });
-      renderFiles();
-      appendLog(d.paths.length + '개 파일 선택됨');
-    }
-  } catch(e) { appendLog('파일 찾기 실패: ' + e); }
+  browseInput.click();
 }
+browseInput.addEventListener('change', async () => {
+  const files = browseInput.files;
+  if (!files.length) return;
+  for (const f of files) {
+    const ext = '.' + f.name.split('.').pop().toLowerCase();
+    if (!EXTS.has(ext)) { appendLog('[무시] 지원 안함: ' + f.name); continue; }
+    // 이미 같은 파일명이 등록되어 있으면 건너뛰기
+    if (filePaths.some(p => p.endsWith(f.name))) { appendLog('[건너뜀] 이미 등록됨: ' + f.name); continue; }
+    appendLog('업로드 중: ' + f.name + ' (' + formatSize(f.size) + ')...');
+    try {
+      const fd = new FormData();
+      fd.append('file', f);
+      const res = await fetch('/api/upload', { method: 'POST', body: fd });
+      const d = await res.json();
+      if (d.path) {
+        if (!filePaths.includes(d.path)) { filePaths.push(d.path); renderFiles(); }
+        appendLog('준비 완료: ' + f.name);
+      } else { appendLog('업로드 실패: ' + (d.error || '알 수 없는 오류')); }
+    } catch(err) { appendLog('업로드 실패: ' + err); }
+  }
+  browseInput.value = '';
+});
 
 // ── 경로 직접 입력 ──
 function addPath() {
@@ -289,35 +310,15 @@ def index():
 
 @app.route('/api/upload', methods=['POST'])
 def api_upload():
-    """드래그앤드롭 파일 → uploads/ 에 저장 후 경로 반환."""
+    """드래그앤드롭/파일찾기 → uploads/ 에 저장 후 경로 반환. 이미 있으면 재사용."""
     f = request.files.get('file')
     if not f:
         return jsonify(error="파일 없음"), 400
     dest = UPLOAD_DIR / f.filename
+    if dest.exists():
+        return jsonify(path=str(dest.resolve()))
     f.save(str(dest))
     return jsonify(path=str(dest.resolve()))
-
-
-@app.route('/api/browse')
-def api_browse():
-    """서버 측 파일 다이얼로그 (tkinter 사용)."""
-    try:
-        import tkinter as tk
-        from tkinter import filedialog
-        root = tk.Tk()
-        root.withdraw()
-        root.attributes('-topmost', True)
-        paths = filedialog.askopenfilenames(
-            title="자막/비디오 선택",
-            filetypes=[
-                ("미디어", "*.mp4 *.mkv *.mov *.avi *.webm *.mp3 *.wav *.m4a *.srt"),
-                ("모든 파일", "*.*"),
-            ],
-        )
-        root.destroy()
-        return jsonify(paths=list(paths))
-    except Exception as e:
-        return jsonify(error=str(e), paths=[])
 
 
 @app.route('/api/translate', methods=['POST'])
