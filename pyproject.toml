@@ -1,7 +1,15 @@
 [project]
 name = "srtlinker"
 version = "0.1.0"
-dependencies = []
+dependencies = [
+    "openai>=1.50.0",
+    "pysrt>=1.1.2",
+    "python-dotenv>=1.0.1",
+    "tenacity>=9.0.0",
+    "tqdm>=4.66.0",
+    "imageio-ffmpeg>=0.5.1",
+    "flask>=3.0.0"
+]
 
 [tool.vercel]
 entrypoint = "gui_web:app"
