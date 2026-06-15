@@ -1,2 +1,7 @@
+[project]
+name = "srtlinker"
+version = "0.1.0"
+dependencies = []
+
 [tool.vercel]
 entrypoint = "gui_web:app"
